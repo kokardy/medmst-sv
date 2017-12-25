@@ -1,0 +1,35 @@
+_kbn             | integer                     |
+mst_type         | character varying(1)        |
+code9            | integer                     |
+name_char_length | integer                     |
+name_char        | character varying(64)       | not null
+name_kana_length | integer                     |
+name_kana        | character varying(20)       |
+tani_code        | integer                     |
+tani_char_length | integer                     |
+tani_char        | character varying(12)       |
+cost_type        | integer                     |
+cost             | integer                     |
+sub1             | integer                     |
+restrain         | integer                     |
+rest1            | integer                     |
+rest2            | integer                     |
+generic          | integer                     |
+sub2             | integer                     |
+rest3            | integer                     |
+rest4            | integer                     |
+inj_volume       | integer                     |
+ins_type         | integer                     |
+name_relation    | integer                     |
+cost_type_old    | integer                     |
+cost_old         | integer                     |
+char_change_type | integer                     |
+kana_change_type | integer                     |
+zaikei           | integer                     |
+sub3             | integer                     |
+change_date      | timestamp without time zone |
+stop_date        | timestamp without time zone |
+code12           | character varying(12)       | not null
+order_no         | integer                     |
+keika_date       | timestamp without time zone |
+std_char         | character varying(200)      |
