@@ -4,8 +4,13 @@ import psycopg2 as pg
 import csv
 import os, re
 import os.path 
+import 
 
 SAVE_DIR = "/bootstrap/save"
+CURRENT_DIR = "./"
+
+def getConnection():
+    return pg.connect(**param)
 
 def get_files(path, hot="hot", y="y"):
     result = dict(hot=dict())
@@ -28,6 +33,29 @@ def get_files(path, hot="hot", y="y"):
 def main():
     infiles = get_files(SAVE_DIR)
     print(infiles)
+
+
+def create(con, tables=["hot", "y"]):
+    if "hot" in tables:
+        createHOT(con)
+    if "y" in tables:
+        createY(con)
+
+def createHOT(con):
+    filepath = os.path.join(CURRENT_DIR, "./medis_def.txt")
+    f = codecs.open(filepath, "r", "utf8")
+    lines = [line for line in f]
+    sql = "\n".join(lines)
+    cur = con.cursor()
+    cur.execute(sql)
+
+def createY(con):
+    filepath = os.path.join(CURRENT_DIR, "./y_def.txt")
+    f = codecs.open(filepath, "r", "utf8")
+    lines = [line for line in f]
+    sql = "\n".join(lines)
+    cur = con.cursor()
+    cur.execute(sql)
 
 
 
