@@ -11,10 +11,10 @@ else:
     SAVE_DIR = "/bootstrap/save"
 
 PARAM = dict(
-            host = os.environ["MEDMST_PG_HOST"],
-            port = os.environ["MEDMST_PG_PORT"],
-            user = os.environ["MEDMST_PG_USER"],
-            password = os.environ["MEDMST_PG_PASSWORD"],
+            host = os.environ["PG_HOST"],
+            port = os.environ["PG_PORT"],
+            user = os.environ["PG_USER"],
+            password = os.environ["PG_PASSWORD"],
 )
 
 def connection():
@@ -52,7 +52,10 @@ def create(con):
     filepath = os.path.join(SAVE_DIR, "y_def.txt")
     _sql_from_file(filepath)
     cur = con.cursor()
-    cur.execute(sql)
+    try:
+        cur.execute(sql)
+    except Exception, e:
+        print e
 
 def _sql_from_file(filepath):
     with codecs.open(filepath, "r", "utf8") as f:
@@ -79,11 +82,54 @@ def _insert(con, sql_file, insert_files, line1skip):
             cur = con.cursor()
             cur.executemany(sql, r)
 
+def delete(con):
+    sqls = [
+        """DELETE FROM "medis";""",
+        """DELETE FROM "y";""",
+    ]
+    cur = con.cursor()
+    for sql in sqls:
+        cur.execute(sql)
+
+def C():
+    con = connection()
+    create(con)
+
+def I():
+    con = connection()
+    infiles = get_files()
+    insert(con, infiles)
+
+def D():
+    con = connection()
+    delete(con)
+
 
 def main():
     infiles = get_files(SAVE_DIR)
-    print(infiles)
-    connection()
+
+    options = sys.args[1].lstrip("-")
+    exec_list = []
+    if "C" in options:
+        exec_list.append(C)
+        options.remove("C")
+    if "D" in options:
+        exec_list.append(D)
+        options.remove("D")
+    if "I" in options:
+        exec_list.append(I)
+        options.remove("I")
+
+    if len(options) > 0:
+        print("OPTION must be -[C][D][I]")
+        print("C: create table")
+        print("D: delete table data")
+        print("I: insert data to table")
+        return
+
+    for func in exec_list:
+        func()
+
 
 if __name__ == '__main__':
     main()
