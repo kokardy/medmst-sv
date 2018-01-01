@@ -1,3 +1,3 @@
 cd /asset
 sh init.sh
-python register.py
+python register.py -CI

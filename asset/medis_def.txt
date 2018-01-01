@@ -1,4 +1,4 @@
-CREATE TABLE "MEDIS" (
+CREATE TABLE "medis" (
     "基準番号（ＨＯＴコード）"              character varying(255) PRIMARY KEY,
     "処方用番号（ＨＯＴ７）"                character varying(255) ,
     "会社識別用番号"                        character varying(255) ,
