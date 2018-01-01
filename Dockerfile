@@ -2,6 +2,10 @@ FROM ubuntu:16.04
 
 COPY asset /asset
 
+ENV GOPATH=/go \
+    http_proxy=${http_proxy} \
+    https_proxy=${https_proxy}
+
 RUN apt-get update && \
     apt-get install -y \
     golang \
@@ -10,12 +14,9 @@ RUN apt-get update && \
     git \
     jlha-utils \
     unzip \
-    && apt-get clean
+    && apt-get clean \
+	mkdir /go && mkdir /bootstrap \ 
+	go get github.com/kokardy/medmst
 
-ENV GOPATH=/go
-ENV http_proxy=${http_proxy}
-ENV https_proxy=${https_proxy}
-RUN mkdir /go && mkdir /bootstrap
-RUN go get github.com/kokardy/medmst
-RUN sh /asset/routine.sh 
+ENTRYPOINT sh /asset/routine.sh && go run /asset/server.go
 
