@@ -15,8 +15,9 @@ RUN apt-get update && \
     jlha-utils \
     unzip \
     && apt-get clean \
-	mkdir /go && mkdir /bootstrap \ 
-	go get github.com/kokardy/medmst
+	mkdir /go && mkdir /bootstrap 
+
+RUN	go get github.com/kokardy/medmst
 
 ENTRYPOINT sh /asset/routine.sh && go run /asset/server.go
 
