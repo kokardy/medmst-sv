@@ -17,7 +17,5 @@ RUN apt-get update && \
     && apt-get clean \
 	mkdir /go && mkdir /bootstrap 
 
-RUN	go get github.com/kokardy/medmst
-
 ENTRYPOINT sh /asset/routine.sh && go run /asset/server.go
 
