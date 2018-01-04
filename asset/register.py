@@ -15,6 +15,7 @@ PARAM = dict(
             port = os.environ["PG_PORT"],
             user = os.environ["PG_USER"],
             password = os.environ["PG_PASSWORD"],
+            database = os.environ["PG_DATABASE"],
 )
 
 def connection():
@@ -48,7 +49,11 @@ def create(con):
     filepath = os.path.join(SAVE_DIR, "medis_def.txt")
     _sql_from_file(filepath)
     cur = con.cursor()
-    cur.execute(sql)
+    try:
+        cur.execute(sql)
+    except Exception, e:
+        print e
+
     filepath = os.path.join(SAVE_DIR, "y_def.txt")
     _sql_from_file(filepath)
     cur = con.cursor()
