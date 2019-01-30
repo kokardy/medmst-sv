@@ -114,7 +114,7 @@ def D():
 def main():
     infiles = get_files(SAVE_DIR)
 
-    options = sys.args[1].lstrip("-")
+    options = sys.argv[1].lstrip("-")
     exec_list = []
     if "C" in options:
         exec_list.append(C)
