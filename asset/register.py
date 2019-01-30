@@ -3,6 +3,7 @@
 import psycopg2 as pg
 import csv
 import os, re
+import sys
 import os.path 
 
 if "MEDMST_SAVE" in os.environ:
