@@ -118,13 +118,13 @@ def main():
     exec_list = []
     if "C" in options:
         exec_list.append(C)
-        options.remove("C")
+        options.replace("C", "")
     if "D" in options:
         exec_list.append(D)
-        options.remove("D")
+        options.replace("D", "")
     if "I" in options:
         exec_list.append(I)
-        options.remove("I")
+        options.replace("I", "")
 
     if len(options) > 0:
         print("OPTION must be -[C][D][I]")
