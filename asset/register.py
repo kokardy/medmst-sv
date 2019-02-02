@@ -115,27 +115,24 @@ def main():
     infiles = get_files(SAVE_DIR)
 
     options = sys.argv[1].lstrip("-")
-    exec_list = []
-    if "C" in options:
-        exec_list.append(C)
-        options.replace("C", "")
-    if "D" in options:
-        exec_list.append(D)
-        options.replace("D", "")
-    if "I" in options:
-        exec_list.append(I)
-        options.replace("I", "")
-
+    
     if len(options) > 0:
         print("OPTION must be -[C][D][I]")
         print("C: create table")
         print("D: delete table data")
         print("I: insert data to table")
         return
+    
+    exec_list = []
+    if "C" in options:
+        exec_list.append(C)
+    if "D" in options:
+        exec_list.append(D)
+    if "I" in options:
+        exec_list.append(I)
 
     for func in exec_list:
         func()
-
 
 if __name__ == '__main__':
     main()
