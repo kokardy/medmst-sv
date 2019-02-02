@@ -115,8 +115,9 @@ def main():
     infiles = get_files(SAVE_DIR)
 
     options = sys.argv[1].lstrip("-")
+
     
-    if len(options) > 0:
+    if len(options) == 0:
         print("OPTION must be -[C][D][I]")
         print("C: create table")
         print("D: delete table data")
