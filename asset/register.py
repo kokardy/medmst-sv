@@ -5,6 +5,7 @@ import csv
 import os, re
 import sys
 import os.path 
+import codecs
 
 if "MEDMST_SAVE" in os.environ:
     SAVE_DIR = os.environ["MEDMST_SAVE"]
