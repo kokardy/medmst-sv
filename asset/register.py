@@ -20,7 +20,7 @@ PARAM = dict(
 )
 
 def connection():
-    return _getConnection(PARAM)
+    return _connection(PARAM)
 
 def _connection(param):
     return pg.connect(**param)
