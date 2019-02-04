@@ -124,6 +124,7 @@ def main():
         print("I: insert data to table")
         return
     
+    #OPTIONの分だけcreate delete insert関数登録
     exec_list = []
     if "C" in options:
         exec_list.append(C)
