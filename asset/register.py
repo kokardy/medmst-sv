@@ -47,11 +47,18 @@ def get_files(save_dir=SAVE_DIR):
                 if filename == "y.csv":
                     result[y] = [fullpath]
 
+    print("reuslt", result)
     return result
+
+def _sql_from_file(filepath):
+    with codecs.open(filepath, "r", "utf8") as f:
+        lines = [line for line in f]
+        sql = "\n".join(lines)
+    return sql
 
 def create(con):
     filepath = os.path.join(ASSET_DIR, "medis_def.txt")
-    _sql_from_file(filepath)
+    sql = _sql_from_file(filepath)
     cur = con.cursor()
     try:
         cur.execute(sql)
@@ -59,18 +66,12 @@ def create(con):
         print e
 
     filepath = os.path.join(ASSET_DIR, "y_def.txt")
-    _sql_from_file(filepath)
+    sql = _sql_from_file(filepath)
     cur = con.cursor()
     try:
         cur.execute(sql)
     except Exception, e:
         print e
-
-def _sql_from_file(filepath):
-    with codecs.open(filepath, "r", "utf8") as f:
-        lines = [line for line in f]
-        sql = "\n".join(lines)
-    return sql
 
 def insert(con, infiles):
     infiles = get_files()
@@ -103,15 +104,18 @@ def delete(con):
 def C():
     con = connection()
     create(con)
+    con.commit()
 
 def I():
     con = connection()
     infiles = get_files()
     insert(con, infiles)
+    con.commit()
 
 def D():
     con = connection()
     delete(con)
+    con.commit()
 
 
 def main():

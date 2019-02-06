@@ -34,4 +34,8 @@ CREATE TABLE "y" (
     "公表順序番号"                                        integer                     ,
     "経過措置年月日又は商品名医薬品コード使用期限"        timestamp without time zone ,
     "基本漢字名称"                                        character varying(200)      
-)
+);
+
+CREATE INDEX index_name ON "y"(
+    "漢字名称"
+);
