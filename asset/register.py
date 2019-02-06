@@ -76,11 +76,17 @@ def create(con):
 def insert(con, infiles):
     infiles = get_files()
     
-    insert_list = [(os.path.join(SAVE_DIR, "{0}_insert.txt").format(table),
-        infiles[table], skip)
-            for (table, skip) in [("medis", True), ("y", False)]]
-    for (sql_file, insert_data, skip) in insert_list:
-        _insert(con, sql_file, insert_data, skip)
+    insert_list = []
+    for (table, skip) in [("medis", True), ("y", False)]]:
+        sql_template = os.path.join(SAVE_DIR, "{0}_insert.txt").format(table)
+        insert_data =  infiles[talbe]
+        insert_list.append(
+                sql,template,
+                insert_data,
+                skip
+        )
+    for (sql_template, insert_data, skip) in insert_list:
+        _insert(con, sql_template, insert_data, skip)
 
 def _insert(con, sql_file, insert_files, line1skip):
     sql = _sql_from_file(sql_file)
@@ -135,10 +141,10 @@ def main():
     exec_list = []
     if "C" in options:
         exec_list.append(C)
-    if "D" in options:
-        exec_list.append(D)
     if "I" in options:
         exec_list.append(I)
+    if "D" in options:
+        exec_list.append(D)
 
     for func in exec_list:
         func()
