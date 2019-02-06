@@ -79,7 +79,7 @@ def insert(con, infiles):
     insert_list = []
     for (table, skip) in [("medis", True), ("y", False)]:
         sql_template = os.path.join(SAVE_DIR, "{0}_insert.txt").format(table)
-        insert_data =  infiles[talbe]
+        insert_data =  infiles[table]
         insert_list.append(
                 sql,template,
                 insert_data,
