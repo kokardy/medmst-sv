@@ -4,9 +4,9 @@ CREATE TABLE "medis" (
     "会社識別用番号"                        character varying(255) ,
     "調剤用番号"                            character varying(255) ,
     "物流用番号"                            character varying(255) ,
-    "ＪＡＮコード"                          character varying(255) INDEX,
-    "薬価基準収載医薬品コード"              character varying(255) INDEX,
-    "個別医薬品コード"                      character varying(255) INDEX,
+    "ＪＡＮコード"                          character varying(255) ,
+    "薬価基準収載医薬品コード"              character varying(255) ,
+    "個別医薬品コード"                      character varying(255) ,
     "レセプト電算処理システムコード（１）"  character varying(255) ,
     "レセプト電算処理システムコード（２）"  character varying(255) ,
     "告示名称"                              character varying(255) ,
@@ -23,4 +23,14 @@ CREATE TABLE "medis" (
     "販売会社"                              character varying(255) ,
     "更新区分"                              character varying(255) ,
     "更新年月日"                            character varying(255)
+);
+
+CREATE INDEX "index_jan" ON "medis"(
+    "ＪＡＮコード"
+);
+CREATE INDEX "index_y" ON "medis"(
+    "薬価基準収載医薬品コード"              
+);
+CREATE INDEX "index_yj" ON "medis"(
+    "個別医薬品コード"                      
 );
