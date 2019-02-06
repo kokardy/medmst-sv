@@ -7,6 +7,8 @@ import sys
 import os.path 
 import codecs
 
+ASSET_DIR = "/asset"
+
 if "MEDMST_SAVE" in os.environ:
     SAVE_DIR = os.environ["MEDMST_SAVE"]
 else:
@@ -48,7 +50,7 @@ def get_files(save_dir=SAVE_DIR):
     return result
 
 def create(con):
-    filepath = os.path.join(SAVE_DIR,"..", "medis_def.txt")
+    filepath = os.path.join(ASSET_DIR, "medis_def.txt")
     _sql_from_file(filepath)
     cur = con.cursor()
     try:
@@ -56,7 +58,7 @@ def create(con):
     except Exception, e:
         print e
 
-    filepath = os.path.join(SAVE_DIR,"..", "y_def.txt")
+    filepath = os.path.join(ASSET_DIR, "y_def.txt")
     _sql_from_file(filepath)
     cur = con.cursor()
     try:
