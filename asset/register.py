@@ -31,12 +31,13 @@ def _connection(param):
 def get_files(save_dir=SAVE_DIR):
     hot = "hot"
     y = "y"
-    result = dict(hot=[], y=[])
+    medis = "medis"
+    result = dict(medis=[], y=[])
     for path, dirs, filenames in os.walk(save_dir):
         for filename in filenames:
             fullpath = os.path.join(path, filename)
             if os.path.basename(path) == hot:
-                r = result[hot]
+                r = result[medis]
                 if re.match("^MEDIS\d{8}.TXT$", filename):
                     r.append(fullpath)
                 elif re.match("^\d{8}.txt", filename):
