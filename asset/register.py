@@ -86,7 +86,11 @@ def insert(con, infiles):
         _insert(con, sql_template, insert_data, skip)
 
 def _insert(con, sql_file, insert_files, line1skip):
-    sql = _sql_from_file(sql_file)
+    try:
+        sql = _sql_from_file(sql_file)
+    except IOError, e:
+        print(e)
+        return
     for insert_file in insert_files:
         with codecs.open(insert_file, "r", "utf-8") as f:
             r = csv.reader(f)
