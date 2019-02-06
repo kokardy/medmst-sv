@@ -82,7 +82,7 @@ def insert(con, infiles):
         sql_template = os.path.join(SAVE_DIR, "{0}_insert.txt").format(table)
         insert_data =  infiles[table]
         insert_list.append(
-                sql,template,
+                sql_template,
                 insert_data,
                 skip
         )
