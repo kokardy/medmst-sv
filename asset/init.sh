@@ -1,4 +1,4 @@
-cd /bootstrap/asset
+cd /asset
 go build -o server .
 cd /bootstrap
 /go/bin/medmst -f
