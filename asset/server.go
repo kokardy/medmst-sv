@@ -15,17 +15,17 @@ func connect_param() (param string) {
 	return
 }
 
-func medis_handler(w http.ResponseWriter, r *http.Request) {
-	barcode := r.FormValue("barcode")
+func handleBarcode(c *gin.Context) {
+	var message string
+	barcode := c.Param("barcode")
 	gs1 := GS1(barcode) //GS1として読んでみる
 	var jan JAN
 	//validate check digit
 	if !gs1.CheckDigitOK() {
 		jan = JAN(barcode) //ダメならJANとして読んでみる
 		if !jan.CheckDigitOK() {
-			fmt.Fprintf(w, "wrong barcode: checkdigit error")
-			fmt.Fprintf(w, barcode)
-			return
+			message = "wrong barcode: checkdigit error"
+			c.String(200, message)
 		}
 	} else { //GS1ならjanに変換する
 		jan = gs1.ToJAN()
@@ -34,8 +34,8 @@ func medis_handler(w http.ResponseWriter, r *http.Request) {
 	db, err := sqlx.Connect("postgresql", param)
 	//DB connection check
 	if err != nil {
-		fmt.Fprintf(w, "an ERROR occured in database connecting")
-		return
+		message = "an ERROR occured in database connecting"
+		c.String(200, message)
 	}
 
 	sql := `SELECT 
@@ -49,33 +49,35 @@ func medis_handler(w http.ResponseWriter, r *http.Request) {
 	err = db.Get(&medis, sql, string(jan))
 	//sql execute error
 	if err != nil {
-		fmt.Fprintf(w, "an ERROR occured in executing SQL")
-		fmt.Fprintf(w, fmt.Sprintf("SQL:%s", sql))
-		return
+		message = "an ERROR occured in executing SQL: %s"
+		message = fmt.Sprintf(message, sql)
+		c.String(200, message)
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	b, err := json.Marshal(medis)
-	if err != nil {
-		fmt.Fprintf(w, "an ERROR occured in marshaling JSON")
-	}
+	c.JSON(200, medis)
 
-	fmt.Fprintf(w, string(b))
-
-	return
-}
-func y_handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World Y")
 }
 
-func hellow_handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World")
+func handleY(c *gin.Context) {
+	c.String("Hello World YYYYY")
 }
 
 func main() {
-	http.HandleFunc("/medis/", medis_handler)
-	http.HandleFunc("/y/", y_handler)
-	http.HandleFunc("/", hellow_handler)
+	r := gin.Default()
+	r.GET("/", func(c *gin.Context) {
+		c.String(200, "Hello world")
+	})
+	r.GET("/hoge", func(c *gin.Context) {
+		c.String(200, "fuga")
+	})
+
+	//y
+	r.GET("/y/", handleY)
+	//medis
+	r.GET("/medis/", handleY)
+	//barcode
+	r.GET("/barcode/:barcode/", handleBarcode)
+
 	fmt.Println("listen: 8080")
-	http.ListenAndServe(":8080", nil)
+	r.Run(":8080")
 }
