@@ -21,5 +21,5 @@ RUN go get github.com/kokardy/medmst \
     github.com/lib/pq \
     github.com/jmoiron/sqlx
 
-ENTRYPOINT sh /asset/routine.sh && go run /asset/server.go
+ENTRYPOINT sh /asset/routine.sh && /asset/server
 
