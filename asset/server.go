@@ -9,12 +9,6 @@ import (
 	"net/http"
 )
 
-type Medis struct {
-	Name  string
-	Total string
-	Unit  string
-}
-
 func connect_param() (param string) {
 
 	return
@@ -60,15 +54,27 @@ func medis_handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.Marshal(w, medis)
+	b, err := json.Marshal(medis)
+	if err != nil {
+		fmt.Fprintf(w, "an ERROR occured in marshaling JSON")
+	}
+
+	fmt.Fprintf(w, string(b))
+
 	return
 }
 func y_handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello, World")
 }
 
+func hellow_handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, World")
+}
+
 func main() {
 	http.HandleFunc("/medis", medis_handler)
 	http.HandleFunc("/y", y_handler)
+	http.HandleFunc("/", hellow_handler)
 	http.ListenAndServe(":8080", nil)
+	fmt.Println("listen: 8080")
 }

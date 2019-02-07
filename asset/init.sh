@@ -1,3 +1,5 @@
+cd /bootstrap/asset
+go build -o server .
 cd /bootstrap
 /go/bin/medmst -f
 cd /bootstrap/save/hot

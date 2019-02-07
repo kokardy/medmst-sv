@@ -1,5 +1,7 @@
 package main
 
 type Medis struct {
-	Name string
+	Name  string
+	Total string
+	Unit  string
 }
