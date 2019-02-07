@@ -19,7 +19,8 @@ RUN apt-get update && \
     
 RUN go get github.com/kokardy/medmst \
     github.com/lib/pq \
-    github.com/jmoiron/sqlx
+    github.com/jmoiron/sqlx \
+	github.com/gin-gonic/gin
 
 ENTRYPOINT sh /asset/routine.sh && /asset/server
 
