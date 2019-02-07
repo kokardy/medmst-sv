@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
-
 	"encoding/json"
-	"github.com/jmoiron/sqlx"
+	"fmt"
 	_ "github.com/lib/pq"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/jmoiron/sqlx"
 )
 
 func connect_param() (param string) {
@@ -64,7 +65,7 @@ func medis_handler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 func y_handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World")
+	fmt.Fprintf(w, "Hello, World Y")
 }
 
 func hellow_handler(w http.ResponseWriter, r *http.Request) {
@@ -72,9 +73,9 @@ func hellow_handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/medis", medis_handler)
-	http.HandleFunc("/y", y_handler)
+	http.HandleFunc("/medis/", medis_handler)
+	http.HandleFunc("/y/", y_handler)
 	http.HandleFunc("/", hellow_handler)
-	http.ListenAndServe(":8080", nil)
 	fmt.Println("listen: 8080")
+	http.ListenAndServe(":8080", nil)
 }
