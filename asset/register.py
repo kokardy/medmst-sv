@@ -79,7 +79,7 @@ def insert(con, infiles):
     
     insert_list = []
     for (table, skip) in [("medis", True), ("y", False)]:
-        sql_template = os.path.join(SAVE_DIR, "{0}_insert.txt").format(table)
+        sql_template = os.path.join(ASSET_DIR, "{0}_insert.txt").format(table)
         insert_data =  infiles[table]
         insert_list.append([sql_template, insert_data, skip])
     for (sql_template, insert_data, skip) in insert_list:
@@ -92,7 +92,7 @@ def _insert(con, sql_file, insert_files, line1skip):
         print(e)
         return
     for insert_file in insert_files:
-        with codecs.open(insert_file, "r", "utf-8") as f:
+        with open(insert_file, "r", encoding="cp932") as f:
             r = csv.reader(f)
             if line1skip:
                 r.next()

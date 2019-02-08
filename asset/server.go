@@ -25,7 +25,7 @@ func handleBarcode(c *gin.Context) {
 		jan = JAN(barcode) //ダメならJANとして読んでみる
 		if !jan.CheckDigitOK() {
 			message = "wrong barcode: checkdigit error"
-			c.String(200, message)
+			c.String(500, message)
 		}
 	} else { //GS1ならjanに変換する
 		jan = gs1.ToJAN()
@@ -35,7 +35,8 @@ func handleBarcode(c *gin.Context) {
 	//DB connection check
 	if err != nil {
 		message = "an ERROR occured in database connecting"
-		c.String(200, message)
+		c.String(500, message)
+		return
 	}
 
 	sql := `SELECT 
@@ -51,7 +52,8 @@ func handleBarcode(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s"
 		message = fmt.Sprintf(message, sql)
-		c.String(200, message)
+		c.String(500, message)
+		return
 	}
 
 	c.JSON(200, medis)
@@ -59,6 +61,27 @@ func handleBarcode(c *gin.Context) {
 }
 
 func handleY(c *gin.Context) {
+	var yList []Y
+	queryString := c.DefaultQuery("query", "")
+	sql := `SELECT
+				"漢字名称",
+				"医薬品コード",
+				"医薬品コード",
+				"医薬品コード"
+			FROM "y"
+			WHERE  
+				"漢字名称" like '%' + $1  + '%' OR
+				"カナ名称" like '%' + $1  + '%' OR
+				"基本漢字名称" like '%' + $1  + '%' 
+		`
+	err := db.Get(&yList, sql, string(jan))
+	if err != nil {
+		message = "an ERROR occured in executing SQL: %s"
+		message = fmt.Sprintf(message, sql)
+		c.String(500, message)
+		return
+	}
+
 	c.String("Hello World YYYYY")
 }
 
