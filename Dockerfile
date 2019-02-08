@@ -10,6 +10,7 @@ RUN apt-get update && \
     apt-get install -y \
     golang \
     python \
+    python3 \
     python-psycopg2 \
     git \
     jlha-utils \
