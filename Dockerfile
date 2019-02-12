@@ -9,9 +9,8 @@ ENV GOPATH=/go \
 RUN apt-get update && \
     apt-get install -y \
     golang \
-    python \
     python3 \
-    python-psycopg2 \
+    python3-psycopg2 \
     git \
     jlha-utils \
     unzip \
