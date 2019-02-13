@@ -5,3 +5,10 @@ type Medis struct {
 	Total string
 	Unit  string
 }
+
+type Y struct {
+	Name     string
+	YJCode   string
+	NameKana string
+	NameBase string
+}
