@@ -1,10 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	_ "github.com/lib/pq"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
@@ -62,6 +60,8 @@ func handleBarcode(c *gin.Context) {
 
 func handleY(c *gin.Context) {
 	var yList []Y
+	var message string
+	var err error
 	queryString := c.DefaultQuery("query", "")
 	sql := `SELECT
 				"漢字名称",
@@ -74,7 +74,16 @@ func handleY(c *gin.Context) {
 				"カナ名称" like '%' + $1  + '%' OR
 				"基本漢字名称" like '%' + $1  + '%' 
 		`
-	err := db.Get(&yList, sql, string(jan))
+	param := connect_param()
+	db, err := sqlx.Connect("postgresql", param)
+	//DB connection check
+	if err != nil {
+		message = "an ERROR occured in database connecting"
+		c.String(500, message)
+		return
+	}
+	//Query
+	err = db.Get(&yList, sql, string(queryString))
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s"
 		message = fmt.Sprintf(message, sql)
@@ -82,7 +91,7 @@ func handleY(c *gin.Context) {
 		return
 	}
 
-	c.String("Hello World YYYYY")
+	c.String(200, "Hello World YYYYY")
 }
 
 func main() {

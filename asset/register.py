@@ -63,16 +63,16 @@ def create(con):
     cur = con.cursor()
     try:
         cur.execute(sql)
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)
 
     filepath = os.path.join(ASSET_DIR, "y_def.txt")
     sql = _sql_from_file(filepath)
     cur = con.cursor()
     try:
         cur.execute(sql)
-    except Exception, e:
-        print e
+    except Exception as e:
+        print(e)
 
 def insert(con, infiles):
     infiles = get_files()
@@ -88,16 +88,23 @@ def insert(con, infiles):
 def _insert(con, sql_file, insert_files, line1skip):
     try:
         sql = _sql_from_file(sql_file)
-    except IOError, e:
+    except IOError as e:
         print(e)
         return
     for insert_file in insert_files:
         with open(insert_file, "r", encoding="cp932") as f:
             r = csv.reader(f)
+            r = [line for line in r]
             if line1skip:
-                r.next()
+                r = r[1:]
             cur = con.cursor()
-            cur.executemany(sql, r)
+            try: 
+                cur.executemany(sql, r)
+                con.commit()
+            except Exception as e:
+                print("Error occured in executing SQL")
+                print(cur.query)
+                raise e
 
 def delete(con):
     sqls = [
@@ -107,6 +114,7 @@ def delete(con):
     cur = con.cursor()
     for sql in sqls:
         cur.execute(sql)
+    con.commit()
 
 def C():
     con = connection()
