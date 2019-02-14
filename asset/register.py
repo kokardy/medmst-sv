@@ -58,21 +58,21 @@ def _sql_from_file(filepath):
     return sql
 
 def create(con):
-    filepath = os.path.join(ASSET_DIR, "medis_def.txt")
-    sql = _sql_from_file(filepath)
-    cur = con.cursor()
-    try:
-        cur.execute(sql)
-    except Exception as e:
-        print(e)
+    filepathlist = [
+        os.path.join(ASSET_DIR, "medis_def.txt"),
+        os.path.join(ASSET_DIR, "y_def.txt"),
+        os.path.join(ASSET_DIR, "yj_def.txt"),
+        os.path.join(ASSET_DIR, "hot_def.txt"),
+    ]
 
-    filepath = os.path.join(ASSET_DIR, "y_def.txt")
-    sql = _sql_from_file(filepath)
-    cur = con.cursor()
-    try:
-        cur.execute(sql)
-    except Exception as e:
-        print(e)
+    for f in filepathlist:
+        sql = _sql_from_file(f)
+        cur = con.cursor()
+        try:
+            cur.execute(sql)
+        except Exception as e:
+            print(e)
+
 
 def insert(con, infiles):
     infiles = get_files()
