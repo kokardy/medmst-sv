@@ -59,10 +59,9 @@ def _sql_from_file(filepath):
 
 def create(con):
     filepathlist = [
-        os.path.join(ASSET_DIR, "medis_def.txt"),
-        os.path.join(ASSET_DIR, "y_def.txt"),
-        os.path.join(ASSET_DIR, "yj_def.txt"),
-        os.path.join(ASSET_DIR, "hot_def.txt"),
+        os.path.join(ASSET_DIR, "medis_def.sql"),
+        os.path.join(ASSET_DIR, "y_def.sql"),
+        os.path.join(ASSET_DIR, "available_def.sql"),
     ]
 
     for f in filepathlist:
@@ -79,7 +78,7 @@ def insert(con, infiles):
     
     insert_list = []
     for (table, skip) in [("medis", True), ("y", False)]:
-        sql_template = os.path.join(ASSET_DIR, "{0}_insert.txt").format(table)
+        sql_template = os.path.join(ASSET_DIR, "{0}_insert.sql").format(table)
         insert_data =  infiles[table]
         insert_list.append([sql_template, insert_data, skip])
     for (sql_template, insert_data, skip) in insert_list:
