@@ -2,14 +2,22 @@ package main
 
 import (
 	"fmt"
+	"os"
+
 	_ "github.com/lib/pq"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jmoiron/sqlx"
 )
 
-func connect_param() (param string) {
-
+func connectParam() (param string) {
+	param = fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
+		os.Getenv("PG_HOST"),
+		os.Getenv("PG_PORT"),
+		os.Getenv("PG_DATABASE"),
+		os.Getenv("PG_USER"),
+		os.Getenv("PG_PASSWORD"),
+	)
 	return
 }
 
@@ -28,8 +36,8 @@ func handleBarcode(c *gin.Context) {
 	} else { //GS1ならjanに変換する
 		jan = gs1.ToJAN()
 	}
-	param := connect_param()
-	db, err := sqlx.Connect("postgresql", param)
+	param := connectParam()
+	db, err := sqlx.Connect("postgres", param)
 	//DB connection check
 	if err != nil {
 		message = "an ERROR occured in database connecting"
@@ -64,34 +72,32 @@ func handleY(c *gin.Context) {
 	var err error
 	queryString := c.DefaultQuery("query", "")
 	sql := `SELECT
-				"漢字名称",
-				"医薬品コード",
-				"医薬品コード",
-				"医薬品コード"
+				*
 			FROM "y"
-			WHERE  
-				"漢字名称" like '%' + $1  + '%' OR
-				"カナ名称" like '%' + $1  + '%' OR
-				"基本漢字名称" like '%' + $1  + '%' 
+			WHERE
+				"漢字名称" like '%' || $1 || '%' OR
+				"カナ名称" like '%' || $1 || '%' OR
+				"基本漢字名称" like '%' || $1 || '%'; 
 		`
-	param := connect_param()
-	db, err := sqlx.Connect("postgresql", param)
+	param := connectParam()
+	db, err := sqlx.Connect("postgres", param)
 	//DB connection check
 	if err != nil {
-		message = "an ERROR occured in database connecting"
+		message = "an ERROR occured in database connecting: %s\n"
+		message = fmt.Sprintf(message, err)
 		c.String(500, message)
 		return
 	}
 	//Query
-	err = db.Get(&yList, sql, string(queryString))
+	err = db.Select(&yList, sql, queryString)
 	if err != nil {
-		message = "an ERROR occured in executing SQL: %s"
-		message = fmt.Sprintf(message, sql)
+		message = "an ERROR occured in executing SQL: %s \n%s\n"
+		message = fmt.Sprintf(message, sql, err)
 		c.String(500, message)
 		return
 	}
 
-	c.String(200, "Hello World YYYYY")
+	c.JSON(200, yList)
 }
 
 func main() {
