@@ -11,12 +11,12 @@ CREATE TABLE "y" (
     "単位_漢字名称"                                       character varying(12)       ,
     "新_金額種別"                                         integer                     ,
     "新_金額"                                             float(32)                   ,
-    "予備1"                                               integer                     ,
+    "予備1"                                               character varying(10)                     ,
     "麻薬・毒薬・覚醒剤原料・向精神薬"                    integer                     ,
     "神経破壊剤"                                          integer                     ,
     "生物学的製剤"                                        integer                     ,
     "後発品"                                              integer                     ,
-    "予備2"                                               integer                     ,
+    "予備2"                                               character varying(10)                     ,
     "歯科特定薬剤"                                        integer                     ,
     "造影(補助)剤"                                        integer                     ,
     "注射容量"                                            float(32)                   ,
@@ -32,7 +32,7 @@ CREATE TABLE "y" (
     "廃止年月日"                                          character varying(8)        ,
     "薬価基準コード"                                      character varying(12)       ,
     "公表順序番号"                                        integer                     ,
-    "経過措置年月日又は商品名医薬品コード使用期限"        character varying(8)        ,
+    "経過措置年月日"        character varying(8)        ,
     "基本漢字名称"                                        character varying(200)      
 );
 
