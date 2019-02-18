@@ -1,9 +1,30 @@
 package main
 
 type Medis struct {
-	Name  string
-	Total string
-	Unit  string
+	HOT            string `db:"基準番号（ＨＯＴコード）" json:"基準番号（ＨＯＴコード）"`
+	HOT7           string `db:"処方用番号（ＨＯＴ７）" json:"処方用番号（ＨＯＴ７）"`
+	Company        string `db:"会社識別用番号" json:"会社識別用番号"`
+	ChozaiNo       string `db:"調剤用番号" json:"調剤用番号"`
+	DeliNo         string `db:"物流用番号" json:"物流用番号"`
+	JANCode        string `db:"ＪＡＮコード" json:"ＪＡＮコード"`
+	PriceCode      string `db:"薬価基準収載医薬品コード" json:"薬価基準収載医薬品コード"`
+	YJCode         string `db:"個別医薬品コード" json:"個別医薬品コード"`
+	ReceCode1      string `db:"レセプト電算処理システムコード（１）" json:"レセプト電算処理システムコード（１）"`
+	ReceCode2      string `db:"レセプト電算処理システムコード（２）" json:"レセプト電算処理システムコード（２）"`
+	PublicName     string `db:"告示名称" json:"告示名称"`
+	ConsName       string `db:"販売名" json:"販売名"`
+	ReceName       string `db:"レセプト電算処理システム医薬品名" json:"レセプト電算処理システム医薬品名"`
+	Unit           string `db:"規格単位" json:"規格単位"`
+	CoverType      string `db:"包装形態" json:"包装形態"`
+	CoverNum       string `db:"包装単位数" json:"包装単位数"`
+	CoverUnit      string `db:"包装単位単位" json:"包装単位単位"`
+	CoverTotal     string `db:"包装総量数" json:"包装総量数"`
+	CoverTotalUnit string `db:"包装総量単位" json:"包装総量単位"`
+	Kubun          string `db:"区分" json:"区分"`
+	ManuCompany    string `db:"製造会社" json:"製造会社"`
+	ConsCampany    string `db:"販売会社" json:"販売会社"`
+	UpdateType     string `db:"更新区分" json:"更新区分"`
+	UpdateDate     string `db:"更新年月日" json:"更新年月日"`
 }
 
 type Y struct {
