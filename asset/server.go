@@ -99,6 +99,42 @@ func handleY(c *gin.Context) {
 
 	c.JSON(200, yList)
 }
+func handleMedis(c *gin.Context) {
+	var medisList []Medis
+	var message string
+	var err error
+	queryString := c.DefaultQuery("query", "")
+	sql := `SELECT
+				*
+			FROM "medis"
+			WHERE
+				"告示名称" like '%' || $1 || '%' OR
+				"販売名" like '%' || $1 || '%' OR
+				"レセプト電算処理システム医薬品名" like '%' || $1 || '%' OR
+				"製造会社"  like '%' || $1 || '%' OR
+				"販売会社"  like '%' || $1 || '%' 
+				; 
+		`
+	param := connectParam()
+	db, err := sqlx.Connect("postgres", param)
+	//DB connection check
+	if err != nil {
+		message = "an ERROR occured in database connecting: %s\n"
+		message = fmt.Sprintf(message, err)
+		c.String(500, message)
+		return
+	}
+	//Query
+	err = db.Select(&medisList, sql, queryString)
+	if err != nil {
+		message = "an ERROR occured in executing SQL: %s \n%s\n"
+		message = fmt.Sprintf(message, sql, err)
+		c.String(500, message)
+		return
+	}
+
+	c.JSON(200, medisList)
+}
 
 func main() {
 	r := gin.Default()
@@ -112,7 +148,7 @@ func main() {
 	//y
 	r.GET("/y/", handleY)
 	//medis
-	r.GET("/medis/", handleY)
+	r.GET("/medis/", handleMedis)
 	//barcode
 	r.GET("/barcode/:barcode/", handleBarcode)
 

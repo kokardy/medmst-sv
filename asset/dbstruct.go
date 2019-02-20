@@ -1,5 +1,6 @@
 package main
 
+//Medis is HOTコードのマスタ
 type Medis struct {
 	HOT            string `db:"基準番号（ＨＯＴコード）" json:"基準番号（ＨＯＴコード）"`
 	HOT7           string `db:"処方用番号（ＨＯＴ７）" json:"処方用番号（ＨＯＴ７）"`
@@ -27,6 +28,7 @@ type Medis struct {
 	UpdateDate     string `db:"更新年月日" json:"更新年月日"`
 }
 
+//Y is 薬価のマスタ
 type Y struct {
 	Change         int     `db:"変更区分" json:"変更区分"`
 	Master         string  `db:"マスター種別" json:"マスター種別"`
