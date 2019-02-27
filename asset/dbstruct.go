@@ -66,3 +66,73 @@ type Y struct {
 	ExpDate        string  `db:"経過措置年月日" json:"経過措置年月日"`
 	BaseName       string  `db:"基本漢字名称" json:"基本漢字名称"`
 }
+
+type AvailableView struct {
+	//medis
+	HOT            string `db:"基準番号（ＨＯＴコード）" json:"基準番号（ＨＯＴコード）"`
+	HOT7           string `db:"処方用番号（ＨＯＴ７）" json:"処方用番号（ＨＯＴ７）"`
+	HOT7           string `db:"HOT11" json:"HOT11"`
+	JANCode        string `db:"ＪＡＮコード" json:"ＪＡＮコード"`
+	PriceCode      string `db:"薬価基準収載医薬品コード" json:"薬価基準収載医薬品コード"`
+	YJCode         string `db:"個別医薬品コード" json:"個別医薬品コード"`
+	PublicName     string `db:"告示名称" json:"告示名称"`
+	ConsName       string `db:"販売名" json:"販売名"`
+	Unit           string `db:"規格単位" json:"規格単位"`
+	CoverType      string `db:"包装形態" json:"包装形態"`
+	CoverNum       string `db:"包装単位数" json:"包装単位数"`
+	CoverUnit      string `db:"包装単位単位" json:"包装単位単位"`
+	CoverTotal     string `db:"包装総量数" json:"包装総量数"`
+	CoverTotalUnit string `db:"包装総量単位" json:"包装総量単位"`
+	ManuCompany    string `db:"製造会社" json:"製造会社"`
+	ConsCampany    string `db:"販売会社" json:"販売会社"`
+	//y
+	Name     string  `db:"漢字名称" json:"漢字名称"`
+	UnitName string  `db:"単位_漢字名称" json:"単位_漢字名称"`
+	Price    float32 `db:"新_金額" json:"新_金額"`
+}
+
+//TODO SQLつくる 未完成
+func AvailableViewSQL() (sql string) {
+
+	//TODO 自動でとってもいいかも
+	fields = []string{
+		"基準番号（ＨＯＴコード）",
+		"処方用番号（ＨＯＴ７）",
+		"ＪＡＮコード",
+		"薬価基準収載医薬品コード",
+		"個別医薬品コード",
+		"告示名称",
+		"販売名",
+		"規格単位",
+		"包装形態",
+		"包装単位数",
+		"包装単位単位",
+		"包装総量数",
+		"包装総量単位",
+		"製造会社",
+		"販売会社",
+
+		"HOT11",
+		"flag",
+	}
+
+	//フィールド名をダブルクォートでくくる
+	for i, field := range fields {
+		field = `"` + field + `"`
+		fields[i] = field
+	}
+
+	sql = `SELECT DISTINCT
+		%s
+	FROM "medis"
+	LEFT JOIN "y"
+		ON "y"."薬価基準コード" = "medis"."薬価基準収載医薬品コード" 
+	LEFT JOIN "hot"
+		on substring("基準番号（ＨＯＴコード）", 11) = "hot"."HOT11"
+	`
+
+	sql = fmt.Sprintf(sql, str.Join(",", fields))
+
+	return
+
+}
