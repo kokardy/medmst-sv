@@ -66,8 +66,47 @@ func handleBarcode(c *gin.Context) {
 
 }
 
+func handleAvailable(c *gin.Context) {
+	var result []AvailableView
+	var message string
+	var err error
+	queryString := c.DefaultQuery("query", "")
+	sql := `SELECT
+				*
+			FROM "available_view"
+			WHERE
+				"漢字名称" like '%' || $1 || '%' OR
+				"販売名" like '%' || $1 || '%' OR
+				"告示名称" like '%' || $1 || '%' OR
+				"薬価基準収載医薬品コード" like '%' || $1 || '%' OR
+				"個別医薬品コード" like '%' || $1 || '%' OR
+				"ＪＡＮコード" like '%' || $1 || '%' OR
+				"基準番号（ＨＯＴコード）" like '%' || $1 || '%' OR
+				"製造会社" like '%' || $1 || '%' OR
+				"販売会社" like '%' || $1 || '%'; 
+		`
+	param := connectParam()
+	db, err := sqlx.Connect("postgres", param)
+	//DB connection check
+	if err != nil {
+		message = "an ERROR occured in database connecting: %s\n"
+		message = fmt.Sprintf(message, err)
+		c.String(500, message)
+		return
+	}
+	//Query
+	err = db.Select(&result, sql, queryString)
+	if err != nil {
+		message = "an ERROR occured in executing SQL: %s \n%s\n"
+		message = fmt.Sprintf(message, sql, err)
+		c.String(500, message)
+		return
+	}
+
+	c.JSON(200, result)
+}
 func handleY(c *gin.Context) {
-	var yList []Y
+	var result []Y
 	var message string
 	var err error
 	queryString := c.DefaultQuery("query", "")
@@ -89,7 +128,7 @@ func handleY(c *gin.Context) {
 		return
 	}
 	//Query
-	err = db.Select(&yList, sql, queryString)
+	err = db.Select(&result, sql, queryString)
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
@@ -97,10 +136,10 @@ func handleY(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, yList)
+	c.JSON(200, result)
 }
 func handleMedis(c *gin.Context) {
-	var medisList []Medis
+	var result []Medis
 	var message string
 	var err error
 	queryString := c.DefaultQuery("query", "")
@@ -125,7 +164,7 @@ func handleMedis(c *gin.Context) {
 		return
 	}
 	//Query
-	err = db.Select(&medisList, sql, queryString)
+	err = db.Select(&result, sql, queryString)
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
@@ -133,7 +172,7 @@ func handleMedis(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, medisList)
+	c.JSON(200, result)
 }
 
 func main() {
@@ -146,9 +185,11 @@ func main() {
 	})
 
 	//y
-	r.GET("/y/", handleY)
+	r.GET("/json/y/", handleY)
 	//medis
-	r.GET("/medis/", handleMedis)
+	r.GET("/json/medis/", handleMedis)
+	//available
+	r.GET("/json/available/", handleAvailable)
 	//barcode
 	r.GET("/barcode/:barcode/", handleBarcode)
 

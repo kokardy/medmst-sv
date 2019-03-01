@@ -71,7 +71,6 @@ type AvailableView struct {
 	//medis
 	HOT            string `db:"基準番号（ＨＯＴコード）" json:"基準番号（ＨＯＴコード）"`
 	HOT7           string `db:"処方用番号（ＨＯＴ７）" json:"処方用番号（ＨＯＴ７）"`
-	HOT11          string `db:"HOT11" json:"HOT11"`
 	JANCode        string `db:"ＪＡＮコード" json:"ＪＡＮコード"`
 	PriceCode      string `db:"薬価基準収載医薬品コード" json:"薬価基準収載医薬品コード"`
 	YJCode         string `db:"個別医薬品コード" json:"個別医薬品コード"`
@@ -89,4 +88,10 @@ type AvailableView struct {
 	Name     string  `db:"漢字名称" json:"漢字名称"`
 	UnitName string  `db:"単位_漢字名称" json:"単位_漢字名称"`
 	Price    float32 `db:"新_金額" json:"新_金額"`
+	//custom
+	HOT11      string `db:"HOT11" json:"HOT11"`
+	YJStatus   int    `db:"yj_status" json:"yj_status"`
+	HOTStatus  int    `db:"hot_status" json:"hot_status"`
+	StatusFlag int    `db:"status_flag" json:"status_flag"`
+	Status     string `db:"採用状態" json:"採用状態"`
 }
