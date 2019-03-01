@@ -59,14 +59,19 @@ CREATE VIEW "available_view" as
 		"製造会社",
 		"販売会社",
 
+        "漢字名称",
+        "単位_漢字名称",
+        "新_金額",
+
 		"HOT11",
         "yj"."status_no" as "yj_status",
         "hot"."status_no" as "hot_status",
+
         CASE 
             WHEN "yj"."status_no" IS NULL THEN "hot"."status_no" 
             WHEN "hot"."status_no" IS NULL THEN "yj"."status_no" 
         ELSE "yj"."status_no" | "hot"."status_no" 
-        END as "status_flag",
+        END AS "status_flag",
 
         resolve_status("yj"."status_no", "hot"."status_no") as "採用状態"
                 
