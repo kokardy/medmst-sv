@@ -193,6 +193,8 @@ func main() {
 	//barcode
 	r.GET("/barcode/:barcode/", handleBarcode)
 
+	//riot
+	r.StaticFile("/riot/riot+compiler.min.js", "/bootstrap/riot/riot+compiler.min.js")
 	fmt.Println("listen: 8080")
 	r.Run(":8080")
 }
