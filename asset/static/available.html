@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<tile>採用薬</tile>
+<script type="text/javascript" src="/riot/riot+compiler.min.js"></script>
+
+<script type="riot/tag">
+
+<drug>
+<tr>
+	<td>{ test }</td>
+	<td>{ test2 }</td>
+</tr>
+this.test = "a";
+this.test2 = "b";
+</drug>
+
+</script>
+
+
+</head>
+<body>
+
+		<table>
+				<th>aaaa</th>
+				<drug></drug>
+		</table>
+
+
+<script>riot.mount("drug");</script>
+</body>
+</html>
