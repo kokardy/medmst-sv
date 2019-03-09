@@ -3,17 +3,46 @@
 <head>
 <tile>採用薬</tile>
 <script type="text/javascript" src="/riot/riot+compiler.min.js"></script>
+<!--
+		"基準番号（ＨＯＴコード）",
+		"処方用番号（ＨＯＴ７）",
+		"ＪＡＮコード",
+		"薬価基準収載医薬品コード",
+		"個別医薬品コード",
+		"告示名称",
+		"販売名",
+		"規格単位",
+		"包装形態",
+		"包装単位数",
+		"包装単位単位",
+		"包装総量数",
+		"包装総量単位",
+		"製造会社",
+		"販売会社",
 
+        "漢字名称",
+        "単位_漢字名称",
+        "新_金額",
+
+		"HOT11",
+        "yj_status",
+        "hot_status",
+        "status_flag",
+		"採用状態"
+-->
 <script type="riot/tag">
 
 <drug>
-<tr>
-	<td>{ test }</td>
-	<td>{ test2 }</td>
+<tr each="{drug_list}">
+	<td>{ HOT11 }</td>
+	<td>{ status }</td>
 </tr>
-this.test = "a";
-this.test2 = "b";
 </drug>
+
+this.drug_list = [
+{HOT11: "fdsajkl0", status: "active"},
+{HOT11: "fdsjakfsdla", status: "nonactive"},
+]
 
 </script>
 
