@@ -32,6 +32,14 @@
 -->
 <script type="riot/tag">
 
+<fields>
+<tr>
+	<th each="{fields}">
+		{field}
+	</th>
+</tr>
+</fields>
+
 <drug>
 <tr each="{drug_list}">
 	<td>{ HOT11 }</td>
@@ -39,10 +47,31 @@
 </tr>
 </drug>
 
-this.drug_list = [
-{HOT11: "fdsajkl0", status: "active"},
-{HOT11: "fdsjakfsdla", status: "nonactive"},
+drug_prelist = [
+{"コード": "fdsajkl0", status: "active"},
+{"コード": "fdsjakfsdla", status: "nonactive"},
 ]
+
+this.fields = []
+keys = []
+Object.keys(drug_prelist[0]).forEach(function(key, index){
+	this.fields.push({field:key});
+	keys.push(key);
+})
+
+trans = {
+"コード": "HOT11",
+"status": "status",
+};
+
+this.drug_list = []
+drug_prelist.forEach(function(obj, index){
+	var newObj = Object();
+	keys.forEach(function(key, index){
+		newObj[trans[key]] = obj[key];
+	});
+	this.drug_list.push(newObj);
+})
 
 </script>
 
@@ -51,11 +80,12 @@ this.drug_list = [
 <body>
 
 		<table>
-				<th>aaaa</th>
-				<drug></drug>
+			<fields></fields>
+			<drug></drug>
 		</table>
 
 
 <script>riot.mount("drug");</script>
+<script>riot.mount("fields");</script>
 </body>
 </html>
