@@ -7,10 +7,9 @@
     type="text"
     ref="query"
     class="query_input"
-    onchange="{update}"
-    oninput="{update}"
+    onKeyup="{change}"
 />
-<button onclick="{update}">検索</button>
+<button onClick="{change}">検索</button>
 
 <table>
     <thead>
@@ -34,21 +33,31 @@ this.drugs = [
 {"コード": "fdsjakfsdla", status: "nonactive"},
 ]
 
-//フィールド名取得
-if(this.drugs.length > 0){
-    this.fields = Object.keys(this.drugs[0])
-}else{
-    this.fields = []
+
+change(e){
+    var tag = this
+    var queryStr = this.refs.query.value
+    var url = "/json/available/"
+    url += "?query=" + queryStr
+    fetch(url)
+    .then(function(data){
+        return data.json()
+    })
+    .then(function(json){
+        console.log(url)
+        console.log(json)
+        tag.drugs=json
+        //フィールド名取得
+        if(tag.drugs.length > 0){
+            tag.fields = Object.keys(this.drugs[0])
+        }else{
+            tag.fields = []
+        }
+    })
+
 }
 
-update(e){
-    console.log("update:")
-    this.drugs = [
-        {"コード": "あいうえお", status: "unknown"},
-        {"コード": "fdsjakfsdla", status: "nonactive"},
-        ]
-}
+
     </script>
-
 </atable>
 
