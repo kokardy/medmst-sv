@@ -1,0 +1,54 @@
+<atable>
+
+<span>検索:</span>
+
+<!-- 検索BOX  -->
+<input
+    type="text"
+    ref="query"
+    class="query_input"
+    onchange="{update}"
+    oninput="{update}"
+/>
+<button onclick="{update}">検索</button>
+
+<table>
+    <thead>
+        <th each="{field in fields}" class="{field}">
+            {field}
+        </th>
+    </thead>
+
+    <tbody>
+    <tr each="{drug in drugs}">
+        <td each="{value, field in drug}" class="{field}">
+            { value }
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+    <script>
+this.drugs = [
+{"コード": "fdsajkl0", status: "active"},
+{"コード": "fdsjakfsdla", status: "nonactive"},
+]
+
+//フィールド名取得
+if(this.drugs.length > 0){
+    this.fields = Object.keys(this.drugs[0])
+}else{
+    this.fields = []
+}
+
+update(e){
+    console.log("update:")
+    this.drugs = [
+        {"コード": "あいうえお", status: "unknown"},
+        {"コード": "fdsjakfsdla", status: "nonactive"},
+        ]
+}
+    </script>
+
+</atable>
+
