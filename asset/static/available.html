@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<tile>採用薬</tile>
+<script type="text/javascript" src="/riot/riot+compiler.min.js"></script>
+<!--
+		"基準番号（ＨＯＴコード）",
+		"処方用番号（ＨＯＴ７）",
+		"ＪＡＮコード",
+		"薬価基準収載医薬品コード",
+		"個別医薬品コード",
+		"告示名称",
+		"販売名",
+		"規格単位",
+		"包装形態",
+		"包装単位数",
+		"包装単位単位",
+		"包装総量数",
+		"包装総量単位",
+		"製造会社",
+		"販売会社",
+
+        "漢字名称",
+        "単位_漢字名称",
+        "新_金額",
+
+		"HOT11",
+        "yj_status",
+        "hot_status",
+        "status_flag",
+		"採用状態"
+-->
+<script type="riot/tag">
+
+<fields>
+<tr>
+	<th each="{fields}">
+		{field}
+	</th>
+</tr>
+</fields>
+
+<drug>
+<tr each="{drug_list}">
+	<td>{ HOT11 }</td>
+	<td>{ status }</td>
+</tr>
+</drug>
+
+drug_prelist = [
+{"コード": "fdsajkl0", status: "active"},
+{"コード": "fdsjakfsdla", status: "nonactive"},
+]
+
+this.fields = []
+keys = []
+Object.keys(drug_prelist[0]).forEach(function(key, index){
+	this.fields.push({field:key});
+	keys.push(key);
+})
+
+trans = {
+"コード": "HOT11",
+"status": "status",
+};
+
+this.drug_list = []
+drug_prelist.forEach(function(obj, index){
+	var newObj = Object();
+	keys.forEach(function(key, index){
+		newObj[trans[key]] = obj[key];
+	});
+	this.drug_list.push(newObj);
+})
+
+</script>
+
+
+</head>
+<body>
+
+		<table>
+			<fields></fields>
+			<drug></drug>
+		</table>
+
+
+<script>riot.mount("drug");</script>
+<script>riot.mount("fields");</script>
+</body>
+</html>

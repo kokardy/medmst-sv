@@ -195,6 +195,10 @@ func main() {
 
 	//riot
 	r.StaticFile("/riot/riot+compiler.min.js", "/bootstrap/riot/riot+compiler.min.js")
+
+	//sttic
+	r.Static("/static/", "/asset/static/")
+
 	fmt.Println("listen: 8080")
 	r.Run(":8080")
 }
