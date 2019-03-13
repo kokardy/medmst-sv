@@ -193,8 +193,10 @@ func main() {
 	//barcode
 	r.GET("/barcode/:barcode/", handleBarcode)
 
-	//riot
+	//riot.js
 	r.StaticFile("/riot/riot+compiler.min.js", "/bootstrap/riot/riot+compiler.min.js")
+	//fetch.js
+	r.StaticFile("/fetch/fetch.js", "/bootstrap/fetch/fetch.js")
 
 	//sttic
 	r.Static("/static/", "/asset/static/")
