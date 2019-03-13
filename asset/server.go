@@ -75,7 +75,6 @@ func handleAvailable(c *gin.Context) {
 				*
 			FROM "available_view"
 			WHERE
-				"漢字名称" like '%' || $1 || '%' OR
 				"販売名" like '%' || $1 || '%' OR
 				"告示名称" like '%' || $1 || '%' OR
 				"薬価基準収載医薬品コード" like '%' || $1 || '%' OR
@@ -91,6 +90,7 @@ func handleAvailable(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
+		message += fmt.Sprintf("queryString: %s", queryString)
 		c.String(500, message)
 		return
 	}
@@ -99,6 +99,7 @@ func handleAvailable(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
+		message += fmt.Sprintf("queryString: %s", queryString)
 		c.String(500, message)
 		return
 	}
@@ -124,6 +125,7 @@ func handleY(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
+		message += fmt.Sprintf("queryString: %s", queryString)
 		c.String(500, message)
 		return
 	}
@@ -132,6 +134,7 @@ func handleY(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
+		message += fmt.Sprintf("queryString: %s", queryString)
 		c.String(500, message)
 		return
 	}
@@ -160,6 +163,7 @@ func handleMedis(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
+		message += fmt.Sprintf("queryString: %s", queryString)
 		c.String(500, message)
 		return
 	}
@@ -168,6 +172,7 @@ func handleMedis(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
+		message += fmt.Sprintf("queryString: %s", queryString)
 		c.String(500, message)
 		return
 	}
