@@ -22,7 +22,9 @@ RUN go get github.com/kokardy/medmst \
     github.com/jmoiron/sqlx \
 	github.com/gin-gonic/gin
 
-RUN cd /bootstrap && git clone https://github.com/riot/riot
+RUN cd /bootstrap && \
+    git clone https://github.com/riot/riot && \
+    git clone https://github.com/github/fetch
 
 ENTRYPOINT sh /asset/routine.sh && /asset/server
 
