@@ -24,7 +24,8 @@ RUN go get github.com/kokardy/medmst \
 
 RUN cd /bootstrap && \
     git clone https://github.com/riot/riot && \
-    git clone https://github.com/github/fetch
+    git clone https://github.com/github/fetch && \
+    git clone https://github.com/taylorhakes/promise-polyfill
 
 ENTRYPOINT sh /asset/routine.sh && /asset/server
 
