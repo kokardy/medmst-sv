@@ -198,6 +198,9 @@ func main() {
 	//fetch.js
 	r.StaticFile("/fetch/fetch.js", "/bootstrap/fetch/fetch.js")
 
+	//promise-polyfill.js
+	r.StaticFile("/promise/polyfill.min.js", "/bootstrap/promise-polyfill/dist/polyfill.min.js")
+
 	//sttic
 	r.Static("/static/", "/asset/static/")
 
