@@ -39,6 +39,7 @@ change(e){
     var queryStr = this.refs.query.value
     var url = "/json/available/"
     url += "?query=" + queryStr
+    url = encodeURI(url)
     fetch(url)
     .then(function(data){
         return data.json()
