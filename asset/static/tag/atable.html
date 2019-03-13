@@ -7,14 +7,13 @@
     type="text"
     ref="query"
     class="query_input"
-    onKeyup="{change}"
 />
 <button onClick="{change}">検索</button>
 
 <table>
     <thead>
         <th each="{field in fields}" class="{field}">
-            {field}
+            { field }
         </th>
     </thead>
 
@@ -35,6 +34,7 @@ this.drugs = [
 
 
 change(e){
+    console.log("change")
     var tag = this
     var queryStr = this.refs.query.value
     var url = "/json/available/"
@@ -46,14 +46,8 @@ change(e){
     })
     .then(function(json){
         console.log(url)
-        console.log(json)
-        tag.drugs=json
-        //フィールド名取得
-        if(tag.drugs.length > 0){
-            tag.fields = Object.keys(this.drugs[0])
-        }else{
-            tag.fields = []
-        }
+        tag.drugs = json
+        tag.fields = Object.keys(this.drugs[0])
     })
 
 }
