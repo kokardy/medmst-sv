@@ -33,11 +33,7 @@ CREATE TABLE "hot" (
 CREATE FUNCTION "resolve_status" ("status_no1" integer, "status_no2" integer)
 RETURNS varchar
     AS $$
-select "name" FROM "status" WHERE "no" = CASE 
-            WHEN $1 IS NULL THEN $2 
-            WHEN $2 IS NULL THEN $1
-        ELSE $1 | $2
-        END
+select "name" FROM "status" WHERE "no" = COALESCE($1, 0) |  COALESCE($2, 0)
        $$ LANGUAGE SQL;
 
 
@@ -59,19 +55,14 @@ CREATE VIEW "available_view" as
 		"製造会社",
 		"販売会社",
 
-        "漢字名称",
-        "単位_漢字名称",
-        "新_金額",
+        COALESCE(y."単位_漢字名称", '--') as "単位_漢字名称", 
+        COALESCE(y."新_金額", -1) as "新_金額",
 
-		"HOT11",
-        "yj"."status_no" as "yj_status",
-        "hot"."status_no" as "hot_status",
+		SUBSTR("基準番号（ＨＯＴコード）", 1, 11) as "HOT11",
+        COALESCE("yj"."status_no", 0) as "yj_status",
+        COALESCE("hot"."status_no", 0) as "hot_status",
 
-        CASE 
-            WHEN "yj"."status_no" IS NULL THEN "hot"."status_no" 
-            WHEN "hot"."status_no" IS NULL THEN "yj"."status_no" 
-        ELSE "yj"."status_no" | "hot"."status_no" 
-        END AS "status_flag",
+        COALESCE("yj"."status_no", 0) | COALESCE("hot"."status_no", 0) AS "status_flag",
 
         resolve_status("yj"."status_no", "hot"."status_no") as "採用状態"
                 

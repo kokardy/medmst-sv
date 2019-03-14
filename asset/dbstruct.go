@@ -85,7 +85,7 @@ type AvailableView struct {
 	ManuCompany    string `db:"製造会社" json:"製造会社"`
 	ConsCampany    string `db:"販売会社" json:"販売会社"`
 	//y
-	Name     string  `db:"漢字名称" json:"漢字名称"`
+	//Name     string  `db:"漢字名称" json:"漢字名称"`
 	UnitName string  `db:"単位_漢字名称" json:"単位_漢字名称"`
 	Price    float32 `db:"新_金額" json:"新_金額"`
 	//custom
