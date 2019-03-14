@@ -196,7 +196,7 @@ func main() {
 	//riot.js
 	r.StaticFile("/riot/riot+compiler.min.js", "/bootstrap/riot/riot+compiler.min.js")
 	//fetch.js
-	r.StaticFile("/fetch/fetch.js", "/bootstrap/fetch/fetch.js")
+	r.StaticFile("/fetch/fetch.umd.js", "/bootstrap/fetch/fetch.umd.js")
 
 	//promise-polyfill.js
 	r.StaticFile("/promise/polyfill.min.js", "/bootstrap/promise-polyfill/dist/polyfill.min.js")

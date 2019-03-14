@@ -14,6 +14,7 @@ RUN apt-get update && \
     git \
     jlha-utils \
     unzip \
+    wget \
     && apt-get clean \
 	mkdir /go && mkdir /bootstrap 
     
@@ -24,8 +25,11 @@ RUN go get github.com/kokardy/medmst \
 
 RUN cd /bootstrap && \
     git clone https://github.com/riot/riot && \
-    git clone https://github.com/github/fetch && \
     git clone https://github.com/taylorhakes/promise-polyfill
+
+RUN mkdir -p /bootstrap/fetch && \
+    cd /bootstrap/fetch && \
+    wget https://github.com/github/fetch/releases/download/v3.0.0/fetch.umd.js
 
 ENTRYPOINT sh /asset/routine.sh && /asset/server
 
