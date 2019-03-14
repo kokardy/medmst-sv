@@ -12,7 +12,7 @@
 
 <table>
     <thead>
-        <th each="{field in fields}" class="{field}">
+        <th each="{field, index in Object.keys(drugs[0])}" class="{field}">
             { field }
         </th>
     </thead>
