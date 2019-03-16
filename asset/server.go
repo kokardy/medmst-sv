@@ -94,6 +94,7 @@ func handleAvailable(c *gin.Context) {
 		c.String(500, message)
 		return
 	}
+	defer db.Close()
 	//Query
 	err = db.Select(&result, sql, queryString)
 	if err != nil {
@@ -129,6 +130,7 @@ func handleY(c *gin.Context) {
 		c.String(500, message)
 		return
 	}
+	defer db.Close()
 	//Query
 	err = db.Select(&result, sql, queryString)
 	if err != nil {
@@ -167,6 +169,7 @@ func handleMedis(c *gin.Context) {
 		c.String(500, message)
 		return
 	}
+	defer db.Close()
 	//Query
 	err = db.Select(&result, sql, queryString)
 	if err != nil {
@@ -178,6 +181,27 @@ func handleMedis(c *gin.Context) {
 	}
 
 	c.JSON(200, result)
+}
+
+func putHOT(c *gin.Context) {
+	var message string
+	var hot HOTStatus
+	c.Bind(&hot)
+	param := connectParam()
+	db, err := sqlx.Connect("postgres", param)
+	//DB connection check
+	if err != nil {
+		message = "an ERROR occured in database connecting: %s\n"
+		message = fmt.Sprintf(message, err)
+		message += fmt.Sprintf("data [%s]", hot)
+		c.String(500, message)
+		return
+	}
+	defer db.Close()
+
+}
+
+func putYJ(c *gin.Context) {
 }
 
 func main() {
@@ -195,6 +219,8 @@ func main() {
 	r.GET("/json/medis/", handleMedis)
 	//available
 	r.GET("/json/available/", handleAvailable)
+	r.PUT("/edit/hot/", putHOT)
+	r.PUT("/edit/yj/", putYJ)
 	//barcode
 	r.GET("/barcode/:barcode/", handleBarcode)
 

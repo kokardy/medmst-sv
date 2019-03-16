@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 //Medis is HOTコードのマスタ
 type Medis struct {
 	HOT            string `db:"基準番号（ＨＯＴコード）" json:"基準番号（ＨＯＴコード）"`
@@ -94,4 +96,18 @@ type AvailableView struct {
 	HOTStatus  int    `db:"hot_status" json:"hot_status"`
 	StatusFlag int    `db:"status_flag" json:"status_flag"`
 	Status     string `db:"採用状態" json:"採用状態"`
+}
+
+type HOTStatus struct {
+	HOT       string `db:"HOT11" json:"HOT"`
+	Status_no int    `db:"status_no" json:"status_no"`
+}
+
+func (hs HOTStatus) String() string {
+	return fmt.Sprintf("HOT:%s status:%d", hs.HOT, hs.Status_no)
+}
+
+type YJStatus struct {
+	YJ        string `db:"yjcode"`
+	Status_no int    `db:status_no`
 }
