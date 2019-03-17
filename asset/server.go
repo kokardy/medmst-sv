@@ -198,6 +198,20 @@ func putHOT(c *gin.Context) {
 		return
 	}
 	defer db.Close()
+	sql := `INSERT INTO "hot" 
+	("HOT11","status_no")
+	VAELUS(?,?)
+	ON CONFLICT
+	UPDATE "hot" SET "HOT11"=?, "status_no"=?;
+	`
+	result, err := db.Exec(sql, hot.HOT, hot.Status_no, hot.HOT, hot.Status_no)
+	if err != nil {
+		message = "an ERROR occured in executing SQL: %s \n%s\n"
+		message = fmt.Sprintf(message, sql, err)
+		message += fmt.Sprintf("data [%s]", hot)
+		c.String(500, message)
+		return
+	}
 
 }
 
