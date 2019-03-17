@@ -111,3 +111,7 @@ type YJStatus struct {
 	YJ        string `db:"yjcode"`
 	Status_no int    `db:status_no`
 }
+
+func (ys YJStatus) String() string {
+	return fmt.Sprintf("HOT:%s status:%d", ys.YJ, ys.Status_no)
+}
