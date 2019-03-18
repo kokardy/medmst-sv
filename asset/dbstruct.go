@@ -99,19 +99,19 @@ type AvailableView struct {
 }
 
 type HOTStatus struct {
-	HOT       string `db:"HOT11" json:"HOT"`
-	Status_no int    `db:"status_no" json:"status_no"`
+	HOT    string `db:"HOT11" json:"HOT" form:"HOT"`
+	Status int    `db:"status" json:"status" form:"status"`
 }
 
 func (hs HOTStatus) String() string {
-	return fmt.Sprintf("HOT:%s status:%d", hs.HOT, hs.Status_no)
+	return fmt.Sprintf("HOT:%s status:%d", hs.HOT, hs.Status)
 }
 
 type YJStatus struct {
-	YJ        string `db:"yjcode"`
-	Status_no int    `db:status_no`
+	YJ     string `db:"yjcode"`
+	Status int    `db:status`
 }
 
 func (ys YJStatus) String() string {
-	return fmt.Sprintf("HOT:%s status:%d", ys.YJ, ys.Status_no)
+	return fmt.Sprintf("HOT:%s status:%d", ys.YJ, ys.Status)
 }
