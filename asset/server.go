@@ -186,7 +186,15 @@ func handleMedis(c *gin.Context) {
 func putHOT(c *gin.Context) {
 	var message string
 	var hot HOTStatus
-	c.Bind(&hot)
+	var err error
+	err = c.Bind(&hot)
+	//Binding
+	if err != nil {
+		message = "an ERROR occured in binding form: %s\n"
+		message = fmt.Sprintf(message, err)
+		c.String(500, message)
+		return
+	}
 	param := connectParam()
 	db, err := sqlx.Connect("postgres", param)
 	//DB connection check
@@ -198,13 +206,18 @@ func putHOT(c *gin.Context) {
 		return
 	}
 	defer db.Close()
-	sql := `INSERT INTO "hot" 
-	("HOT11","status_no")
-	VAELUS(?,?)
-	ON CONFLICT
-	UPDATE "hot" SET "HOT11"=?, "status_no"=?;
+	sql := `INSERT INTO "hot" ("HOT11","status_no")
+		VALUES(:hot,:status)
+		ON CONFLICT ("HOT11")
+			DO UPDATE SET "HOT11"=:hot, "status_no"=:status;
 	`
-	result, err := db.Exec(sql, hot.HOT, hot.Status_no, hot.HOT, hot.Status_no)
+	result, err := db.NamedExec(
+		sql,
+		map[string]interface{}{
+			"hot":    hot.HOT,
+			"status": hot.Status,
+		},
+	)
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
@@ -213,6 +226,8 @@ func putHOT(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(result)
+	c.String(200, hot.String())
 }
 
 func putYJ(c *gin.Context) {
