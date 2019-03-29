@@ -71,8 +71,8 @@ type Y struct {
 
 type AvailableView struct {
 	//medis
-	HOT            string `db:"基準番号（ＨＯＴコード）" json:"基準番号（ＨＯＴコード）"`
-	HOT7           string `db:"処方用番号（ＨＯＴ７）" json:"処方用番号（ＨＯＴ７）"`
+	//HOT            string `db:"基準番号（ＨＯＴコード）" json:"基準番号（ＨＯＴコード）"`
+	//HOT7           string `db:"処方用番号（ＨＯＴ７）" json:"処方用番号（ＨＯＴ７）"`
 	JANCode        string `db:"ＪＡＮコード" json:"ＪＡＮコード"`
 	PriceCode      string `db:"薬価基準収載医薬品コード" json:"薬価基準収載医薬品コード"`
 	YJCode         string `db:"個別医薬品コード" json:"個別医薬品コード"`

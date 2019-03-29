@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>採用薬</title>
+
+<link rel="stylesheet" href="./css/common.css" type="text/css" />
+<link rel="stylesheet" href="./css/available.css" type="text/css" />
+
+<script type="text/javascript" src="/promise/polyfill.min.js"></script>
+<script type="text/javascript" src="/fetch/fetch.umd.js"></script>
+<script type="text/javascript" src="/riot/riot+compiler.min.js"></script>
+<!--
+		"基準番号（ＨＯＴコード）",
+		"処方用番号（ＨＯＴ７）",
+		"ＪＡＮコード",
+		"薬価基準収載医薬品コード",
+		"個別医薬品コード",
+		"告示名称",
+		"販売名",
+		"規格単位",
+		"包装形態",
+		"包装単位数",
+		"包装単位単位",
+		"包装総量数",
+		"包装総量単位",
+		"製造会社",
+		"販売会社",
+
+        "漢字名称",
+        "単位_漢字名称",
+        "新_金額",
+
+		"HOT11",
+        "yj_status",
+        "hot_status",
+        "status_flag",
+		"採用状態"
+-->
+
+
+<script type="riot/tag" src="./tag/atable_edit.html"></script>
+
+
+</head>
+<body>
+
+<div data-is="atable"></div>
+
+
+<script>riot.mount("atable");</script>
+</body>
+</html>
