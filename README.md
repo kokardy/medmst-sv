@@ -1,2 +1,0 @@
-# medmst-sv
-medmstのhttpサーバ

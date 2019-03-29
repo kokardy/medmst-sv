@@ -39,8 +39,8 @@ select "name" FROM "status" WHERE "no" = COALESCE($1, 0) |  COALESCE($2, 0)
 
 CREATE VIEW "available_view" as
 	SELECT DISTINCT
-		"基準番号（ＨＯＴコード）",
-		"処方用番号（ＨＯＴ７）",
+		--"基準番号（ＨＯＴコード）",
+		--"処方用番号（ＨＯＴ７）",
 		"ＪＡＮコード",
 		"薬価基準収載医薬品コード",
 		"個別医薬品コード",
