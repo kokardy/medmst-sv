@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	_ "github.com/lib/pq"
@@ -80,7 +81,6 @@ func handleAvailable(c *gin.Context) {
 				"薬価基準収載医薬品コード" like '%' || $1 || '%' OR
 				"個別医薬品コード" like '%' || $1 || '%' OR
 				"ＪＡＮコード" like '%' || $1 || '%' OR
-				"基準番号（ＨＯＴコード）" like '%' || $1 || '%' OR
 				"製造会社" like '%' || $1 || '%' OR
 				"販売会社" like '%' || $1 || '%'; 
 		`
@@ -233,6 +233,14 @@ func putHOT(c *gin.Context) {
 func putYJ(c *gin.Context) {
 }
 
+func redirectToPMDA(c *gin.Context) {
+	var url string
+	yjcode := c.Param("yjcode")
+	domain := os.Getenv("YJ_REDIRECTER")
+	url = fmt.Sprintf("//%s/%s/", domain, yjcode)
+	c.Redirect(http.StatusPermanentRedirect, url)
+}
+
 func main() {
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
@@ -241,6 +249,9 @@ func main() {
 	r.GET("/hoge", func(c *gin.Context) {
 		c.String(200, "fuga")
 	})
+
+	//redirect to PMDA
+	r.GET("/redirect/pmda/:yjcode/", redirectToPMDA)
 
 	//y
 	r.GET("/json/y/", handleY)
