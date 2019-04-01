@@ -27,8 +27,19 @@
         </td>
         <td class="outerlink">
             <a 
-            href="/redirect/{ drug["薬価基準収載医薬品コード"] }">
+            target="_blank"
+            href="/redirect/{ drug['薬価基準収載医薬品コード'] }">
                     添付文書
+            </a>
+            <a
+            target="_blank"
+            href="//10.26.61.131/jiho/latest/CYJ/{drug['薬価基準収載医薬品コード']}.pdf">
+                    JIHO(薬効)
+            </a>
+            <a
+            target="_blank"
+            href="//10.26.61.131/jiho/latest/IYJ/{drug['薬価基準収載医薬品コード']}.pdf">
+                    JIHO(成分)
             </a>
         </td>
     </tr>
