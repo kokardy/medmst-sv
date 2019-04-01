@@ -31,37 +31,37 @@
         <td class="change_status_YJ">
             <input name="status_change" value="3"
             type="radio" 
-            onChange="{change_statusYJ.bind(this, drug, 3)}">
+            onChange="{change_statusYJ.bind(this, drug["薬価基準収載医薬品コード"], 3)}">
             採用</input>     <br/>
             <input name="status_change" value="1"
             type="radio"
-            onChange="{change_statusYJ.bind(this, drug, 1)}">
+            onChange="{change_statusYJ.bind(this, drug["薬価基準収載医薬品コード"], 1)}">
             院内採用</input> <br/>
             <input name="status_change" value="2"
             type="radio"
-            onChange="{change_statusYJ.bind(this, drug, 2)}">
+            onChange="{change_statusYJ.bind(this, drug["薬価基準収載医薬品コード"], 2)}">
             院外採用</input> <br/>
             <input name="status_change" value="0"
             type="radio"
-            onChange="{change_statusYJ.bind(this, drug, 0)}">
+            onChange="{change_statusYJ.bind(this, drug["薬価基準収載医薬品コード"], 0)}">
             不採用</input>   <br/>
         </td>
         <td class="change_status_HOT11">
             <input name="status_change" value="3"
             type="radio"
-            onChange="{change_statusHOT.bind(this, drug, 3)}">
+            onChange="{change_statusHOT.bind(this, drug["HOT11"], 3)}">
             採用</input>     <br/>
             <input name="status_change" value="1"
             type="radio"
-            onChange="{change_statusHOT.bind(this, drug, 1)}">
+            onChange="{change_statusHOT.bind(this, drug["HOT11"], 1)}">
             院内採用</input> <br/>
             <input name="status_change" value="2"
             type="radio"
-            onChange="{change_statusHOT.bind(this, drug, 2)}">
+            onChange="{change_statusHOT.bind(this, drug["HOT11"], 2)}">
             院外採用</input> <br/>
             <input name="status_change" value="0"
             type="radio"
-            onChange="{change_statusHOT.bind(this, drug, 0)}">
+            onChange="{change_statusHOT.bind(this, drug["HOT11"], 0)}">
             不採用</input>   <br/>
         </td>
     </tr>
@@ -74,13 +74,14 @@ this.drugs = [
     status: "active"},
 ]
 
-change_statusYJ(drug, new_stat, e){
-    console.log("yj:"+ drug["薬価基準収載医薬品コード"] + 
+change_statusYJ(yj, new_stat, e){
+    console.log("yj:"+ yj +
     " change_status:"+ new_stat)
 }
 
-change_statusHOT(drug, new_stat, e){
-    console.log("hot:"+ drug["HOT11"] + " change_status:"+ new_stat)
+change_statusHOT(hot, new_stat, e){
+    console.log("hot:"+ hot + 
+    " change_status:"+ new_stat)
 }
 
 
@@ -97,9 +98,13 @@ change(e){
     })
     .then(function(json){
         console.log(url)
+        console.log(json)
         tag.drugs = json
-        tag.fields = Object.keys(this.drugs[0])
+        tag.fields = Object.keys(tag.drugs[0])
     })
+    .then(undefined, function onRejected(error){
+        console.log("rejected:" + error);
+    });
 
 }
 
