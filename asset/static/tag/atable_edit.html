@@ -98,7 +98,6 @@ change(e){
     })
     .then(function(json){
         console.log(url)
-        console.log(json)
         tag.drugs = json
         tag.fields = Object.keys(tag.drugs[0])
     })
