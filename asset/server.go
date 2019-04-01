@@ -80,7 +80,7 @@ func handleAvailable(c *gin.Context) {
 				"薬価基準収載医薬品コード" like '%' || $1 || '%' OR
 				"個別医薬品コード" like '%' || $1 || '%' OR
 				"ＪＡＮコード" like '%' || $1 || '%' OR
-				"基準番号（ＨＯＴコード）" like '%' || $1 || '%' OR
+				"HOT11" like '%' || $1 || '%' OR
 				"製造会社" like '%' || $1 || '%' OR
 				"販売会社" like '%' || $1 || '%'; 
 		`
