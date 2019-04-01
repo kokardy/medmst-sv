@@ -31,7 +31,7 @@ RUN mkdir -p /bootstrap/fetch && \
     cd /bootstrap/fetch && \
     wget https://github.com/github/fetch/releases/download/v3.0.0/fetch.umd.js
 
-ENV PMDA_SV=pmda.go.jp
+ENV YJ_REDIRECTER=pmda-kv
 
 ENTRYPOINT sh /asset/routine.sh && /asset/server
 
