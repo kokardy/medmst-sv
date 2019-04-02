@@ -23,7 +23,7 @@ INSERT INTO "status" VALUES(
 CREATE TABLE "yj" (
     "yjcode" character varying(12) primary key,
     "status_no" integer REFERENCES status (no),
-    "yj_comment" character varying(255) default ''
+    "yj_comment" character varying(255) default '',
     "drug_code" character varying(10) default ''
 );
 
