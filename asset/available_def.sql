@@ -23,7 +23,8 @@ INSERT INTO "status" VALUES(
 CREATE TABLE "yj" (
     "yjcode" character varying(12) primary key,
     "status_no" integer REFERENCES status (no),
-    "yj_comment" character varying(255)
+    "yj_comment" character varying(255) default ''
+    "drug_code" character varying(10) default ''
 );
 
 CREATE TABLE "hot" (
@@ -43,7 +44,7 @@ CREATE VIEW "available_view" as
 	SELECT DISTINCT
 		--"基準番号（ＨＯＴコード）",
 		--"処方用番号（ＨＯＴ７）",
-		"ＪＡＮコード",
+		--"ＪＡＮコード",
 		"薬価基準収載医薬品コード",
 		"個別医薬品コード",
 		"告示名称",
@@ -61,6 +62,7 @@ CREATE VIEW "available_view" as
 		SUBSTR("基準番号（ＨＯＴコード）", 1, 11) as "HOT11",
         COALESCE("yj"."status_no", 0) as "yj_status",
         yj_comment,
+        drug_code,
         COALESCE("hot"."status_no", 0) as "hot_status",
         hot_comment,
         COALESCE("yj"."status_no", 0) | COALESCE("hot"."status_no", 0) AS "status_flag",
