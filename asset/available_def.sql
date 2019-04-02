@@ -60,11 +60,11 @@ CREATE VIEW "available_view" as
         COALESCE(y."新_金額", -1) as "新_金額",
 
 		SUBSTR("基準番号（ＨＯＴコード）", 1, 11) as "HOT11",
-        COALESCE("yj"."status_no", 0) as "yj_status",
-        yj_comment,
-        drug_code,
-        COALESCE("hot"."status_no", 0) as "hot_status",
-        hot_comment,
+        COALESCE(yj.status_no, 0) as "yj_status",
+        COALESCE(yj_comment, '') as yj_comment,
+        COALESCE(yj.drug_code, '') as "drug_code",
+        COALESCE(hot.status_no, 0) as "hot_status",
+        COALESCE(hot_comment, '') as hot_comment,
         COALESCE("yj"."status_no", 0) | COALESCE("hot"."status_no", 0) AS "status_flag",
 
         resolve_status("yj"."status_no", "hot"."status_no") as "採用状態"
