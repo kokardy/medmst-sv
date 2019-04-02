@@ -22,12 +22,14 @@ INSERT INTO "status" VALUES(
 
 CREATE TABLE "yj" (
     "yjcode" character varying(12) primary key,
-    "status_no" integer REFERENCES status (no)
+    "status_no" integer REFERENCES status (no),
+    "yj_comment" character varying(255)
 );
 
 CREATE TABLE "hot" (
     "HOT11" character varying(11) primary key,
-    "status_no" integer REFERENCES status (no)
+    "status_no" integer REFERENCES status (no),
+    "hot_comment" character varying(255)
 );
 
 CREATE FUNCTION "resolve_status" ("status_no1" integer, "status_no2" integer)
@@ -50,8 +52,6 @@ CREATE VIEW "available_view" as
 		"包装形態",
 		"包装単位数",
 		"包装単位単位",
-		"包装総量数",
-		"包装総量単位",
 		"製造会社",
 		"販売会社",
 
@@ -60,8 +60,9 @@ CREATE VIEW "available_view" as
 
 		SUBSTR("基準番号（ＨＯＴコード）", 1, 11) as "HOT11",
         COALESCE("yj"."status_no", 0) as "yj_status",
+        yj_comment,
         COALESCE("hot"."status_no", 0) as "hot_status",
-
+        hot_comment,
         COALESCE("yj"."status_no", 0) | COALESCE("hot"."status_no", 0) AS "status_flag",
 
         resolve_status("yj"."status_no", "hot"."status_no") as "採用状態"

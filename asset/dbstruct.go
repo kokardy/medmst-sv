@@ -73,19 +73,17 @@ type AvailableView struct {
 	//medis
 	//HOT            string `db:"基準番号（ＨＯＴコード）" json:"基準番号（ＨＯＴコード）"`
 	//HOT7           string `db:"処方用番号（ＨＯＴ７）" json:"処方用番号（ＨＯＴ７）"`
-	JANCode        string `db:"ＪＡＮコード" json:"ＪＡＮコード"`
-	PriceCode      string `db:"薬価基準収載医薬品コード" json:"薬価基準収載医薬品コード"`
-	YJCode         string `db:"個別医薬品コード" json:"個別医薬品コード"`
-	PublicName     string `db:"告示名称" json:"告示名称"`
-	ConsName       string `db:"販売名" json:"販売名"`
-	Unit           string `db:"規格単位" json:"規格単位"`
-	CoverType      string `db:"包装形態" json:"包装形態"`
-	CoverNum       string `db:"包装単位数" json:"包装単位数"`
-	CoverUnit      string `db:"包装単位単位" json:"包装単位単位"`
-	CoverTotal     string `db:"包装総量数" json:"包装総量数"`
-	CoverTotalUnit string `db:"包装総量単位" json:"包装総量単位"`
-	ManuCompany    string `db:"製造会社" json:"製造会社"`
-	ConsCampany    string `db:"販売会社" json:"販売会社"`
+	JANCode     string `db:"ＪＡＮコード" json:"ＪＡＮコード"`
+	PriceCode   string `db:"薬価基準収載医薬品コード" json:"薬価基準収載医薬品コード"`
+	YJCode      string `db:"個別医薬品コード" json:"個別医薬品コード"`
+	PublicName  string `db:"告示名称" json:"告示名称"`
+	ConsName    string `db:"販売名" json:"販売名"`
+	Unit        string `db:"規格単位" json:"規格単位"`
+	CoverType   string `db:"包装形態" json:"包装形態"`
+	CoverNum    string `db:"包装単位数" json:"包装単位数"`
+	CoverUnit   string `db:"包装単位単位" json:"包装単位単位"`
+	ManuCompany string `db:"製造会社" json:"製造会社"`
+	ConsCampany string `db:"販売会社" json:"販売会社"`
 	//y
 	//Name     string  `db:"漢字名称" json:"漢字名称"`
 	UnitName string  `db:"単位_漢字名称" json:"単位_漢字名称"`
@@ -93,7 +91,9 @@ type AvailableView struct {
 	//custom
 	HOT11      string `db:"HOT11" json:"HOT11"`
 	YJStatus   int    `db:"yj_status" json:"yj_status"`
+	YJComment  int    `db:"yj_comment" json:"yj_comment"`
 	HOTStatus  int    `db:"hot_status" json:"hot_status"`
+	HOTComment int    `db:"hot_comment" json:"hot_comment"`
 	StatusFlag int    `db:"status_flag" json:"status_flag"`
 	Status     string `db:"採用状態" json:"採用状態"`
 }
