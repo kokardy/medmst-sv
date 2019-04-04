@@ -1,10 +1,12 @@
 FROM ubuntu:18.04
 
 COPY asset /asset
+COPY supervisord.conf /etc/supervisord.conf
 
 ENV GOPATH=/go \
     http_proxy=${http_proxy} \
-    https_proxy=${https_proxy}
+    https_proxy=${https_proxy} \
+    YJ_REDIRECTER=pmda-kv
 
 RUN apt-get update && \
     apt-get install -y \
@@ -15,6 +17,8 @@ RUN apt-get update && \
     jlha-utils \
     unzip \
     wget \
+    supervisor \
+    cron \
     && apt-get clean \
 	mkdir /go && mkdir /bootstrap 
     
@@ -31,7 +35,6 @@ RUN mkdir -p /bootstrap/fetch && \
     cd /bootstrap/fetch && \
     wget https://github.com/github/fetch/releases/download/v3.0.0/fetch.umd.js
 
-ENV YJ_REDIRECTER=pmda-kv
+RUN sh /asset/init.sh
 
-ENTRYPOINT sh /asset/routine.sh && /asset/server
-
+CMD supervisord -c /etc/supervisord.conf
