@@ -7,3 +7,5 @@ jlha xif *.lzh
 cd /bootstrap/save/y
 unzip -jo y.zip
 cd /bootstrap
+
+python3 register.py -CI
