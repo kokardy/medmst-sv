@@ -28,6 +28,11 @@ def connection():
 def _connection(param):
     return pg.connect(**param)
 
+
+#get_files
+#@param save_dir 探すディレクトリ
+#@return {medis:[filelist], y:[filelist]}
+#ディレクトリからinsertするためのファイルのリスト探してくる
 def get_files(save_dir=SAVE_DIR):
     hot = "hot"
     y = "y"
@@ -51,12 +56,15 @@ def get_files(save_dir=SAVE_DIR):
     print("reuslt", result)
     return result
 
+#想定使用方法
+#*.sqlのファイルを読み込んでsql文字列を得る
 def _sql_from_file(filepath):
     with codecs.open(filepath, "r", "utf8") as f:
         lines = [line for line in f]
         sql = "\n".join(lines)
     return sql
 
+#CREATE TABLEを実行する
 def create(con):
     filepathlist = [
         os.path.join(ASSET_DIR, "medis_def.sql"),
@@ -72,7 +80,8 @@ def create(con):
         except Exception as e:
             print(e)
 
-
+#@param infiles={medis:[filelist], y:[filelist]}
+#INSERT INTO TABLEを実行
 def insert(con, infiles):
     infiles = get_files()
     
@@ -84,6 +93,9 @@ def insert(con, infiles):
     for (sql_template, insert_data, skip) in insert_list:
         _insert(con, sql_template, insert_data, skip)
 
+#insert(con, infles)から呼ぶ用
+#sqlファイルと入力用ファイルを一行目をスキップするかどうかを与えて
+#INSERT INTO TABLE 実行する
 def _insert(con, sql_file, insert_files, line1skip):
     try:
         sql = _sql_from_file(sql_file)
@@ -105,6 +117,7 @@ def _insert(con, sql_file, insert_files, line1skip):
                 print(cur.query)
                 raise e
 
+#テーブル全消し
 def delete(con):
     sqls = [
         """DELETE FROM "medis";""",
@@ -115,17 +128,24 @@ def delete(con):
         cur.execute(sql)
     con.commit()
 
+
+#option -Cで実行する
+#テーブル作成
 def C():
     con = connection()
     create(con)
     con.commit()
 
+#option -Iで実行する
+#テーブルにINSERT
 def I():
     con = connection()
     infiles = get_files()
     insert(con, infiles)
     con.commit()
 
+#option -Dで実行する
+#DELETE TABLE
 def D():
     con = connection()
     delete(con)
@@ -154,6 +174,7 @@ def main():
     if "D" in options:
         exec_list.append(D)
 
+    #OPTIONにあったものだけ実行
     for func in exec_list:
         func()
 
