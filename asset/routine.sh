@@ -8,5 +8,4 @@ jlha xif *.lzh
 cd /bootstrap/save/y
 unzip -jo y.zip
 cd /bootstrap
-cd /asset
-python3 register.py -DI
+python3 /asset/register.py -DI
