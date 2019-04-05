@@ -91,10 +91,10 @@ type AvailableView struct {
 	//custom
 	HOT11      string `db:"HOT11" json:"HOT11"`
 	YJStatus   int    `db:"yj_status" json:"yj_status"`
-	YJComment  int    `db:"yj_comment" json:"yj_comment"`
-	DrugCode   int    `db:"drug_code" json:"drug_code"`
+	YJComment  string `db:"yj_comment" json:"yj_comment"`
+	DrugCode   string `db:"drug_code" json:"drug_code"`
 	HOTStatus  int    `db:"hot_status" json:"hot_status"`
-	HOTComment int    `db:"hot_comment" json:"hot_comment"`
+	HOTComment string `db:"hot_comment" json:"hot_comment"`
 	StatusFlag int    `db:"status_flag" json:"status_flag"`
 	Status     string `db:"採用状態" json:"採用状態"`
 }
