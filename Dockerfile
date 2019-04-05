@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 COPY asset /asset
 COPY supervisord.conf /etc/supervisord.conf
-COPY routine.sh /etc/cron.daily/routine.sh
+COPY asset/routine.sh /etc/cron.daily/routine.sh
 
 ENV GOPATH=/go \
     http_proxy=${http_proxy} \
