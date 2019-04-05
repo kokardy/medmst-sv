@@ -15,11 +15,11 @@ else:
     SAVE_DIR = "/bootstrap/save"
 
 PARAM = dict(
-            host = os.environ["PG_HOST"],
-            port = os.environ["PG_PORT"],
-            user = os.environ["PG_USER"],
-            password = os.environ["PG_PASSWORD"],
-            database = os.environ["PG_DATABASE"],
+            host = os.environ.get("PG_HOST", "postgres"),
+            port = os.environ.get("PG_PORT", 5432),
+            user = os.environ.get("PG_USER", "postgres"),
+            password = os.environ.get("PG_PASSWORD", "allyourbaseisbelongtous"),
+            database = os.environ.get("PG_DATABASE", "medmst"),
 )
 
 def connection():

@@ -36,6 +36,5 @@ RUN mkdir -p /bootstrap/fetch && \
     cd /bootstrap/fetch && \
     wget https://github.com/github/fetch/releases/download/v3.0.0/fetch.umd.js
 
-RUN sh /asset/init.sh
 
-CMD supervisord -c /etc/supervisord.conf
+CMD sh /asset/init.sh && supervisord -c /etc/supervisord.conf
