@@ -109,10 +109,19 @@ func (hs HOTStatus) String() string {
 }
 
 type YJStatus struct {
-	YJ     string `db:"yjcode"`
-	Status int    `db:status`
+	YJ     string `db:"yjcode" json:"yjcode" form:"yjcode"`
+	Status int    `db:"status" json:"status" form:"status"`
 }
 
 func (ys YJStatus) String() string {
 	return fmt.Sprintf("HOT:%s status:%d", ys.YJ, ys.Status)
+}
+
+type CustomYJ struct{
+	HOT9    string `db:"HOT9" json:"HOT" form:"HOT"`
+	YJ     string `db:"yjcode" json:"yjcode" form:"yjcode"`
+}
+
+func (cyj CustomYJ) String() string{
+	return fmt.Sprintf("HOT9:%s YJ:%s", cyj.HOT9, cyj.YJ)
 }
