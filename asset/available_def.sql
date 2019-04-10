@@ -35,8 +35,8 @@ CREATE TABLE "hot" (
 
 CREATE TABLE "custom_yj"(
     "HOT9" character varying(9) primary key,
-    "yjcode" character varying(12) primary key,
-)
+    "yjcode" character varying(12) 
+);
 
 CREATE FUNCTION "resolve_status" ("status_no1" integer, "status_no2" integer)
 RETURNS varchar
@@ -64,16 +64,15 @@ CREATE VIEW "available_view" as
         COALESCE(y."単位_漢字名称", '--') as "単位_漢字名称", 
         COALESCE(y."新_金額", -1) as "新_金額",
 
-		SUBSTR("基準番号（ＨＯＴコード）", 1, 11) as "HOT11",
-        COALESCE(yj.status_no, 0) as "yj_status",
-        COALESCE(yj_comment, '') as yj_comment,
-        COALESCE(yj.drug_code, '') as "drug_code",
-        COALESCE(hot.status_no, 0) as "hot_status",
-        COALESCE(hot_comment, '') as hot_comment,
-        COALESCE(yj."status_no", 0) | COALESCE(hot."status_no", 0) AS "status_flag",
 
+        SUBSTR("基準番号（ＨＯＴコード）", 1, 11) as "HOT11",
+        COALESCE(yj.status_no, 0) as yj_status,
+        COALESCE(yj_comment, '') as yj_comment,
+        COALESCE(yj.drug_code, '') as drug_code,
+        COALESCE(hot.status_no, 0) as hot_status,
+        COALESCE(hot_comment, '') as hot_comment,
+        COALESCE(yj.status_no, 0) | COALESCE(hot.status_no, 0) AS status_flag,
         resolve_status(yj."status_no", hot."status_no") as "採用状態"
-                
 
 	FROM medis
 	LEFT JOIN y
@@ -81,6 +80,6 @@ CREATE VIEW "available_view" as
     LEFT JOIN yj
         ON yj."yjcode" = medis."薬価基準収載医薬品コード"
     LEFT JOIN hot
-        ON hot."HOT11" = substr(medis."基準番号（ＨＯＴコード）", 1, 11);
+        ON hot."HOT11" = substr(medis."基準番号（ＨＯＴコード）", 1, 11)
     LEFT JOIN custom_yj
-        ON SUBSTR("hot"."HOT11", 1 , 9) = custom_yj."HOT9"
+        ON SUBSTR("hot"."HOT11", 1 , 9) = custom_yj."HOT9";
