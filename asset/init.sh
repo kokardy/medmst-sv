@@ -8,4 +8,4 @@ cd /bootstrap/save/y
 unzip -jo y.zip
 
 cd /bootstrap
-python3 /asset/register.py -CI
+python3 /asset/register.py -CDI
