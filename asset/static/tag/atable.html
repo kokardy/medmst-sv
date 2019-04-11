@@ -26,21 +26,23 @@
             { value }
         </td>
         <td class="outerlink">
+            <div if={ drug['個別医薬品コード'] }>
             <a 
             target="_blank"
-            href="/redirect/{ drug['薬価基準収載医薬品コード'] }">
+            href="/redirect/{ drug['個別医薬品コード'] }">
                     添付文書
             </a>
             <a
             target="_blank"
-            href="//10.26.61.131/jiho/latest/CYJ/{drug['薬価基準収載医薬品コード']}.pdf">
+            href="//10.26.61.131/jiho/latest/CYJ/{drug['個別医薬品コード']}.pdf">
                     JIHO(薬効)
             </a>
             <a
             target="_blank"
-            href="//10.26.61.131/jiho/latest/IYJ/{drug['薬価基準収載医薬品コード']}.pdf">
+            href="//10.26.61.131/jiho/latest/IYJ/{drug['個別医薬品コード']}.pdf">
                     JIHO(成分)
             </a>
+            </div>
         </td>
     </tr>
     </tbody>
