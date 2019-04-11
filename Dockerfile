@@ -3,6 +3,8 @@ FROM ubuntu:18.04
 COPY asset /asset
 COPY supervisord.conf /etc/supervisord.conf
 COPY asset/routine.sh /etc/cron.daily/routine.sh
+COPY asset/cron_backup /etc/cron.d/cron_backup
+
 
 ENV GOPATH=/go \
     http_proxy=${http_proxy} \
@@ -18,6 +20,7 @@ RUN apt-get update && \
     jlha-utils \
     unzip \
     wget \
+    postgresql-client \
     supervisor \
     cron \
     && apt-get clean \
