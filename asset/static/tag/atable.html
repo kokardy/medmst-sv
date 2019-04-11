@@ -69,7 +69,8 @@ change(e){
     .then(function(json){
         console.log(url)
         tag.drugs = json
-        tag.fields = Object.keys(this.drugs[0])
+        tag.fields = Object.keys(tag.drugs[0])
+        tag.update()
     })
 
 }
