@@ -20,17 +20,17 @@ INSERT INTO "status" VALUES(
     '採用'
 );
 
+CREATE TABLE "hot" (
+    "HOT11" character varying(11) primary key,
+    "status_no" integer REFERENCES status (no),
+    "hot_comment" character varying(255)
+);
+
 CREATE TABLE "yj" (
     "yjcode" character varying(12) primary key,
     "status_no" integer REFERENCES status (no),
     "yj_comment" character varying(255) default '',
     "drug_code" character varying(10) default ''
-);
-
-CREATE TABLE "hot" (
-    "HOT11" character varying(11) primary key,
-    "status_no" integer REFERENCES status (no),
-    "hot_comment" character varying(255)
 );
 
 CREATE TABLE "custom_yj"(

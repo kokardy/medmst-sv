@@ -204,16 +204,21 @@ func putHOT(c *gin.Context) {
 		return
 	}
 	defer db.Close()
-	sql := `INSERT INTO "hot" ("HOT11","status_no")
-		VALUES(:hot,:status)
-		ON CONFLICT ("HOT11")
-			DO UPDATE SET "HOT11"=:hot, "status_no"=:status;
+	sql := `INSERT INTO "hot" 
+				("HOT11", "status_no", "hot_comment")
+				VALUES(:hot, :status, :comment)
+			ON CONFLICT ("HOT11")
+				DO UPDATE SET 
+				"HOT11"=:hot, 
+				"status_no"=:status, 
+				"hot_comment"=:comment;
 	`
 	result, err := db.NamedExec(
 		sql,
 		map[string]interface{}{
-			"hot":    hot.HOT,
-			"status": hot.Status,
+			"hot":     hot.HOT,
+			"status":  hot.Status,
+			"comment": hot.Comment,
 		},
 	)
 	if err != nil {
@@ -229,6 +234,64 @@ func putHOT(c *gin.Context) {
 }
 
 func putYJ(c *gin.Context) {
+	var message string
+	var yj YJStatus
+	var err error
+	err = c.Bind(&hot)
+	//Binding
+	if err != nil {
+		message = "an ERROR occured in binding form: %s\n"
+		message = fmt.Sprintf(message, err)
+		c.String(500, message)
+		return
+	}
+	param := connectParam()
+	db, err := sqlx.Connect("postgres", param)
+	//DB connection check
+	if err != nil {
+		message = "an ERROR occured in database connecting: %s\n"
+		message = fmt.Sprintf(message, err)
+		message += fmt.Sprintf("data [%s]", yj)
+		c.String(500, message)
+		return
+	}
+	defer db.Close()
+	sql := `INSERT INTO "yj" 
+					("yjcode", 
+					"status_no",
+					"yj_comment",
+					"drug_code")
+				VALUES(
+					:yj,
+					:status,
+					:comment,
+					:drug_code)
+			ON CONFLICT ("yjcode")
+				DO UPDATE SET 
+				"yjcode"=:yj, 
+				"status_no"=:status, 
+				"yj"=:comment
+				"drug_code"=:drug_code;
+	`
+	result, err := db.NamedExec(
+		sql,
+		map[string]interface{}{
+			"yj":        yj.YJ,
+			"status":    yj.Status,
+			"comment":   yj.Comment,
+			"drug_code": yj.DrugCode,
+		},
+	)
+	if err != nil {
+		message = "an ERROR occured in executing SQL: %s \n%s\n"
+		message = fmt.Sprintf(message, sql, err)
+		message += fmt.Sprintf("data [%s]", hot)
+		c.String(500, message)
+		return
+	}
+
+	fmt.Println(result)
+	c.String(200, hot.String())
 }
 
 func redirectToPMDA(c *gin.Context) {

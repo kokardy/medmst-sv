@@ -100,8 +100,9 @@ type AvailableView struct {
 }
 
 type HOTStatus struct {
-	HOT    string `db:"HOT11" json:"HOT" form:"HOT"`
-	Status int    `db:"status" json:"status" form:"status"`
+	HOT     string `db:"HOT11" json:"HOT" form:"HOT"`
+	Status  int    `db:"status_no" json:"status" form:"status"`
+	Comment string `db:"hot_comment" json:"comment" form:"comment"`
 }
 
 func (hs HOTStatus) String() string {
@@ -109,19 +110,21 @@ func (hs HOTStatus) String() string {
 }
 
 type YJStatus struct {
-	YJ     string `db:"yjcode" json:"yjcode" form:"yjcode"`
-	Status int    `db:"status" json:"status" form:"status"`
+	YJ       string `db:"yjcode" json:"yjcode" form:"yjcode"`
+	Status   int    `db:"status_no" json:"status" form:"status"`
+	Comment  string `db:"yj_comment" json:"comment" form:"comment"`
+	DrugCode string `db:"drug_code" json:"drugcode" form:"drugcode"`
 }
 
 func (ys YJStatus) String() string {
 	return fmt.Sprintf("HOT:%s status:%d", ys.YJ, ys.Status)
 }
 
-type CustomYJ struct{
-	HOT9    string `db:"HOT9" json:"HOT" form:"HOT"`
-	YJ     string `db:"yjcode" json:"yjcode" form:"yjcode"`
+type CustomYJ struct {
+	HOT9 string `db:"HOT9" json:"HOT" form:"HOT"`
+	YJ   string `db:"yjcode" json:"yjcode" form:"yjcode"`
 }
 
-func (cyj CustomYJ) String() string{
+func (cyj CustomYJ) String() string {
 	return fmt.Sprintf("HOT9:%s YJ:%s", cyj.HOT9, cyj.YJ)
 }
