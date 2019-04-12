@@ -24,47 +24,7 @@
     </thead>
 
     <tbody>
-    <tr each="{drug in drugs}">
-        <td each="{value, field in drug}" class="{field}">
-            { value }
-        </td>
-        <td class="change_status_YJ">
-            <input name="status_change" value="3"
-            type="radio" 
-            onChange="{change_statusYJ.bind(this, drug["薬価基準収載医薬品コード"], 3)}">
-            採用</input>     <br/>
-            <input name="status_change" value="1"
-            type="radio"
-            onChange="{change_statusYJ.bind(this, drug["薬価基準収載医薬品コード"], 1)}">
-            院内採用</input> <br/>
-            <input name="status_change" value="2"
-            type="radio"
-            onChange="{change_statusYJ.bind(this, drug["薬価基準収載医薬品コード"], 2)}">
-            院外採用</input> <br/>
-            <input name="status_change" value="0"
-            type="radio"
-            onChange="{change_statusYJ.bind(this, drug["薬価基準収載医薬品コード"], 0)}">
-            不採用</input>   <br/>
-        </td>
-        <td class="change_status_HOT11">
-            <input name="status_change" value="3"
-            type="radio"
-            onChange="{change_statusHOT.bind(this, drug["HOT11"], 3)}">
-            採用</input>     <br/>
-            <input name="status_change" value="1"
-            type="radio"
-            onChange="{change_statusHOT.bind(this, drug["HOT11"], 1)}">
-            院内採用</input> <br/>
-            <input name="status_change" value="2"
-            type="radio"
-            onChange="{change_statusHOT.bind(this, drug["HOT11"], 2)}">
-            院外採用</input> <br/>
-            <input name="status_change" value="0"
-            type="radio"
-            onChange="{change_statusHOT.bind(this, drug["HOT11"], 0)}">
-            不採用</input>   <br/>
-        </td>
-    </tr>
+            <tr data-is="drug" each="{drugs}"></tr>
     </tbody>
 </table>
 
@@ -74,9 +34,30 @@ this.drugs = [
     status: "active"},
 ]
 
+
+
 change_statusYJ(yj, new_stat, e){
     console.log("yj:"+ yj +
     " change_status:"+ new_stat)
+    var url = "/edit/yj/"
+    var data = {
+        yjcode: yj,
+        status: new_stat,
+    }
+    fetch(url, {
+      method: "PUT",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+              "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(data),
+    })
+    .then(function(json){
+       var result = json["result"]
+       console.log("PUT:" + data  + " result:" + result)
+    })
+
 }
 
 change_statusHOT(hot, new_stat, e){
@@ -100,6 +81,7 @@ change(e){
         console.log(url)
         tag.drugs = json
         tag.fields = Object.keys(tag.drugs[0])
+        tag.update()
     })
     .then(undefined, function onRejected(error){
         console.log("rejected:" + error);
@@ -111,3 +93,47 @@ change(e){
     </script>
 </atable>
 
+
+<drug>
+    <td each="{value, field in this}" class="{field}">
+        { value }
+    </td>
+    <td class="change_status_YJ">
+        <input name="status_change" value="3"
+                                    type="radio" >
+        採用</input>     <br/>
+        <input name="status_change" value="1"
+                                    type="radio">
+        院内採用</input> <br/>
+        <input name="status_change" value="2"
+                                    type="radio">
+        院外採用</input> <br/>
+        <input name="status_change" value="0"
+                                    type="radio">
+        不採用</input>   <br/>
+    </td>
+    <td class="change_status_HOT11">
+        <input name="status_change" value="3"
+                                    type="radio">
+        採用</input>     <br/>
+        <input name="status_change" value="1"
+                                    type="radio">
+        院内採用</input> <br/>
+        <input name="status_change" value="2"
+                                    type="radio">
+        院外採用</input> <br/>
+        <input name="status_change" value="0"
+                                    type="radio">
+        不採用</input>   <br/>
+    </td>
+    <td>
+            <button onClick="{save_status}">保存</button>
+        <div id="save_{this['HOT9']}"></div>
+    </td>
+
+
+save_status(e){
+  console.log("this:" + Object.keys(this))
+}
+
+</drug>

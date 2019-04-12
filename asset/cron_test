@@ -1,0 +1,3 @@
+PATH=/bin
+
+* * * * * root /asset/cron_test.sh
