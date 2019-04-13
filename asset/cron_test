@@ -1,3 +1,5 @@
+SHELL=/bin/bash
 PATH=/bin
+MAILTO=""
 
 * * * * * root /asset/cron_test.sh

@@ -7,5 +7,8 @@ jlha xif *.lzh
 cd /bootstrap/save/y
 unzip -jo y.zip
 
+cp /asset/cron_backup /etc/cron.d/
+echo "* * * * *  /asset/backup.sh" | crontab -
+
 cd /bootstrap
 python3 /asset/register.py -CDI
