@@ -237,7 +237,7 @@ func putYJ(c *gin.Context) {
 	var message string
 	var yj YJStatus
 	var err error
-	err = c.Bind(&hot)
+	err = c.Bind(&yj)
 	//Binding
 	if err != nil {
 		message = "an ERROR occured in binding form: %s\n"
@@ -285,13 +285,13 @@ func putYJ(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
-		message += fmt.Sprintf("data [%s]", hot)
+		message += fmt.Sprintf("data [%s]", yj)
 		c.String(500, message)
 		return
 	}
 
 	fmt.Println(result)
-	c.String(200, hot.String())
+	c.String(200, yj.String())
 }
 
 func redirectToPMDA(c *gin.Context) {
