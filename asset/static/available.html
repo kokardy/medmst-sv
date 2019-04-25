@@ -39,6 +39,15 @@
 
 
 <script type="riot/tag" src="./tag/atable.html"></script>
+<script>
+
+function focus(){
+    var element = document.getElementById("query_string");
+    console.log(element);
+    element.focus();
+}
+
+</script>
 
 
 </head>
@@ -47,6 +56,7 @@
 <div data-is="atable"></div>
 
 
-<script>riot.mount("atable");</script>
+<script>riot.mount("atable");
+</script>
 </body>
 </html>
