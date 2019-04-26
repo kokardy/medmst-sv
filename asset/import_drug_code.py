@@ -24,7 +24,7 @@ def _connection(param):
     return pg.connect(**param)
 
 def sql_params():
-    with codecs.open(ifile, mode="r", encofing="utf8") as f:
+    with codecs.open(ifile, mode="r", encoding="utf8") as f:
         params = [line.split("\t") for line in f]
 
     return params
