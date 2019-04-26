@@ -25,19 +25,24 @@ def _connection(param):
 
 def sql_params():
     with codecs.open(ifile, mode="r", encoding="utf8") as f:
-        params = [line.split("\t") for line in f]
+        params = [line.strip("\n").split("\t") for line in f]
 
     return params
 
 def import_drugs():
     params = sql_params()
 
+    for param in params:
+        if len(param) != 3:
+            print(param)
+            raise Exception(u"line in drug_code_list.txt must have 3 fields")
+
     sql = """
 INSERT INTO yj(
     yjcode,
     status_no,
-    drug_code    
-    yj_comment,
+    drug_code,
+    yj_comment
 ) VALUES (
     %s,
     3,
