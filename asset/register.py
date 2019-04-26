@@ -148,43 +148,42 @@ def main():
         return
     
     #OPTIONの分だけcreate delete insert関数登録
-    exec_list = []
+    con = connection()
     if "C" in options:
-        exec_list.append(C)
+        C(con)
     if "D" in options:
-        exec_list.append(D)
+        con = connection()
+        con = D(con, commit=False)
     if "I" in options:
-        exec_list.append(I)
-
-    #OPTIONにあったものだけ実行
-    for func in exec_list:
-        func()
+        con = I(con, commit=False)
+    con.commit()
 
 
 #option -Cで実行する
 #テーブル作成
-def C():
-    con = connection()
+def C(con=connection(), commit=True):
     print("create")
     create(con)
-    con.commit()
+    if commit:
+        con.commit()
+    return con
 
 #option -Iで実行する
 #テーブルにINSERT
-def I():
-    con = connection()
+def I(con=connection(), commit=True):
     print("insert")
     infiles = get_files()
     insert(con, infiles)
     con.commit()
+    return con
 
 #option -Dで実行する
 #DELETE TABLE
-def D():
-    con = connection()
+def D(con=connection(), commit=True):
     print("delete")
     delete(con)
     con.commit()
+    return con
 
 
 
