@@ -29,7 +29,7 @@ def sql_params():
 
     return params
 
-def import():
+def import_drugs():
     params = sql_params()
 
     sql = """
@@ -51,3 +51,11 @@ INSERT INTO yj(
     cur.executemany(sql, params)
 
     con.commit()
+
+
+def main():
+    import_drugs()
+    
+
+if __name__ == '__main__':
+    main()
