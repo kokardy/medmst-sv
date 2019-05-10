@@ -297,8 +297,8 @@ func putYJ(c *gin.Context) {
 func redirectToPMDA(c *gin.Context) {
 	var url string
 	yjcode := c.Param("yjcode")
-	domain := os.Getenv("YJ_REDIRECTER")
-	url = fmt.Sprintf("//%s/%s/", domain, yjcode)
+	redirectURL := os.Getenv("YJ_REDIRECT_URL") //http://localhost:8080/redirect/%s的なのが入る
+	url = fmt.Sprintf(redirectURL, yjcode)
 	c.Redirect(http.StatusPermanentRedirect, url)
 }
 
