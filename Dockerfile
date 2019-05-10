@@ -9,7 +9,7 @@ COPY asset/cron_backup /etc/cron.d/cron_backup
 ENV GOPATH=/go \
     http_proxy=${http_proxy} \
     https_proxy=${https_proxy} \
-    YJ_REDIRECTER=pmda-kv
+    YJ_REDIRECT_URL=http://pmda-kv/redirect/%s
 
 RUN apt-get update && \
     apt-get install -y \
