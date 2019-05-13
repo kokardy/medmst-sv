@@ -53,6 +53,30 @@ def get_files(save_dir=SAVE_DIR):
                     result[y] = [fullpath]
 
     print("result", result)
+
+    ##medisの古いデータをinsert deleteしないようにする
+    ##MDIS********.TXTの日付が最新なのでそれより古いものは省く
+    r = result[medis]
+
+    #filenameにMEDIS*********.TXTが入る
+    for filename in r:
+        if filename.startswith("MEDIS"):
+            break
+
+    oldest = filename.lstrip("MEDIS")
+
+    #_ok 最終的にMEDIS始まりのファイルとそのファイルより新しいのだけにする
+    def _ok(filename): 
+        if filename.startswith("MEDIS"):
+            return True
+        elif oldest < filename:
+            return True
+        else:
+            return False
+
+    r = filter(_ok, r)
+    result[medis] = r
+
     return result
 
 #想定使用方法
