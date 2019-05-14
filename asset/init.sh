@@ -12,3 +12,4 @@ echo "* * * * *  /asset/backup.sh" | crontab -
 
 cd /bootstrap
 python3 /asset/register.py -DCI
+python3 /asset/import_drug_code.py
