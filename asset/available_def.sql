@@ -82,4 +82,5 @@ CREATE VIEW "available_view" as
     LEFT JOIN hot
         ON hot."HOT11" = substr(medis."基準番号（ＨＯＴコード）", 1, 11)
     LEFT JOIN custom_yj
-        ON SUBSTR("hot"."HOT11", 1 , 9) = custom_yj."HOT9";
+        ON SUBSTR("hot"."HOT11", 1 , 9) = custom_yj."HOT9"
+    WHERE medis."更新区分" <> '4'; -- '4'は削除フラグ
