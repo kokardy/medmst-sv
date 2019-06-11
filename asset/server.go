@@ -11,6 +11,13 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+var user = os.Getenv("ADMIN_USER")
+var password = os.Getenv("ADMIN_PASSWORD")
+
+var accounts = gin.Accounts{
+	user: password,
+}
+
 func connectParam() (param string) {
 	param = fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
 		os.Getenv("PG_HOST"),
@@ -333,8 +340,12 @@ func main() {
 	//promise-polyfill.js
 	r.StaticFile("/promise/polyfill.min.js", "/bootstrap/promise-polyfill/dist/polyfill.min.js")
 
-	//sttic
+	//static
 	r.Static("/static/", "/asset/static/")
+	r.Static("/static_auth/", "/asset/static_auth/")
+
+	//authorized := r.Group("/static_auth/", gin.BasicAuth(accounts))
+	//authorized.StaticFile("/", "/asset/static_auth/")
 
 	fmt.Println("listen: 8080")
 	r.Run(":8080")

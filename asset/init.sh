@@ -1,5 +1,6 @@
 cd /asset
 go build -o server .
+chmod +x server
 cd /bootstrap
 /go/bin/medmst -f
 cd /bootstrap/save/hot
