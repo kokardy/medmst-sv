@@ -11,13 +11,6 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-var user = os.Getenv("ADMIN_USER")
-var password = os.Getenv("ADMIN_PASSWORD")
-
-var accounts = gin.Accounts{
-	user: password,
-}
-
 func connectParam() (param string) {
 	param = fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable",
 		os.Getenv("PG_HOST"),
@@ -310,6 +303,14 @@ func redirectToPMDA(c *gin.Context) {
 }
 
 func main() {
+	var user = os.Getenv("ADMIN_USER")
+	var password = os.Getenv("ADMIN_PASSWORD")
+	var accounts = gin.Accounts{
+		user: password,
+	}
+
+	fmt.Printf("###################accounts: %s################\n", accounts)
+
 	r := gin.Default()
 	r.GET("/", func(c *gin.Context) {
 		c.String(200, "Hello world")
@@ -342,10 +343,12 @@ func main() {
 
 	//static
 	r.Static("/static/", "/asset/static/")
-	r.Static("/static_auth/", "/asset/static_auth/")
+	//r.Static("/static_auth/", "/asset/static_auth/")
+	auth_r := r.Group("/static_auth/", gin.BasicAuth(accounts))
+	auth_r.Static("/", "/asset/static_auth/")
 
 	//authorized := r.Group("/static_auth/", gin.BasicAuth(accounts))
-	//authorized.StaticFile("/", "/asset/static_auth/")
+	//authorized.Static("/", "/asset/static_auth/")
 
 	fmt.Println("listen: 8080")
 	r.Run(":8080")
