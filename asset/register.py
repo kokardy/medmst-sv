@@ -67,7 +67,7 @@ def get_files(save_dir=SAVE_DIR):
 
     #_ok 最終的にMEDIS始まりのファイルとそのファイルより新しいのだけにする
     def _ok(filename): 
-        if filename.startswith("MEDIS"):
+        if filename.find("MEDIS") > -1:
             return True
         elif oldest < filename:
             return True
@@ -130,6 +130,7 @@ def _insert(con, sql_file, insert_files, line1skip):
         print(e)
         return
     for insert_file in insert_files:
+        print(f'insert: {insert_file}')
         with open(insert_file, "r", encoding="cp932") as f:
             r = csv.reader(f)
             r = [line for line in r]
