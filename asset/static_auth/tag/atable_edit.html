@@ -42,15 +42,12 @@ this.fields = [
     "保存",
 ]
 
-
-change_statusYJ(yj, new_stat, e){
+//YJの採用状況を更新
+change_statusYJ(yj, new_yj_data, e){
     console.log("yj:"+ yj +
     " change_status:"+ new_stat)
     var url = "/edit/yj/"
-    var data = {
-        yjcode: yj,
-        status: new_stat,
-    }
+    var data = new_yj_data
     fetch(url, {
       method: "PUT",
       cache: "no-cache",
@@ -67,14 +64,30 @@ change_statusYJ(yj, new_stat, e){
 
 }
 
-change_statusHOT(hot, new_stat, e){
+//HOTの採用状況を更新
+change_statusHOT(hot, new_hot_data, e){
     console.log("hot:"+ hot + 
     " change_status:"+ new_stat)
+    var url = "/edit/hot/"
+    var data = new_hot_data
+    fetch(url, {
+      method: "PUT",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+              "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(data),
+    })
+    .then(function(json){
+       var result = json["result"]
+       console.log("PUT:" + data  + " result:" + result)
+    })
 }
 
 
 change(e){
-    console.log("change")
+    console.log("search")
     var tag = this
     var queryStr = this.refs.query.value
     var url = "/json/available/"
@@ -110,6 +123,7 @@ change(e){
                 name="drug_code_{this['HOT11']}" 
                 value="{this['drug_code']}">
             </input>
+            <br/>
             カスタムYJ:
             <input
                 ref="custom_yj" 
@@ -199,11 +213,31 @@ change(e){
         <div id="save_{this['HOT9']}"></div>
     </td>
 
-
+    <script>
 save_status(e){
   console.log("this:" + Object.keys(this))
-  console.log("opts:" + this.opts)
-  console.log("opts:" + Object.keys(this.opts))
+
+  var new_yj = {
+                  "yj" : this["個別医薬品コード"],
+                  "yj_status" : this["yj_status"],
+                  "drug_code" : this["drug_code"],
+                  "yj_comment" : this["yj_comment"],
+  }
+  console.log(new_yj)
+
+  var new_hot = {
+                  "hot" : this["HOT11"],
+                  "hot_status" : this["hot_status"],
+                  "hot_comment" : this["hot_comment"], 
+  }
+  console.log(new_hot)
+
+  var new_custom_yj = {
+                  "HOT9" : this["HOT11"].substring(0,9),
+                  "custom_yj" : this.refs.custom_yj.value,
+  }
+  console.log(new_custom_yj)
 }
+    </script>
 
 </drug>
