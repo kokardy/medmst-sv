@@ -294,6 +294,59 @@ func putYJ(c *gin.Context) {
 	c.String(200, yj.String())
 }
 
+func putCustomYJ(c *gin.Context) {
+	var message string
+	var cyj CustomYJ
+	var err error
+	err = c.Bind(&cyj)
+	//Binding
+	if err != nil {
+		message = "an ERROR occured in binding form: %s\n"
+		message = fmt.Sprintf(message, err)
+		c.String(500, message)
+		return
+	}
+	param := connectParam()
+	db, err := sqlx.Connect("postgres", param)
+	//DB connection check
+	if err != nil {
+		message = "an ERROR occured in database connecting: %s\n"
+		message = fmt.Sprintf(message, err)
+		message += fmt.Sprintf("data [%s]", cyj)
+		c.String(500, message)
+		return
+	}
+	defer db.Close()
+	sql := `INSERT INTO "custom_yj" 
+					("HOT9", 
+					"yjcode")
+				VALUES(
+					:HOT9,
+					:yjcode)
+			ON CONFLICT ("HOT9")
+				DO UPDATE SET 
+				"HOT9"=:HOT9, 
+				"yjcode"=:yjcode;
+	`
+	result, err := db.NamedExec(
+		sql,
+		map[string]interface{}{
+			"HOT9":   cyj.HOT9,
+			"yjcode": cyj.YJ,
+		},
+	)
+	if err != nil {
+		message = "an ERROR occured in executing SQL: %s \n%s\n"
+		message = fmt.Sprintf(message, sql, err)
+		message += fmt.Sprintf("data [%s]", cyj)
+		c.String(500, message)
+		return
+	}
+
+	fmt.Println(result)
+	c.String(200, cyj.String())
+}
+
 func redirectToPMDA(c *gin.Context) {
 	var url string
 	yjcode := c.Param("yjcode")
@@ -330,6 +383,7 @@ func main() {
 	r.GET("/json/available/", handleAvailable)
 	r.PUT("/edit/hot/", putHOT)
 	r.PUT("/edit/yj/", putYJ)
+	r.PUT("/edit/cyj/", putCustomYJ)
 	//barcode
 	r.GET("/barcode/:barcode/", handleBarcode)
 

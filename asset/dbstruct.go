@@ -121,7 +121,7 @@ func (ys YJStatus) String() string {
 }
 
 type CustomYJ struct {
-	HOT9 string `db:"HOT9" json:"HOT" form:"HOT"`
+	HOT9 string `db:"HOT9" json:"HOT9" form:"HOT9"`
 	YJ   string `db:"yjcode" json:"yjcode" form:"yjcode"`
 }
 
