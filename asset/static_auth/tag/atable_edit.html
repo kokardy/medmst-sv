@@ -158,53 +158,63 @@ change(e){
     </td>
     <td>
         <input name="yj_status_{this['HOT11']}"
+                                    onclick='{ check_yj_status.bind(this, 3) }'
                                     value="3"
                                     checked='{this["yj_status"]==3}'
                                     type="radio" >
         採用</input>     <br/>
         <input name="yj_status_{this['HOT11']}"
+                                    onclick='{ check_yj_status.bind(this, 1) }'
                                     value="1"
                                     checked='{this["yj_status"]==1}'
                                     type="radio">
         院内採用</input> <br/>
         <input name="yj_status_{this['HOT11']}" 
+                                    onclick='{ check_yj_status.bind(this, 2) }'
                                     value="2"
                                     checked='{this["yj_status"]==2}'
                                     type="radio">
         院外採用</input> <br/>
         <input name="yj_status_{this['HOT11']}" 
+                                    onclick='{ check_yj_status.bind(this, 0) }'
                                     value="0"
                                     checked='{this["yj_status"]==0}'
                                     type="radio">
         不採用</input>   <br/>
         コメント:
         <input name="yj_comment_{this['HOT11']}"
+               ref="yj_comment"
                value='{this["yj_comment"]}'>
         </input>
     </td>
     <td>
         <input name="hot_status_{this['HOT11']}"
+                                    onclick='{ check_hot_status.bind(this, 3) }'
                                     value="3"
                                     checked='{this["hot_status"]==3}'
                                     type="radio" >
         採用</input>     <br/>
         <input name="hot_status_{this['HOT11']}"
+                                    onclick='{ check_hot_status.bind(this, 1) }'
                                     value="1"
                                     checked='{this["hot_status"]==1}'
                                     type="radio">
         院内採用</input> <br/>
         <input name="hot_status_{this['HOT11']}"
+                                    onclick='{ check_hot_status.bind(this, 2) }'
                                     value="2"
                                     checked='{this["hot_status"]==2}'
                                     type="radio">
         院外採用</input> <br/>
         <input name="hot_status_{this['HOT11']}"
+                                    onclick='{ check_hot_status.bind(this, 0) }'
                                     value="0"
                                     checked='{this["hot_status"]==0}'
                                     type="radio">
         不採用</input>   <br/>
         コメント:
         <input name="hot_comment_{this['HOT11']}" 
+               ref="hot_comment"
                value='{this["hot_comment"]}'>
         </input>
     </td>
@@ -214,28 +224,44 @@ change(e){
     </td>
 
     <script>
+//採用状態HOTのradio
+check_hot_status (v, e){
+  console.log("hot status change:" + v)
+  this.hot_status = v
+}
+
+//採用状態YJのradio
+check_yj_status (v, e){
+  console.log("yj status change:" + v)
+  this.yj_status = v
+}
+
+
 save_status(e){
-  console.log("this:" + Object.keys(this))
+  //console.log("this:" + Object.keys(this))
 
   var new_yj = {
                   "yj" : this["個別医薬品コード"],
-                  "yj_status" : this["yj_status"],
-                  "drug_code" : this["drug_code"],
-                  "yj_comment" : this["yj_comment"],
+                  "yj_status" : this.yj_status,
+                  "drug_code" : this.refs.drug_code.value,
+                  "yj_comment" : this.refs.yj_comment.value,
   }
+  console.log("new_yj:")
   console.log(new_yj)
 
   var new_hot = {
                   "hot" : this["HOT11"],
-                  "hot_status" : this["hot_status"],
-                  "hot_comment" : this["hot_comment"], 
+                  "hot_status" : this.hot_status,
+                  "hot_comment" : this.refs.hot_comment.value, 
   }
+  console.log("new_hot:")
   console.log(new_hot)
 
   var new_custom_yj = {
                   "HOT9" : this["HOT11"].substring(0,9),
                   "custom_yj" : this.refs.custom_yj.value,
   }
+  console.log("new_custom_yj:")
   console.log(new_custom_yj)
 }
     </script>
