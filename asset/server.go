@@ -229,7 +229,7 @@ func putHOT(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(result)
+	fmt.Println("result: " + result + "hot: " + hot.HOT)
 	c.String(200, hot.String())
 }
 

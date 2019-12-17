@@ -42,48 +42,6 @@ this.fields = [
     "保存",
 ]
 
-//YJの採用状況を更新
-change_statusYJ(yj, new_yj_data, e){
-    console.log("yj:"+ yj +
-    " change_status:"+ new_stat)
-    var url = "/edit/yj/"
-    var data = new_yj_data
-    fetch(url, {
-      method: "PUT",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-              "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(data),
-    })
-    .then(function(json){
-       var result = json["result"]
-       console.log("PUT:" + data  + " result:" + result)
-    })
-
-}
-
-//HOTの採用状況を更新
-change_statusHOT(hot, new_hot_data, e){
-    console.log("hot:"+ hot + 
-    " change_status:"+ new_stat)
-    var url = "/edit/hot/"
-    var data = new_hot_data
-    fetch(url, {
-      method: "PUT",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-              "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(data),
-    })
-    .then(function(json){
-       var result = json["result"]
-       console.log("PUT:" + data  + " result:" + result)
-    })
-}
 
 
 change(e){
@@ -224,21 +182,72 @@ change(e){
     </td>
 
     <script>
+//YJの採用状況を更新
+function change_statusYJ(yj, new_yj_data){
+    console.info("yj:" + yj +
+    " change_status:" + new_yj_data)
+    var url = "/edit/yj/"
+    var json_data = JSON.stringify(new_yj_data)
+    fetch(url, {
+      method: "PUT",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+              "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(json_data),
+    })
+    .then(function(json){
+       var result = json["result"]
+       console.info(json)
+       console.info("---------------PUT--------------")
+       console.info(json_data)
+       console.info("---------------PUT end----------")
+       console.info("result:" + result)
+    })
+
+}
+
+//HOTの採用状況を更新
+function change_statusHOT(hot, new_hot_data){
+    console.info("hot:"+ hot + " update:")
+    var url = "/edit/hot/"
+    var json_data = JSON.stringify(new_hot_data)
+    fetch(url, {
+      method: "PUT",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+              "Content-Type": "application/json; charset=utf-8",
+      },
+      body: json_data,
+    })
+    .then(function(json){
+       var result = json["result"]
+
+       console.info(json)
+       console.info("---------------PUT--------------")
+       console.info(json_data)
+       console.info("---------------PUT end----------")
+       console.info("result:" + result)
+    })
+}
+
 //採用状態HOTのradio
 check_hot_status (v, e){
-  console.log("hot status change:" + v)
+  console.info("hot status change:" + v)
   this.hot_status = v
 }
 
 //採用状態YJのradio
 check_yj_status (v, e){
-  console.log("yj status change:" + v)
+  console.info("yj status change:" + v)
   this.yj_status = v
 }
 
 
 save_status(e){
-  //console.log("this:" + Object.keys(this))
+  //console.info("this:" + Object.keys(this))
 
   var new_yj = {
                   "yj" : this["個別医薬品コード"],
@@ -246,23 +255,25 @@ save_status(e){
                   "drug_code" : this.refs.drug_code.value,
                   "yj_comment" : this.refs.yj_comment.value,
   }
-  console.log("new_yj:")
-  console.log(new_yj)
+  console.info("new_yj:")
+  console.info(new_yj)
 
   var new_hot = {
                   "hot" : this["HOT11"],
                   "hot_status" : this.hot_status,
                   "hot_comment" : this.refs.hot_comment.value, 
   }
-  console.log("new_hot:")
-  console.log(new_hot)
+  console.info("new_hot:")
+  console.info(new_hot)
+
+  change_statusHOT(this["HOT11"], new_hot)
 
   var new_custom_yj = {
                   "HOT9" : this["HOT11"].substring(0,9),
                   "custom_yj" : this.refs.custom_yj.value,
   }
-  console.log("new_custom_yj:")
-  console.log(new_custom_yj)
+  console.info("new_custom_yj:")
+  console.info(new_custom_yj)
 }
     </script>
 
