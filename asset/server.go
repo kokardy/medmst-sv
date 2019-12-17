@@ -185,8 +185,11 @@ func putHOT(c *gin.Context) {
 	var message string
 	var hot HOTStatus
 	var err error
-	err = c.Bind(&hot)
+	
 	//Binding
+	err = c.Bind(&hot)
+	fmt.Printf("Bind: %s", hot)
+
 	if err != nil {
 		message = "an ERROR occured in binding form: %s\n"
 		message = fmt.Sprintf(message, err)
@@ -204,6 +207,8 @@ func putHOT(c *gin.Context) {
 		return
 	}
 	defer db.Close()
+	//TODO:いつもINSERT成功している?
+	//status commentが入らない。
 	sql := `INSERT INTO "hot" 
 				("HOT11", "status_no", "hot_comment")
 				VALUES(:hot, :status, :comment)
