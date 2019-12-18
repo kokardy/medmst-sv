@@ -185,7 +185,7 @@ func putHOT(c *gin.Context) {
 	var message string
 	var hot HOTStatus
 	var err error
-	
+
 	//Binding
 	err = c.Bind(&hot)
 	fmt.Printf("Bind: %s", hot)
@@ -393,7 +393,7 @@ func main() {
 	r.GET("/barcode/:barcode/", handleBarcode)
 
 	//riot.js
-	r.StaticFile("/riot/riot+compiler.min.js", "/bootstrap/riot/riot+compiler.min.js")
+	r.Static("/riot/", "/bootstrap/riot/")
 	//fetch.js
 	r.StaticFile("/fetch/fetch.umd.js", "/bootstrap/fetch/fetch.umd.js")
 
