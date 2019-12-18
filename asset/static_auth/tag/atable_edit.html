@@ -10,6 +10,7 @@
 <input
     type="text"
     ref="query"
+    name="query"
     class="query_input"
 />
 <button onClick="{change}">検索</button>
@@ -27,6 +28,7 @@
 </table>
 
     <script>
+var tag = this
 this.drugs = [ ]
 
 this.fields = [
@@ -46,8 +48,8 @@ this.fields = [
 
 change(e){
     console.log("search")
-    var tag = this
-    var queryStr = this.refs.query.value
+    console.log(tag)
+    var queryStr = tag.query.value
     var url = "/json/available/"
     url += "?query=" + queryStr
     url = encodeURI(url)
@@ -182,6 +184,8 @@ change(e){
     </td>
 
     <script>
+
+var drug = this;
 //YJの採用状況を更新
 function change_statusYJ(yj, new_yj_data){
     console.info("yj:" + yj +
@@ -248,6 +252,8 @@ check_yj_status (v, e){
 
 save_status(e){
   //console.info("this:" + Object.keys(this))
+	console.info("drug")
+	console.info(drug)
 
   var new_yj = {
                   "yj" : this["個別医薬品コード"],
@@ -255,16 +261,18 @@ save_status(e){
                   "drug_code" : this.refs.drug_code.value,
                   "yj_comment" : this.refs.yj_comment.value,
   }
-  console.info("new_yj:")
+	console.info("-----------new_yj-----------")
   console.info(new_yj)
+	console.info("----------------------------")
 
   var new_hot = {
                   "HOT" : this["HOT11"],
                   "status" : this.hot_status,
                   "comment" : this.refs.hot_comment.value, 
   }
-  console.info("new_hot:")
+  console.info("-----------new_hot----------")
   console.info(new_hot)
+  console.info("----------------------------")
 
   change_statusHOT(this["HOT11"], new_hot)
 
