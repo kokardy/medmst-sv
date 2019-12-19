@@ -10,6 +10,7 @@
 <input
     type="text"
     ref="query"
+    id="query_str"
     class="query_input"
 />
 <button onClick="{change}">検索</button>
@@ -46,8 +47,11 @@ this.fields = [
 
 change(e){
     console.log("search")
+    console.log(this)
+
     var tag = this
-    var queryStr = this.refs.query.value
+    var queryStr = document.getElementById("query_str").value
+    //var queryStr = this.refs.query.value
     var url = "/json/available/"
     url += "?query=" + queryStr
     url = encodeURI(url)
