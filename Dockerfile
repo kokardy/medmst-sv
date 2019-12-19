@@ -34,7 +34,7 @@ RUN go get github.com/kokardy/medmst \
 	github.com/gin-gonic/gin
 
 RUN cd /bootstrap && \
-    git clone -b v2 https://github.com/riot/riot && \
+    git clone -b v3 https://github.com/riot/riot && \
     git clone https://github.com/taylorhakes/promise-polyfill
 
 RUN mkdir -p /bootstrap/fetch && \
