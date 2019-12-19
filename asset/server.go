@@ -90,6 +90,7 @@ func handleAvailable(c *gin.Context) {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
 		message += fmt.Sprintf("queryString: %s", queryString)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -100,6 +101,7 @@ func handleAvailable(c *gin.Context) {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
 		message += fmt.Sprintf("queryString: %s", queryString)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -127,6 +129,7 @@ func handleY(c *gin.Context) {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
 		message += fmt.Sprintf("queryString: %s", queryString)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -137,6 +140,7 @@ func handleY(c *gin.Context) {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
 		message += fmt.Sprintf("queryString: %s", queryString)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -166,6 +170,7 @@ func handleMedis(c *gin.Context) {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
 		message += fmt.Sprintf("queryString: %s", queryString)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -176,6 +181,7 @@ func handleMedis(c *gin.Context) {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
 		message += fmt.Sprintf("queryString: %s", queryString)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -195,6 +201,7 @@ func putHOT(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in binding form: %s\n"
 		message = fmt.Sprintf(message, err)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -205,6 +212,7 @@ func putHOT(c *gin.Context) {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
 		message += fmt.Sprintf("data [%s]", hot)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -231,11 +239,12 @@ func putHOT(c *gin.Context) {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
 		message += fmt.Sprintf("data [%s]", hot)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
 
-	fmt.Printf("result: OK hot: %s\n", hot.HOT)
+	fmt.Printf("result: OK hot: %s\n", hot)
 	c.JSON(200, hot)
 }
 
@@ -243,11 +252,13 @@ func putYJ(c *gin.Context) {
 	var message string
 	var yj YJStatus
 	var err error
-	err = c.Bind(&yj)
 	//Binding
+	err = c.Bind(&yj)
+	fmt.Printf("Bind: %s\n", yj)
 	if err != nil {
 		message = "an ERROR occured in binding form: %s\n"
 		message = fmt.Sprintf(message, err)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -258,6 +269,7 @@ func putYJ(c *gin.Context) {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
 		message += fmt.Sprintf("data [%s]", yj)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -276,10 +288,10 @@ func putYJ(c *gin.Context) {
 				DO UPDATE SET 
 				"yjcode"=:yj, 
 				"status_no"=:status, 
-				"yj"=:comment
+				"yj_comment"=:comment,
 				"drug_code"=:drug_code;
 	`
-	result, err := db.NamedExec(
+	_, err = db.NamedExec(
 		sql,
 		map[string]interface{}{
 			"yj":        yj.YJ,
@@ -292,12 +304,13 @@ func putYJ(c *gin.Context) {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
 		message += fmt.Sprintf("data [%s]", yj)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
 
-	fmt.Println(result)
-	c.String(200, yj.String())
+	fmt.Printf("result: OK hot: %s\n", yj)
+	c.JSON(200, yj)
 }
 
 func putCustomYJ(c *gin.Context) {
@@ -309,6 +322,7 @@ func putCustomYJ(c *gin.Context) {
 	if err != nil {
 		message = "an ERROR occured in binding form: %s\n"
 		message = fmt.Sprintf(message, err)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -319,6 +333,7 @@ func putCustomYJ(c *gin.Context) {
 		message = "an ERROR occured in database connecting: %s\n"
 		message = fmt.Sprintf(message, err)
 		message += fmt.Sprintf("data [%s]", cyj)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -345,6 +360,7 @@ func putCustomYJ(c *gin.Context) {
 		message = "an ERROR occured in executing SQL: %s \n%s\n"
 		message = fmt.Sprintf(message, sql, err)
 		message += fmt.Sprintf("data [%s]", cyj)
+		fmt.Printf("err: %s\n", message)
 		c.String(500, message)
 		return
 	}
@@ -389,7 +405,7 @@ func main() {
 	r.GET("/json/available/", handleAvailable)
 	r.PUT("/edit/hot/", putHOT)
 	r.PUT("/edit/yj/", putYJ)
-	r.PUT("/edit/cyj/", putCustomYJ)
+	r.PUT("/edit/custom_yj/", putCustomYJ)
 	//barcode
 	r.GET("/barcode/:barcode/", handleBarcode)
 
