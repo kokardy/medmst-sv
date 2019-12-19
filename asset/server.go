@@ -104,6 +104,7 @@ func handleAvailable(c *gin.Context) {
 		return
 	}
 
+	c.Header("Cache-Control", "no-store")
 	c.JSON(200, result)
 }
 func handleY(c *gin.Context) {
@@ -208,8 +209,7 @@ func putHOT(c *gin.Context) {
 		return
 	}
 	defer db.Close()
-	//TODO:いつもINSERT成功している?
-	//status commentが入らない。
+
 	sql := `INSERT INTO "hot" 
 				("HOT11", "status_no", "hot_comment")
 				VALUES(:hot, :status, :comment)
@@ -219,7 +219,7 @@ func putHOT(c *gin.Context) {
 				"status_no"=:status, 
 				"hot_comment"=:comment;
 	`
-	result, err := db.NamedExec(
+	_, err = db.NamedExec(
 		sql,
 		map[string]interface{}{
 			"hot":     hot.HOT,
@@ -235,7 +235,7 @@ func putHOT(c *gin.Context) {
 		return
 	}
 
-	fmt.Printf("result: %s hot: %s\n", result, hot.HOT)
+	fmt.Printf("result: OK hot: %s\n", hot.HOT)
 	c.JSON(200, hot)
 }
 
