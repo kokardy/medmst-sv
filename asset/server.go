@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 	"os"
@@ -188,7 +189,7 @@ func putHOT(c *gin.Context) {
 
 	//Binding
 	err = c.Bind(&hot)
-	fmt.Printf("Bind: %s", hot)
+	fmt.Printf("Bind: %s\n", hot)
 
 	if err != nil {
 		message = "an ERROR occured in binding form: %s\n"
@@ -234,7 +235,7 @@ func putHOT(c *gin.Context) {
 		return
 	}
 
-	fmt.Printf("result: %s hot: %s", result, hot.HOT)
+	fmt.Printf("result: %s hot: %s\n", result, hot.HOT)
 	c.JSON(200, hot)
 }
 
@@ -409,6 +410,9 @@ func main() {
 	//authorized := r.Group("/static_auth/", gin.BasicAuth(accounts))
 	//authorized.Static("/", "/asset/static_auth/")
 
-	fmt.Println("listen: 8080")
-	r.Run(":8080")
+	var port string
+	flag.StringVar(&port, "port", ":8080", "Port number default:':8080'")
+
+	fmt.Printf("listen: %s \n", port)
+	r.Run(port)
 }
