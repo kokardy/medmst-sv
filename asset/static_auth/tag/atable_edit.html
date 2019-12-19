@@ -48,7 +48,7 @@ this.fields = [
 
 
 change(e){
-    console.log("search no-store")
+    console.info("search no-store")
 
     var tag = this
     //var queryStr = document.getElementById("query_str").value
@@ -189,6 +189,7 @@ change(e){
     </td>
     <td>
             <button onClick="{save_status}">保存</button>
+            <div ref="saved"></div>
         <div id="save_{this['HOT9']}"></div>
     </td>
 
@@ -197,8 +198,7 @@ change(e){
 var drug = this;
 //YJの採用状況を更新
 function change_statusYJ(yj, new_yj_data){
-    console.info("yj:" + yj +
-    " change_status:" + new_yj_data)
+    console.info("yj:" + yj + " update")
     var url = "/edit/yj/"
     var json_data = JSON.stringify(new_yj_data)
     fetch(url, {
@@ -206,24 +206,28 @@ function change_statusYJ(yj, new_yj_data){
       cache: "no-cache",
       credentials: "same-origin",
       headers: {
-              "Content-Type": "application/json; charset=utf-8",
+              //"Content-Type": "application/json; charset=utf-8",
+              "Content-Type": "application/json",
       },
-      body: JSON.stringify(json_data),
+      body: json_data,
     })
     .then(function(json){
        var result = json["result"]
        console.info(json)
-       console.info("---------------PUT--------------")
+       console.info("---------------PUT YJ-----------")
        console.info(json_data)
        console.info("---------------PUT end----------")
-       console.info("result:" + result)
+       console.info("result:" + json.status)
+       if(json.status != 200){
+          alert("YJ採用状態の保存に失敗しました")
+       }
     })
 
 }
 
 //HOTの採用状況を更新
 function change_statusHOT(hot, new_hot_data){
-    console.info("hot:"+ hot + " update:")
+    console.info("hot:"+ hot + " update")
     var url = "/edit/hot/"
     var json_data = JSON.stringify(new_hot_data)
     fetch(url, {
@@ -238,14 +242,45 @@ function change_statusHOT(hot, new_hot_data){
     })
     .then(function(json){
        var result = json["result"]
-
        console.info(json)
-       console.info("---------------PUT--------------")
+       console.info("---------------PUT HOT----------")
        console.info(json_data)
        console.info("---------------PUT end----------")
-       console.info("result:" + result)
+       console.info("result:" + json.status)
+       if(json.status != 200){
+          alert("HOT採用状態の保存に失敗しました")
+       }
     })
 }
+
+//カスタムYJの採用状況を更新
+function change_customYJ(hot, new_custom_yj){
+    console.info("custom_yj HOT:"+ new_custom_yj.HOT9 + " update")
+    var url = "/edit/custom_yj/"
+    var json_data = JSON.stringify(new_custom_yj)
+    fetch(url, {
+      method: "PUT",
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: {
+              //"Content-Type": "application/json; charset=utf-8",
+              "Content-Type": "application/json",
+      },
+      body: json_data,
+    })
+    .then(function(json){
+       var result = json["result"]
+       console.info(json)
+       console.info("---------------PUT CUSTOM_YJ----------")
+       console.info(json_data)
+       console.info("---------------PUT end----------")
+       console.info("result:" + json.status)
+       if(json.status != 200){
+          alert("カスタムYJの保存に失敗しました")
+       }
+    })
+}
+
 
 //採用状態HOTのradio
 check_hot_status (v, e){
@@ -262,16 +297,19 @@ check_yj_status (v, e){
 
 save_status(e){
   //console.info("this:" + Object.keys(this))
+  console.info(this)
 
   var new_yj = {
                   "yj" : this["個別医薬品コード"],
-                  "yj_status" : this.yj_status,
+                  "status" : this.yj_status,
                   "drug_code" : this.refs.drug_code.value,
-                  "yj_comment" : this.refs.yj_comment.value,
+                  "comment" : this.refs.yj_comment.value,
   }
-	console.info("-----------new_yj-----------")
+  console.info("-----------new_yj-----------")
   console.info(new_yj)
-	console.info("----------------------------")
+  console.info("----------------------------")
+
+  change_statusYJ(this["個別医薬品コード"], new_yj)
 
   var new_hot = {
                   "HOT" : this["HOT11"],
@@ -284,13 +322,15 @@ save_status(e){
 
   change_statusHOT(this["HOT11"], new_hot)
 
+  var HOT9 = this["HOT11"].substring(0,9)
   var new_custom_yj = {
-                  "HOT9" : this["HOT11"].substring(0,9),
+                  "HOT9" : HOT9,
                   "custom_yj" : this.refs.custom_yj.value,
   }
   console.info("-----------new_custom_yj-----------")
   console.info(new_custom_yj)
   console.info("-----------------------------------")
+  change_customYJ(HOT9, new_custom_yj)
 }
     </script>
 
