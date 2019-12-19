@@ -234,7 +234,7 @@ func putHOT(c *gin.Context) {
 		return
 	}
 
-	fmt.Println("result: " + result + "hot: " + hot.HOT)
+	fmt.Printf("result: %s hot: %s", result, hot.HOT)
 	c.String(200, hot.String())
 }
 
