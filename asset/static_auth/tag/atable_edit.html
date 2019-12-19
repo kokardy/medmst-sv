@@ -225,7 +225,8 @@ function change_statusHOT(hot, new_hot_data){
       cache: "no-cache",
       credentials: "same-origin",
       headers: {
-              "Content-Type": "application/json; charset=utf-8",
+              //"Content-Type": "application/json; charset=utf-8",
+              "Content-Type": "application/json",
       },
       body: json_data,
     })
@@ -255,8 +256,6 @@ check_yj_status (v, e){
 
 save_status(e){
   //console.info("this:" + Object.keys(this))
-	console.info("drug")
-	console.info(drug)
 
   var new_yj = {
                   "yj" : this["個別医薬品コード"],
@@ -283,8 +282,9 @@ save_status(e){
                   "HOT9" : this["HOT11"].substring(0,9),
                   "custom_yj" : this.refs.custom_yj.value,
   }
-  console.info("new_custom_yj:")
+  console.info("-----------new_custom_yj-----------")
   console.info(new_custom_yj)
+  console.info("-----------------------------------")
 }
     </script>
 

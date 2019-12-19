@@ -235,7 +235,7 @@ func putHOT(c *gin.Context) {
 	}
 
 	fmt.Printf("result: %s hot: %s", result, hot.HOT)
-	c.String(200, hot.String())
+	c.JSON(200, hot)
 }
 
 func putYJ(c *gin.Context) {
