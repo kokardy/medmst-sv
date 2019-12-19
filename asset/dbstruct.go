@@ -97,6 +97,9 @@ type AvailableView struct {
 	HOTComment string `db:"hot_comment" json:"hot_comment"`
 	StatusFlag int    `db:"status_flag" json:"status_flag"`
 	Status     string `db:"採用状態" json:"採用状態"`
+
+	//CustomYJ
+	CustomYJ string `db:"custom_yj" json:"custom_yj"`
 }
 
 type HOTStatus struct {
@@ -110,10 +113,10 @@ func (hs HOTStatus) String() string {
 }
 
 type YJStatus struct {
-	YJ       string `db:"yjcode" json:"yjcode" form:"yjcode"`
+	YJ       string `db:"yjcode" json:"yj" form:"yj"`
 	Status   int    `db:"status_no" json:"status" form:"status"`
 	Comment  string `db:"yj_comment" json:"comment" form:"comment"`
-	DrugCode string `db:"drug_code" json:"drugcode" form:"drugcode"`
+	DrugCode string `db:"drug_code" json:"drug_code" form:"drug_code"`
 }
 
 func (ys YJStatus) String() string {
@@ -122,7 +125,7 @@ func (ys YJStatus) String() string {
 
 type CustomYJ struct {
 	HOT9 string `db:"HOT9" json:"HOT9" form:"HOT9"`
-	YJ   string `db:"yjcode" json:"yjcode" form:"yjcode"`
+	YJ   string `db:"yjcode" json:"custom_yj" form:"custom_yj"`
 }
 
 func (cyj CustomYJ) String() string {

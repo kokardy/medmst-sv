@@ -74,7 +74,7 @@ CREATE VIEW "available_view" as
         COALESCE(yj.status_no, 0) | COALESCE(hot.status_no, 0) AS status_flag,
         resolve_status(yj."status_no", hot."status_no") as "採用状態",
 
-        custom_yj."yjcode" as "custom_yj"
+        COALESCE(custom_yj."yjcode", '') as custom_yj
         
 
 	FROM medis
