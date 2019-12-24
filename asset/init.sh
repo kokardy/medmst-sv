@@ -10,6 +10,7 @@ unzip -jo y.zip
 
 cp /asset/cron_backup /etc/cron.d/
 echo "0 18 * * *  /asset/backup.sh" | crontab -
+/etc/init.d/cron reload
 
 cd /bootstrap
 python3 /asset/register.py -DCI
