@@ -2,18 +2,19 @@
 
 . /root/env.sh
 
-cat /root/env.sh
-
-echo "${PG_HOST}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" > ~/.pgpass
-
+echo "${PG_HOST}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" 
+#echo "${PG_HOST}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" > ~/.pgpass
+echo "*:*:*:*:${PG_PASSWORD}" > ~/.pgpass
+#sudo su postgres
 cat ~/.pgpass
 
 chmod 0600 ~/.pgpass
 
 dir="/backup"
-filename="backup.sql"
 
-mkdir -p ${dir}
+mkdir -p $dir
+
+filename="backup.sql"
 
 pg_dump ${PG_DATABASE} \
 		-h ${PG_HOST} \
@@ -21,7 +22,6 @@ pg_dump ${PG_DATABASE} \
 		-w -Fp -f ${dir}/${filename} \
 		-t yj -t hot -t costom_yj 
 
-cat ~/.pgpass
 filename2=`date '+%Y%m%d%H%M'`.sql
 
 cp ${dir}/${filename} ${dir}/${filename2}
