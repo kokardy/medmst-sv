@@ -369,12 +369,81 @@ func putCustomYJ(c *gin.Context) {
 	c.String(200, cyj.String())
 }
 
+//redirectToPMDA YJコードからredirect
 func redirectToPMDA(c *gin.Context) {
 	var url string
 	yjcode := c.Param("yjcode")
-	redirectURL := os.Getenv("YJ_REDIRECT_URL") //http://localhost:8080/redirect/%s的なのが入る
+
+	//http://localhost:8080/redirect/%s的なのが入る
+	redirectURL := os.Getenv("YJ_REDIRECT_URL")
+
 	url = fmt.Sprintf(redirectURL, yjcode)
 	c.Redirect(http.StatusTemporaryRedirect, url)
+}
+
+//redirectToPMDAWithDrugCode 薬品コードからredirect
+func redirectToPMDAWithDrugCode(c *gin.Context) {
+	var url string
+	var message string
+	drugCode := c.Param("drugCode")
+	yjcode, err := drugcodeToYJ(drugCode)
+
+	if err != nil {
+		message = "%s\ncan not get YJ. 薬品コード:[%s]"
+		message = fmt.Sprintf(message, err, drugCode)
+		fmt.Printf("err: %s\n", message)
+		c.String(404, message)
+		return
+	}
+
+	//http://localhost:8080/redirect/%s的なのが入る
+	redirectURL := os.Getenv("YJ_REDIRECT_URL")
+
+	url = fmt.Sprintf(redirectURL, yjcode)
+	//fmt.Printf("redirect url:%s\n", url)
+	c.Redirect(http.StatusTemporaryRedirect, url)
+}
+
+//drugcodeToYJ 薬日コードからYJコードに変換
+func drugcodeToYJ(drugCode string) (yjcode string, err error) {
+	param := connectParam()
+	db, err := sqlx.Connect("postgres", param)
+	//DB connection check
+	var message string
+	if err != nil {
+		message = "an ERROR occured in database connecting: %s\n"
+		message = fmt.Sprintf(message, err)
+		message += fmt.Sprintf("drugcode [%s]", drugCode)
+		err = fmt.Errorf("err: %s\n", message)
+		return
+	}
+	defer db.Close()
+	sql := `
+SELECT
+	"個別医薬品コード"
+FROM available_view
+WHERE "drug_code"=$1;
+`
+
+	result := struct {
+		YJCode string `db:"個別医薬品コード"`
+	}{}
+
+	//resultに突っ込む
+	err = db.Get(&result, sql, drugCode)
+	if err != nil {
+		message = "an ERROR occured in executing SQL: %s \n%s\n"
+		message = fmt.Sprintf(message, sql, err)
+		message += fmt.Sprintf("drugcode [%s]\n", drugCode)
+		err = fmt.Errorf("err: %s\n", message)
+		fmt.Println(err)
+		return
+	}
+
+	yjcode = result.YJCode
+
+	return
+
 }
 
 func main() {
@@ -395,7 +464,8 @@ func main() {
 	})
 
 	//redirect to PMDA
-	r.GET("/redirect/pmda/:yjcode/", redirectToPMDA)
+	r.GET("/redirect/pmda/yj/:yjcode/", redirectToPMDA)
+	r.GET("/redirect/pmda/drug_code/:drugCode/", redirectToPMDAWithDrugCode)
 
 	//y
 	r.GET("/json/y/", handleY)
