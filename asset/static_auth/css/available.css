@@ -1,3 +1,34 @@
 .HOT7, .HOT11, .status_flag{
     display:none;
 }
+
+
+table{
+    width:1200px;
+    table-layout:fixed;
+}
+
+th.医薬品コード{
+    width:200px;
+}
+
+th.名称{
+    width:300px;
+}
+th.規格単位・包装{
+    width:100px;
+}
+th.薬価{
+    width:75px;
+}
+th.YJで採用設定{
+    width:180px;
+}
+th.HOTで採用設定{
+    width:180px;
+}
+th.保存{
+    width:50px;
+}
+
+
