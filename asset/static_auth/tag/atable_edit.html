@@ -35,13 +35,11 @@ this.drugs = [ ]
 this.fields = [
     "医薬品コード",
     "名称",
-    "規格単位",
-    "包装",
+    "規格単位/包装",
     "会社",
     "薬価",
-    "採用状態",
-    "採用状態YJ",
-    "採用状態HOT",
+    "YJで採用設定",
+    "HOTで採用設定",
     "保存",
 ]
 
@@ -86,6 +84,7 @@ change(e){
     <td>
             厚労省コード:{this["薬価基準収載医薬品コード"]} <br/>
             YJコード:{this["個別医薬品コード"]} <br/>
+            HOT11:{this['HOT11']}<br/>
             薬品コード:
             <input
                 ref="drug_code" 
@@ -107,9 +106,7 @@ change(e){
             告示名称:{this["告示名称"]}
     </td>
     <td>
-            {this["規格単位"]}
-    </td>
-    <td>
+            {this["規格単位"]}<br/>
             {this["包装形態"]}
             {this["包装単位数"]}
             {this["包装単位単位"]}
@@ -121,9 +118,6 @@ change(e){
     <td>
             {this["新_金額"]} / 
             {this["単位_漢字名称"]}
-    </td>
-    <td>
-            {this["採用状態"]}
     </td>
     <td>
         <input name="yj_status_{this['HOT11']}"
