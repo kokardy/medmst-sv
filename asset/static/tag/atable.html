@@ -51,9 +51,7 @@ this.fields = [
     "会社",
     "薬価",
     "採用状態",
-    "採用状態YJ",
-    "採用状態HOT",
-    "保存",
+    "リンク",
 ]
 
 
@@ -118,20 +116,8 @@ change(e){
     <td>
             厚労省コード:{this["薬価基準収載医薬品コード"]} <br/>
             YJコード:{this["個別医薬品コード"]} <br/>
-            薬品コード:
-            <input 
-                    ref="drug_code"
-                    class="disabled"
-                    name="drug_code_{this['HOT11']}"
-                    value="{this["drug_code"]}">
-            </input><br/>
-            カスタムYJ:
-            <input
-                ref="custom_yj" 
-                class="disabled"
-                name="custom_yj_{this['HOT11']}" 
-                value="{this['custom_yj']}">
-            </input>
+            薬品コード:{this["drug_code"]} <br/>
+            カスタムYJ:{this['custom_yj']} <br/>
     </td>
     <td>
             販売名:{this["販売名"]} <br/>
@@ -154,69 +140,9 @@ change(e){
             {this["単位_漢字名称"]}
     </td>
     <td>
-            {this["採用状態"]}
-    </td>
-    <td>
-        <input name="yj_status_{this['HOT11']}"
-                                    class="disabled"
-                                    value="3"
-                                    checked='{this["yj_status"]==3}'
-                                    type="radio" >
-        採用</input>     <br/>
-        <input name="yj_status_{this['HOT11']}"
-                                    class="disabled"
-                                    value="1"
-                                    checked='{this["yj_status"]==1}'
-                                    type="radio">
-        院内採用</input> <br/>
-        <input name="yj_status_{this['HOT11']}" 
-                                    class="disabled"
-                                    value="2"
-                                    checked='{this["yj_status"]==2}'
-                                    type="radio">
-        院外採用</input> <br/>
-        <input name="yj_status_{this['HOT11']}" 
-                                    class="disabled"
-                                    value="0"
-                                    checked='{this["yj_status"]==0}'
-                                    type="radio">
-        不採用</input>   <br/>
-        コメント:
-        <input name="yj_comment_{this['HOT11']}"
-                                    class="disabled"
-               value='{this["yj_comment"]}'>
-        </input>
-    </td>
-    <td>
-        <input name="hot_status_{this['HOT11']}"
-                                    class="disabled"
-                                    value="3"
-                                    checked='{this["hot_status"]==3}'
-                                    type="radio" >
-        採用</input>     <br/>
-        <input name="hot_status_{this['HOT11']}"
-                                    class="disabled"
-                                    value="1"
-                                    checked='{this["hot_status"]==1}'
-                                    type="radio">
-        院内採用</input> <br/>
-        <input name="hot_status_{this['HOT11']}"
-                                    class="disabled"
-                                    value="2"
-                                    checked='{this["hot_status"]==2}'
-                                    type="radio">
-        院外採用</input> <br/>
-        <input name="hot_status_{this['HOT11']}"
-                                    class="disabled"
-                                    value="0"
-                                    checked='{this["hot_status"]==0}'
-                                    type="radio">
-        不採用</input>   <br/>
-        コメント:
-        <input name="hot_comment_{this['HOT11']}" 
-                                    class="disabled"
-               value='{this["hot_comment"]}'>
-        </input>
+            {this["採用状態"]} <br/>
+            YJコメント:{this["yj_comment"]} <br/>
+            HOTコメント:{this["hot_comment"]}
     </td>
     <td class="outerlink">
         <div if={ this['個別医薬品コード'] }>
