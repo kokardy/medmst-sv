@@ -8,6 +8,7 @@ import os.path
 import codecs
 
 ifile = "/asset/drug_code_list.txt"
+backupfile = "/backup/backup.sql"
 
 PARAM = dict(
             host = os.environ.get("PG_HOST", "postgres"),
@@ -58,9 +59,32 @@ INSERT INTO yj(
     con.commit()
 
 
+def restore_drugs():
+    con = connection()
+    cur = con.cursor()
+
+    sql = """
+    DROP TABLE yj;
+    DROP TABLE hot;
+    DROP TABLE custom_yj;
+    """
+
+    with codecs.open(backupfile, "r", encoding="utf8") as f:
+        sql = sql +  "\n".join(f)
+
+    try:
+        cur.execute(sql)
+    except:
+        con.rollback()
+
+    con.commit()
+
 def main():
-    import_drugs()
-    
+    if os.path.exists(backupfile):
+        restore_drugs()
+        print("restore drugs: {}".format(backupfile))
+    else:
+        print("restore file not found: {}".format(backupfile))
 
 if __name__ == '__main__':
     main()
