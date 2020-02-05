@@ -11,19 +11,21 @@ cat ~/.pgpass
 chmod 0600 ~/.pgpass
 
 dir="/backup"
-
-mkdir -p $dir
-
 filename="backup.tar"
 
-pg_dump  ${PG_DATABASE} \
+
+psql -d medmst \
+    -h ${PG_HOST} \
+	-U ${PG_USER} \
+    -w \
+    -c 'DELETE FROM yj; DELETE FROM hot; DELETE FROM custom_yj'
+
+
+pg_restore -d ${PG_DATABASE} \
 		-h ${PG_HOST} \
 		-U ${PG_USER} \
-		-w -Ft -f ${dir}/${filename} \
-		-t yj -t hot -t custom_yj 
+		--data-only \
+		-t yj -t hot -t custom_yj \
+		-w -Ft ${dir}/${filename}
 
-filename2=`date '+%Y%m%d%H%M'`.tar
-
-cp ${dir}/${filename} ${dir}/${filename2}
-
-echo "backup:${filename2}"
+echo "restore:${filename}"
