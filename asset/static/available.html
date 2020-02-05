@@ -47,6 +47,11 @@ function focus(){
     element.focus();
 }
 
+function gs1search(gs1){
+    document.gs1form.gs1code.value = gs1;
+    document.gs1form.submit();
+}
+
 </script>
 
 
@@ -58,5 +63,81 @@ function focus(){
 
 <script>riot.mount("atable");
 </script>
+<form name="gs1form" action="https://www.pmda.go.jp/PmdaSearch/iyakuSearch/" method="POST">
+	<input type="hidden" name="btnA.x" value="67">
+	<input type="hidden" name="btnA.y" value="8">
+	<input type="hidden" name="nameWord" value="">
+	<input type="hidden" name="iyakuHowtoNameSearchRadioValue" value="1">
+	<input type="hidden" name="howtoMatchRadioValue" value="1">
+	<input type="hidden" name="effectValue" value="">
+	<input type="hidden" name="infoindicationsorefficacy" value="">
+	<input type="hidden" name="infoindicationsorefficacyHowtoSearch" value="and">
+	<input type="hidden" name="warnings" value="">
+	<input type="hidden" name="warningsHowtoSearch" value="and">
+	<input type="hidden" name="contraindicationsAvoidedadministration" value="">
+	<input type="hidden" name="contraindicationsAvoidedadministrationHowtoSearch" value="">
+	<input type="hidden" name="contraindicatedcombinationPrecautionsforcombination" value="">
+	<input type="hidden" name="contraindicatedcombinationPrecautionsforcombinationHowtoSearch" value="">
+	<input type="hidden" name="dispColumnsList[0]" value="1">
+	<input type="hidden" name="dispColumnsList[1]" value="2">
+	<input type="hidden" name="dispColumnsList[2]" value="3">
+	<input type="hidden" name="dispColumnsList[3]" value="">
+	<input type="hidden" name="dispColumnsList[4]" value="">
+	<input type="hidden" name="dispColumnsList[5]" value="">
+	<input type="hidden" name="dispColumnsList[6]" value="">
+	<input type="hidden" name="dispColumnsList[7]" value="">
+	<input type="hidden" name="dispColumnsList[8]" value="">
+	<input type="hidden" name="dispColumnsList[9]" value="">
+	<input type="hidden" name="dispColumnsList[10]" value="">
+	<input type="hidden" name="dispColumnsList[11]" value="">
+	<input type="hidden" name="dispColumnsList[12]" value="">
+	<input type="hidden" name="dispColumnsList[13]" value="">
+	<input type="hidden" name="dispColumnsList[14]" value="">
+	<input type="hidden" name="dispColumnsList[15]" value="">
+	<input type="hidden" name="changeColumnsList" value="">
+	<input type="hidden" name="updateDocFrDt" value="">
+	<input type="hidden" name="updateDocToDt" value="">
+	<input type="hidden" name="tglOpFlg" value="">
+	<input type="hidden" name="compNameWord" value="">
+	<input type="hidden" name="koumoku1Value" value="">
+	<input type="hidden" name="koumoku2Value" value="">
+	<input type="hidden" name="koumoku3Value" value="">
+	<input type="hidden" name="koumoku1Word" value="">
+	<input type="hidden" name="koumoku2Word" value="">
+	<input type="hidden" name="koumoku3Word" value="">
+	<input type="hidden" name="koumoku1HowtoSearch" value="and">
+	<input type="hidden" name="koumoku2HowtoSearch" value="and">
+	<input type="hidden" name="koumoku3HowtoSearch" value="and">
+	<input type="hidden" name="howtoRdSearchSel" value="or">
+	<input type="hidden" name="relationDoc1Sel" value="">
+	<input type="hidden" name="relationDoc2Sel" value="">
+	<input type="hidden" name="relationDoc3Sel" value="">
+	<input type="hidden" name="relationDoc1check1" value="on">
+	<input type="hidden" name="relationDoc1check2" value="on">
+	<input type="hidden" name="relationDoc2check1" value="on">
+	<input type="hidden" name="relationDoc2check2" value="on">
+	<input type="hidden" name="relationDoc3check1" value="on">
+	<input type="hidden" name="relationDoc3check2" value="on">
+	<input type="hidden" name="relationDoc1Word" value="検索語を入力">
+	<input type="hidden" name="relationDoc2Word" value="検索語を入力">
+	<input type="hidden" name="relationDoc3Word" value="検索語を入力">
+	<input type="hidden" name="relationDoc1HowtoSearch" value="and">
+	<input type="hidden" name="relationDoc2HowtoSearch" value="and">
+	<input type="hidden" name="relationDoc3HowtoSearch" value="and">
+	<input type="hidden" name="relationDoc1FrDt" value="年月 [YYYYMM]">
+	<input type="hidden" name="relationDoc1ToDt" value="年月 [YYYYMM]">
+	<input type="hidden" name="relationDoc2FrDt" value="年月 [YYYYMM]">
+	<input type="hidden" name="relationDoc2ToDt" value="年月 [YYYYMM]">
+	<input type="hidden" name="relationDoc3FrDt" value="年月 [YYYYMM]">
+	<input type="hidden" name="relationDoc3ToDt" value="年月 [YYYYMM]">
+	<input type="hidden" name="relationDocHowtoSearchBetween12" value="and">
+	<input type="hidden" name="relationDocHowtoSearchBetween23" value="and">
+	<input type="hidden" name="ListRows" value="100">
+	<input type="hidden" name="listCategory" value="BOOK">
+	<input type="hidden" name="personFlg" value="false">
+	<input type="hidden" name="iyakuKoumokuSelectSwitchRadio" value="2">
+
+	<input type="hidden" name="gs1code" value="04987084000637">
+</form>
 </body>
 </html>
