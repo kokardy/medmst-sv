@@ -10,7 +10,7 @@ unzip -jo y.zip
 
 #cron
 cp /asset/cron_backup /etc/cron.d/
-echo "0 18 * * *  /asset/backup.sh" | crontab -
+echo "30 6 * * *  /asset/routine.sh" | crontab -
 #cron reload
 /etc/init.d/cron reload
 
@@ -18,5 +18,7 @@ echo "0 18 * * *  /asset/backup.sh" | crontab -
 sleep 5
 cd /bootstrap
 python3 /asset/register.py -DCI
-python3 /asset/import_drug_code.py
+#python3 /asset/import_drug_code.py
+cd /asset
+bash restore.sh
 

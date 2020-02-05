@@ -64,9 +64,9 @@ def restore_drugs():
     cur = con.cursor()
 
     sql = """
-    DROP TABLE yj;
-    DROP TABLE hot;
-    DROP TABLE custom_yj;
+    -- DROP TABLE yj;
+    -- DROP TABLE hot;
+    -- DROP TABLE custom_yj;
     """
 
     with codecs.open(backupfile, "r", encoding="utf8") as f:
@@ -74,10 +74,13 @@ def restore_drugs():
 
     try:
         cur.execute(sql)
-    except:
+        con.commit()
+        print("commit backup.sql")
+    except Exception as e:
         con.rollback()
+        print("rollback")
+        raise e
 
-    con.commit()
 
 def main():
     if os.path.exists(backupfile):
