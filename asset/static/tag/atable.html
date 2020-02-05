@@ -161,6 +161,9 @@ change(e){
         href="//10.26.61.131/jiho/latest/IYJ/{this['個別医薬品コード']}.pdf">
                 JIHO(成分)
         </a>
+        <!-- GS1:{ GS1toJAN(this['JAN']) } -->
+        <!-- JAN:{ this['JAN'] } -->
+        <button onclick="gs1search({ GS1toJAN(this['JAN']) });">PMDA添付文書</button>
         </div>
     </td>
 
