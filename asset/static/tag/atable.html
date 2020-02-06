@@ -2,9 +2,29 @@
 
 <style>
 
-input.disabled{
-        pointer-events:none;
+tr.status0{
+    background-color:#DDDDDD;
 }
+tr.status1{
+    background-color:yellow;
+}
+tr.status2{
+    background-color:green;
+}
+tr.status3{
+    background-color:pink;
+}
+
+a,a:visited{
+    color:blue;
+}
+
+em{
+    font-size:Larger;
+    font-weight:bold;
+
+}
+
 
 </style>
 
@@ -17,10 +37,12 @@ input.disabled{
 <!-- 検索BOX  -->
 <input
     id="query_string"
+    name="query_string"
     type="text"
     ref="query"
     class="query_input"
-    ></input>
+    >
+</input>
 <button onClick="{change}">検索</button>
 
 <table>
@@ -31,14 +53,16 @@ input.disabled{
     </thead>
 
     <tbody>
-            <tr data-is="drug" each="{drugs}"></tr>
+            <tr class="status{status_flag}" data-is="drug" each="{drugs}"></tr>
     </tbody>
 </table>
 
     <script>
 
 
-console.log(Object.keys(this))
+this.on("mount", function(){
+  document.getElementById("query_string").focus()
+})
 
 
 this.drugs = [ ]
@@ -53,37 +77,6 @@ this.fields = [
     "採用状態",
     "リンク",
 ]
-
-
-change_statusYJ(yj, new_stat, e){
-    console.log("yj:"+ yj +
-    " change_status:"+ new_stat)
-    var url = "/edit/yj/"
-    var data = {
-        yjcode: yj,
-        status: new_stat,
-    }
-    fetch(url, {
-      method: "PUT",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-              "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify(data),
-    })
-    .then(function(json){
-       var result = json["result"]
-       console.log("PUT:" + data  + " result:" + result)
-    })
-
-}
-
-change_statusHOT(hot, new_stat, e){
-    console.log("hot:"+ hot + 
-    " change_status:"+ new_stat)
-}
-
 
 change(e){
     console.log("change")
@@ -102,8 +95,10 @@ change(e){
         tag.update()
     })
     .then(undefined, function onRejected(error){
-        console.log("rejected:" + error);
-    });
+        console.log("rejected:" + error)
+    })
+
+
 
 }
 
@@ -140,7 +135,7 @@ change(e){
             {this["単位_漢字名称"]}
     </td>
     <td>
-            {this["採用状態"]} <br/>
+            <em>{this["採用状態"]}</em><br/>
             YJコメント:{this["yj_comment"]} <br/>
             HOTコメント:{this["hot_comment"]}
     </td>
