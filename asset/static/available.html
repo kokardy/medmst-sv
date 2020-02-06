@@ -42,20 +42,11 @@
 <script>
 
 function onload(){
-    console.log(document.domain);
     if(document.domain=="10.26.61.131" || document.domain=="yakuzai-web2"){
         document.gs1form.action = "http://10.26.61.131:8081/PmdaSearch/iyakuSearch/";
     }
-    console.log(document.gs1form.action)
 }
 
-
-function focus(){
-    var element = document.getElementById("query_string");
-    console.log(element);
-    element.focus();
-
-}
 
 function gs1search(gs1){
     document.gs1form.gs1code.value = gs1;
