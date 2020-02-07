@@ -34,9 +34,26 @@ a, a:visited{
 
 </style>
 
+
+<script>
+function onload(){
+    var domain = document.domain;
+    var port = location.port;
+    console.log(domain);
+    console.log(port);
+    
+    domains = document.getElementsByClassName("domain");
+    for (i=0; i < domains.length ; i++){
+        domains[i].innerHTML = domain + ":" + port ;
+    }
+   
+}
+
+</script>
+
     </head>
 
-    <body>
+    <body onload="onload();">
         <h1>DI Window 2</h1>
         <h2>現在βバージョンです</h2>
         <h3>
@@ -49,8 +66,21 @@ a, a:visited{
         </div>
         <h3> <a href="available.html">採用薬検索</a> </h3>
         <h3> <a href="../static_auth/available_edit.html">採用薬編集</a> </h3>
+        
 
-
+        <h3>添付文書へのダイレクトアクセス</h3>
+        <div>
+                以下のアドレスにアクセスすると添付文書へ直接飛びます。
+                (登録されていないものもあります)
+        </div>
+        <ul>
+          <li>
+          http://<span class="domain"></span>/redirect/pmda/yj/[YJコード]/
+          </li>
+          <li>
+          http://<span class="domain"></span>/redirect/pmda/drug_code/[6桁薬品コード]/
+          </li>
+        </ul>
         <h2>TODO</h2>
         <ul class="todo">
            <li>公式マスタの定期更新(cron)</li>
