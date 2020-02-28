@@ -11,7 +11,7 @@ cat ~/.pgpass
 chmod 0600 ~/.pgpass
 
 dir="/backup"
-filename="backup.tar"
+filename="backup"
 
 
 psql -d medmst \
@@ -26,6 +26,6 @@ pg_restore -d ${PG_DATABASE} \
 		-U ${PG_USER} \
 		--data-only \
 		-t yj -t hot -t custom_yj \
-		-w -Ft ${dir}/${filename}
+		-w -Fc ${dir}/${filename}
 
 echo "restore:${filename}"
