@@ -9,8 +9,7 @@ cd /bootstrap/save/y
 unzip -jo y.zip
 
 #cron
-cp /asset/cron_backup /etc/cron.d/
-echo "30 6 * * *  /asset/routine.sh" | crontab -
+echo "30 6,18 * * * bash /asset/routine.sh" | crontab -
 #cron reload
 /etc/init.d/cron reload
 
