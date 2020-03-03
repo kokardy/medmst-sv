@@ -101,6 +101,15 @@ function onload(){
            <li class="finish">検索結果の見栄えを変える</li> 
         </ul>
 
+
+        <ul class="history">
+            <li>20200227 正式稼働。YJと薬品コードから添付文書のリダイレクト機能のみ
+            <li>20200229 NOTFOUNDのトラブル。原因：PMDAのサイトの仕様変更。httpからhttpsへリダイレクトするようになった。対応：nginxからrproxyにリバースプロキシを変更。リバースプロキシの設定をhttpsのページを読むように変更。
+            <li>20200303 添付文書で開けるページと開けないページがある。原因：bufio.Scannerの上限(64KiB)を超える長い行が存在する。対応：行の読み込みをbufio.Scannerからbufio.Readerにして、長い行に対応。
+
+
+        </ul>
+
     </body>
 
 
