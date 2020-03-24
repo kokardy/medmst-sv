@@ -2,11 +2,12 @@
 
 . /root/env.sh
 
-echo "${PG_HOST}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" 
+date
+#echo "${PG_HOST}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" 
 #echo "${PG_HOST}:${PG_PORT}:${PG_DATABASE}:${PG_USER}:${PG_PASSWORD}" > ~/.pgpass
-echo "*:*:*:*:${PG_PASSWORD}" > ~/.pgpass
+#echo "*:*:*:*:${PG_PASSWORD}" > ~/.pgpass
 #sudo su postgres
-cat ~/.pgpass
+#cat ~/.pgpass
 
 chmod 0600 ~/.pgpass
 
