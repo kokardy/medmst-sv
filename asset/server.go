@@ -81,8 +81,9 @@ func handleAvailable(c *gin.Context) {
 				"個別医薬品コード" like $1 || '%' OR
 				"HOT11" like $1 || '%' OR
 				"製造会社" like '%' || $1 || '%' OR
-				"販売会社" like '%' || $1 || '%'; 
+				"販売会社" like '%' || $1 || '%'
 			ORDER BY "個別医薬品コード", "販売会社", "製造会社"
+			;
 		`
 	param := connectParam()
 	db, err := sqlx.Connect("postgres", param)
