@@ -2,6 +2,10 @@
     display:none;
 }
 
+#query_string{
+    ime-mode:active;
+}
+
 
 table{
     width:1200px;
