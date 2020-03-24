@@ -4,7 +4,7 @@ chmod +x server
 cd /bootstrap
 /go/bin/medmst -f
 cd /bootstrap/save/hot
-jlha xif *.lzh
+unzip -jo *.lzh
 cd /bootstrap/save/y
 unzip -jo y.zip
 
