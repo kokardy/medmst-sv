@@ -4,7 +4,7 @@ mv /bootstrap/save /bootstrap/${day}backup
 cd /bootstrap
 /go/bin/medmst -f
 cd /bootstrap/save/hot
-jlha xif *.lzh
+unzip -jo *.zip
 cd /bootstrap/save/y
 unzip -jo y.zip
 cd /bootstrap
