@@ -81,7 +81,7 @@ CREATE VIEW "available_view" as
 	LEFT JOIN y
 		ON y."薬価基準コード" = medis."薬価基準収載医薬品コード" 
     LEFT JOIN yj
-        ON yj."yjcode" = medis."薬価基準収載医薬品コード"
+        ON yj."yjcode" = medis."個別医薬品コード"
     LEFT JOIN hot
         ON hot."HOT11" = substr(medis."基準番号（ＨＯＴコード）", 1, 11)
     LEFT JOIN custom_yj
