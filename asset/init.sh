@@ -9,7 +9,7 @@ cd /bootstrap/save/y
 unzip -jo y.zip
 
 #cron
-echo "30 6,18 * * * bash /asset/routine.sh" | crontab -
+echo "30 6,18 * * * export http_proxy=$http_proxy ; export https_proxy=$https_proxy && bash /asset/routine.sh >> /bootstrap/cron.log" | crontab -
 #cron reload
 /etc/init.d/cron reload
 
