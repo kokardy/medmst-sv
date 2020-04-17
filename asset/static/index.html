@@ -83,10 +83,10 @@ function onload(){
         </ul>
         <h2>TODO</h2>
         <ul class="todo">
-           <li>公式マスタの定期更新(cron)</li>
+           <li class="finish">公式マスタの定期更新(cron)</li>
            <li class="finish">定期バックアップからのリストア機能をつける</li>
            <li class="finish">再起動時に採用薬データを入れなおす</li>
-           <li>最新の採用状況をインポート</li>
+           <li>最新の採用状況をインポート. scriptは作成した</li>
            <li class="finish">PMDAの各ファイルへのURLの定期更新(cron)</li>
            <li>公式のマスタのワクチン何故かYJ入っていない。カスタムYJ入れる</li>
            <li>JIHOにYJがない薬品はデッドリンクになる</li> 
@@ -108,6 +108,8 @@ function onload(){
             <li>20200303 添付文書で開けるページと開けないページがある。原因：bufio.Scannerの上限(64KiB)を超える長い行が存在する。対応：行の読み込みをbufio.Scannerからbufio.Readerにして、長い行に対応。
             <li>20200323 古い採用情報を一旦インポート。import用のscript作成</li>
             <li>20200326 薬価マスタのURL変更に対応。とってくるHOTマスタをlzhからzipに変更</li>
+            <li>20200416 YJ→URLのkey-value登録に7桁目がアルファベットのYJコードを拾うように変更</li>
+            <li>20200417 マスタの自動更新</li>
 
 
         </ul>
