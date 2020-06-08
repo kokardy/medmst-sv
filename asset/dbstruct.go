@@ -78,6 +78,8 @@ type AvailableView struct {
 	YJCode      string `db:"個別医薬品コード" json:"個別医薬品コード"`
 	PublicName  string `db:"告示名称" json:"告示名称"`
 	ConsName    string `db:"販売名" json:"販売名"`
+	GenericName string `db:"成分名" json:"成分名"`
+	GenericInfo string `db:"後発情報" json:"後発情報"`
 	Unit        string `db:"規格単位" json:"規格単位"`
 	CoverType   string `db:"包装形態" json:"包装形態"`
 	CoverNum    string `db:"包装単位数" json:"包装単位数"`
