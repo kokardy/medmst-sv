@@ -93,6 +93,7 @@ def create(con):
     filepathlist = [
         os.path.join(ASSET_DIR, "medis_def.sql"),
         os.path.join(ASSET_DIR, "y_def.sql"),
+        os.path.join(ASSET_DIR, "generic_def.sql"),
         os.path.join(ASSET_DIR, "available_def.sql"),
     ]
 
