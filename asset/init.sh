@@ -4,13 +4,12 @@ chmod +x server
 cd /bootstrap
 /go/bin/medmst -f
 cd /bootstrap/save/hot
-jlha xif *.lzh
+unzip -jo *.zip
 cd /bootstrap/save/y
 unzip -jo y.zip
 
 #cron
-cp /asset/cron_backup /etc/cron.d/
-echo "30 6 * * *  /asset/routine.sh" | crontab -
+echo "30 6,18 * * * export http_proxy=$http_proxy ; export https_proxy=$https_proxy && bash /asset/routine.sh >> /bootstrap/cron.log" | crontab -
 #cron reload
 /etc/init.d/cron reload
 

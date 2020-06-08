@@ -2,17 +2,21 @@
 
 <style>
 
+/* 不採用 */
 tr.status0{
-    background-color:#DDDDDD;
+    background-color:gray;
 }
+/* 院内 */
 tr.status1{
-    background-color:yellow;
+    background-color:#FFAAAA;
 }
+/* 院外 */
 tr.status2{
-    background-color:green;
+    background-color:#AAFFAA;
 }
+/* 院内院外採用 */
 tr.status3{
-    background-color:pink;
+    background-color:white;
 }
 
 a,a:visited{
@@ -158,7 +162,7 @@ change(e){
         </a>
         <!-- GS1:{ GS1toJAN(this['JAN']) } -->
         <!-- JAN:{ this['JAN'] } -->
-        <button onclick="gs1search({ GS1toJAN(this['JAN']) });">PMDA添付文書</button>
+        <button onclick="gs1search({ GS1toJAN(this['JAN']) });">GS1での検索結果へ</button>
         </div>
     </td>
 
