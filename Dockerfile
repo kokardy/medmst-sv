@@ -1,10 +1,8 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 COPY asset /asset
 COPY supervisord.conf /etc/supervisord.conf
 COPY asset/routine.sh /etc/cron.daily/routine.sh
-COPY asset/cron_backup /etc/cron.d/cron_backup
-
 
 ENV GOPATH=/go \
     http_proxy=${http_proxy} \
@@ -13,13 +11,13 @@ ENV GOPATH=/go \
     ADMIN_USER=di \
     ADMIN_PASSWORD=diwindow1235
 
-RUN apt-get update && \
+RUN ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+		apt-get update && \
     apt-get install -y \
     golang \
     python3 \
     python3-psycopg2 \
     git \
-    jlha-utils \
     unzip \
     wget \
     postgresql-client \
@@ -31,7 +29,7 @@ RUN apt-get update && \
 RUN go get github.com/kokardy/medmst \
     github.com/lib/pq \
     github.com/jmoiron/sqlx \
-	github.com/gin-gonic/gin
+  	github.com/gin-gonic/gin
 
 RUN cd /bootstrap && \
     git clone -b v3 https://github.com/riot/riot && \
