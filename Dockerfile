@@ -17,6 +17,7 @@ RUN ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     golang \
     python3 \
     python3-psycopg2 \
+    python3-sqlalchemy \
     git \
     unzip \
     wget \
