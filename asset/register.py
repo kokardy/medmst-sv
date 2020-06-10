@@ -36,6 +36,7 @@ def get_files(save_dir=SAVE_DIR):
     hot = "hot"
     y = "y"
     medis = "medis"
+    generic = "generic"
     result = dict(medis=[], y=[])
     for path, dirs, filenames in os.walk(save_dir):
         for filename in filenames:
@@ -51,6 +52,9 @@ def get_files(save_dir=SAVE_DIR):
             if os.path.basename(path) == y:
                 if filename == "y.csv":
                     result[y] = [fullpath]
+            if os.path.basename(path) == generic:
+                if re.match("^tp\d{8}-\d{2}_\d{2}.xlsx", filename):
+                    result[generic] = [fullpath]
 
     print("result", result)
 
@@ -120,6 +124,27 @@ def insert(con, infiles):
     for (sql_template, insert_data, skip) in insert_list:
         _insert(con, sql_template, insert_data, skip)
 
+    import pandas as pd
+    import sqlalchemy as sa
+    engine = sa.create_engine(
+        f'postgresql://{PARAM["user"]}:{PARAM["password"]}@{PARAM["host"]}:{PARAM["port"]}/{PARAM["database"]}'
+    )
+
+    gfile = infiles["generic"]
+    insert_data = pd.read_excel(gfile[0], dtype={4:str}) #日付が数値に解釈されるのを防止する
+    index = "薬価基準収載医薬品コード"
+    columns = [
+        "成分名",
+        "品名",
+        "後発情報",
+        "収載年月日",
+        "経過措置による使用期限" ,
+        "備考"]   
+    insert_data = insert_data.set_index(index)
+    insert_data.columns = columns
+
+    insert_data.to_sql("generic", engine, if_exists="append" )#if_exists=append テーブルがあったら追加
+
 
 #insert(con, infles)から呼ぶ用
 #sqlファイルと入力用ファイルを一行目をスキップするかどうかを与えて
@@ -161,10 +186,7 @@ def delete(con):
 
 
 def main():
-    infiles = get_files(SAVE_DIR)
-
     options = sys.argv[1].lstrip("-")
-
     
     if len(options) == 0:
         print("OPTION must be -[C][D][I]")
