@@ -176,6 +176,7 @@ def delete(con):
     sqls = [
         """DELETE FROM "medis";""",
         """DELETE FROM "y";""",
+        """DELETE FROM "generic";""",
     ]
     cur = con.cursor()
     for sql in sqls:
