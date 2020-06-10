@@ -18,6 +18,7 @@ RUN ln -fs /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     python3 \
     python3-psycopg2 \
     python3-sqlalchemy \
+    python3-pandas \
     git \
     unzip \
     wget \
