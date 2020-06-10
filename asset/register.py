@@ -143,6 +143,7 @@ def insert(con, infiles):
     insert_data = insert_data.set_index(index)
     insert_data.columns = columns
 
+    print("insert: generic table")
     insert_data.to_sql("generic", engine, if_exists="append" )#if_exists=append テーブルがあったら追加
 
 
@@ -156,7 +157,7 @@ def _insert(con, sql_file, insert_files, line1skip):
         print(e)
         return
     for insert_file in insert_files:
-        print(f'insert: {insert_file}')
+        print(f'insert: {insert_file} table')
         with open(insert_file, "r", encoding="cp932") as f:
             r = csv.reader(f)
             r = [line for line in r]
