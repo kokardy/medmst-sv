@@ -55,7 +55,7 @@ CREATE VIEW "available_view" as
 		"告示名称",
 		"販売名",
         COALESCE(generic."成分名", '') as "成分名",
-        "後発情報",
+        COALESCE("後発情報", '') as "後発情報",
 		"規格単位",
 		"包装形態",
 		"包装単位数",
@@ -83,9 +83,9 @@ CREATE VIEW "available_view" as
 	LEFT JOIN y
 		ON y."薬価基準コード" = medis."薬価基準収載医薬品コード" 
     LEFT JOIN yj
-        ON yj."yjcode" = medis."薬価基準収載医薬品コード"
+        ON medis."個別医薬品コード" = yj."yjcode"
     LEFT JOIN generic
-        ON yj."yjcode" = generic."薬価基準収載医薬品コード"
+        ON y."薬価基準コード" = generic."薬価基準収載医薬品コード"
     LEFT JOIN hot
         ON hot."HOT11" = substr(medis."基準番号（ＨＯＴコード）", 1, 11)
     LEFT JOIN custom_yj
