@@ -95,6 +95,7 @@ change(e){
     })
     .then(function(json){
         console.log(url)
+        console.debug(json)
         tag.drugs = json
         tag.update()
     })
@@ -120,7 +121,8 @@ change(e){
     </td>
     <td>
             販売名:{this["販売名"]} <br/>
-            告示名称:{this["告示名称"]}
+            <!-- 告示名称:{this["告示名称"]} -->
+            成分名:{this["成分名"]}
     </td>
     <td>
             {this["規格単位"]}

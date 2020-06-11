@@ -38,22 +38,22 @@ def get_files(save_dir=SAVE_DIR):
     medis = "medis"
     generic = "generic"
     result = dict(medis=[], y=[])
-    for path, dirs, filenames in os.walk(save_dir):
+    for path, _dirs, filenames in os.walk(save_dir):
         for filename in filenames:
             fullpath = os.path.join(path, filename)
             if os.path.basename(path) == hot:
                 r = result[medis]
-                if re.match("^MEDIS\d{8}.TXT$", filename):
+                if re.match("^MEDIS\\d{8}.TXT$", filename):
                     r.append(fullpath)
-                elif re.match("^\d{8}.txt", filename):
+                elif re.match("^\\d{8}.txt", filename):
                     r.append(fullpath)
-                elif re.match("^h\d{8}del.txt", filename):
+                elif re.match("^h\\d{8}del.txt", filename):
                     r.append(fullpath)
             if os.path.basename(path) == y:
                 if filename == "y.csv":
                     result[y] = [fullpath]
             if os.path.basename(path) == generic:
-                if re.match("^tp\d{8}-\d{2}_\d{2}.xlsx", filename):
+                if re.match("^tp\\d{8}-\\d{2}_\\d{2}.xlsx", filename):
                     result[generic] = [fullpath]
 
     print("result", result)
