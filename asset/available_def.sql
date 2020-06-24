@@ -67,7 +67,7 @@ CREATE VIEW "available_view" as
         COALESCE(y."新_金額", -1) as "新_金額",
 
 
-        SUBSTR("基準番号（ＨＯＴコード）", 1, 11) as "HOT11",
+        CAST(SUBSTR("基準番号（ＨＯＴコード）", 1, 11) AS varchar(11)) as "HOT11",
         COALESCE(yj.status_no, 0) as yj_status,
         COALESCE(yj_comment, '') as yj_comment,
         COALESCE(yj.drug_code, '') as drug_code,
