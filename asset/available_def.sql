@@ -69,7 +69,12 @@ CREATE VIEW "available_view" as
 		"販売会社",
 
         COALESCE(y."単位_漢字名称", '--') as "単位_漢字名称", 
-        COALESCE(y."新_金額", -1) as "新_金額",
+
+        CASE
+            WHEN medis."薬価基準収載医薬品コード" IS NULL THEN -1
+            WHEN medis."薬価基準収載医薬品コード" = '' THEN -1
+            ELSE COALESCE(y."新_金額", -1)
+        END as "新_金額",
 
 
         CAST(SUBSTR("基準番号（ＨＯＴコード）", 1, 11) AS varchar(11)) as "HOT11",
