@@ -49,7 +49,12 @@ CREATE VIEW "available_view" as
 	SELECT DISTINCT
 		--"基準番号（ＨＯＴコード）",
 		--"処方用番号（ＨＯＴ７）",
-		COALESCE("ＪＡＮコード", '') as "JAN",
+
+		--COALESCE("ＪＡＮコード", '') as "JAN",
+		COALESCE(
+            (SELECT "ＪＡＮコード" FROM medis WHERE "個別医薬品コード" = yj.yjcode LIMIT 1)
+            , '') as "JAN",
+
 		medis."薬価基準収載医薬品コード",
 		COALESCE(medis."個別医薬品コード", custom_yj."yjcode") as "個別医薬品コード",
 		"告示名称",
