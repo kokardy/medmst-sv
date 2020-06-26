@@ -34,3 +34,6 @@ CREATE INDEX "index_y" ON "medis"(
 CREATE INDEX "index_yj" ON "medis"(
     "個別医薬品コード"                      
 );
+CREATE INDEX "index_hot" ON "medis"(
+    "基準番号（ＨＯＴコード）"                      
+);
