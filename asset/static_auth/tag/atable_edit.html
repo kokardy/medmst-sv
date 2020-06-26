@@ -121,63 +121,63 @@ change(e){
             {this["単位_漢字名称"]}
     </td>
     <td>
-        <input name="yj_status_{this['JAN']}"
+        <input name="yj_status_{this['HOT11']}"
                                     onclick='{ check_yj_status.bind(this, 3) }'
                                     value="3"
                                     checked='{this["yj_status"]==3}'
                                     type="radio" >
         採用</input>     <br/>
-        <input name="yj_status_{this['JAN']}"
+        <input name="yj_status_{this['HOT11']}"
                                     onclick='{ check_yj_status.bind(this, 1) }'
                                     value="1"
                                     checked='{this["yj_status"]==1}'
                                     type="radio">
         院内採用</input> <br/>
-        <input name="yj_status_{this['JAN']}" 
+        <input name="yj_status_{this['HOT11']}" 
                                     onclick='{ check_yj_status.bind(this, 2) }'
                                     value="2"
                                     checked='{this["yj_status"]==2}'
                                     type="radio">
         院外採用</input> <br/>
-        <input name="yj_status_{this['JAN']}" 
+        <input name="yj_status_{this['HOT11']}" 
                                     onclick='{ check_yj_status.bind(this, 0) }'
                                     value="0"
                                     checked='{this["yj_status"]==0}'
                                     type="radio">
         不採用</input>   <br/>
         コメント:
-        <input name="yj_comment_{this['JAN']}"
+        <input name="yj_comment_{this['HOT11']}"
                ref="yj_comment"
                value='{this["yj_comment"]}'>
         </input>
     </td>
     <td>
-        <input name="hot_status_{this['JAN']}"
+        <input name="hot_status_{this['HOT11']}"
                                     onclick='{ check_hot_status.bind(this, 3) }'
                                     value="3"
                                     checked='{this["hot_status"]==3}'
                                     type="radio" >
         採用</input>     <br/>
-        <input name="hot_status_{this['JAN']}"
+        <input name="hot_status_{this['HOT11']}"
                                     onclick='{ check_hot_status.bind(this, 1) }'
                                     value="1"
                                     checked='{this["hot_status"]==1}'
                                     type="radio">
         院内採用</input> <br/>
-        <input name="hot_status_{this['JAN']}"
+        <input name="hot_status_{this['HOT11']}"
                                     onclick='{ check_hot_status.bind(this, 2) }'
                                     value="2"
                                     checked='{this["hot_status"]==2}'
                                     type="radio">
         院外採用</input> <br/>
-        <input name="hot_status_{this['JAN']}"
+        <input name="hot_status_{this['HOT11']}"
                                     onclick='{ check_hot_status.bind(this, 0) }'
                                     value="0"
                                     checked='{this["hot_status"]==0}'
                                     type="radio">
         不採用</input>   <br/>
         コメント:
-        <input name="hot_comment_{this['JAN']}" 
+        <input name="hot_comment_{this['HOT11']}" 
                ref="hot_comment"
                value='{this["hot_comment"]}'>
         </input>
