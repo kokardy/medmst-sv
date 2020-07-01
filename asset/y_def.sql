@@ -32,10 +32,14 @@ CREATE TABLE "y" (
     "廃止年月日"                                          character varying(8)        ,
     "薬価基準コード"                                      character varying(12)       ,
     "公表順序番号"                                        integer                     ,
-    "経過措置年月日"        character varying(8)        ,
+    "経過措置年月日"                                      character varying(8)        ,
     "基本漢字名称"                                        character varying(200)      
 );
 
-CREATE INDEX index_name ON "y"(
+CREATE INDEX index_y_name ON "y"(
     "漢字名称"
+);
+
+CREATE INDEX index_y_yj ON "y"(
+    "薬価基準コード" 
 );

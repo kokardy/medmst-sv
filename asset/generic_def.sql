@@ -8,9 +8,9 @@ CREATE TABLE "generic" (
     "備考"                                  character varying(255)
 );
 
-CREATE INDEX "index_gen" ON "generic"(
+CREATE INDEX "index_generic_gen" ON "generic"(
     "後発情報"
 );
-CREATE INDEX "index_gname" ON "generic"(
+CREATE INDEX "index_generic_gname" ON "generic"(
     "成分名"
 );
