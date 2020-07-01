@@ -25,15 +25,27 @@ CREATE TABLE "medis" (
     "更新年月日"                            character varying(255)
 );
 
-CREATE INDEX "index_jan" ON "medis"(
+CREATE INDEX "index_medis_jan" ON "medis"(
     "ＪＡＮコード"
 );
-CREATE INDEX "index_y" ON "medis"(
-    "薬価基準収載医薬品コード"              
+CREATE INDEX "index_medis_y" ON "medis"(
+    "薬価基準収載医薬品コード"
 );
-CREATE INDEX "index_yj" ON "medis"(
-    "個別医薬品コード"                      
+CREATE INDEX "index_medis_yj" ON "medis"(
+    "個別医薬品コード"
 );
-CREATE INDEX "index_hot" ON "medis"(
-    "基準番号（ＨＯＴコード）"                      
+CREATE INDEX "index_medis_hot" ON "medis"(
+    "基準番号（ＨＯＴコード）"
+);
+CREATE INDEX "index_medis_hot11" ON "medis"(
+    SUBSTR("基準番号（ＨＯＴコード）", 1, 11)
+);
+CREATE INDEX "index_medis_pname" ON "medis"(
+    "製造会社"
+);
+CREATE INDEX "index_medis_cname" ON "medis"(
+    "販売会社"
+);
+CREATE INDEX "index_medis_update" ON "medis"(
+    "更新区分"
 );

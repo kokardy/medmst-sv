@@ -73,7 +73,7 @@ func handleAvailable(c *gin.Context) {
 	var message string
 	var err error
 	queryString := c.DefaultQuery("query", "")
-	sql := `SELECT
+	sql := `SELECT DISTINCT
 				*
 			FROM "available_view"
 			WHERE
