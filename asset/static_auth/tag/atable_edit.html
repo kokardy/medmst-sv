@@ -81,12 +81,21 @@ change(e){
 
 
 <drug>
+    <style>
+        input.drug_code{
+            width:100px;
+        }
+        input.yj_comment, input.hot_comment{
+            width:150px;
+        }
+    </style>
     <td>
-            厚労省コード:{this["薬価基準収載医薬品コード"]} <br/>
+            薬価コード:{this["薬価基準収載医薬品コード"]} <br/>
             YJコード:{this["個別医薬品コード"]} <br/>
             HOT11:{this['HOT11']}<br/>
             薬品コード:
             <input
+                class="drug_code" 
                 ref="drug_code" 
                 name="drug_code_{this['HOT11']}" 
                 value="{this['drug_code']}">
@@ -148,6 +157,7 @@ change(e){
         コメント:
         <input name="yj_comment_{this['HOT11']}"
                ref="yj_comment"
+               class="yj_comment"
                value='{this["yj_comment"]}'>
         </input>
     </td>
@@ -179,6 +189,7 @@ change(e){
         コメント:
         <input name="hot_comment_{this['HOT11']}" 
                ref="hot_comment"
+               class="hot_comment"
                value='{this["hot_comment"]}'>
         </input>
     </td>
