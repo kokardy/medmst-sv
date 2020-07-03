@@ -29,14 +29,17 @@
 </table>
 
     <script>
+this.on("mount", function(){
+  document.getElementById("query_str").focus()
+})
 var tag = this
 this.drugs = [ ]
 
 this.fields = [
     "医薬品コード",
     "名称",
-    "規格単位/包装",
-    "会社",
+    //"規格単位",
+    //"会社",
     "薬価",
     "YJで採用設定",
     "HOTで採用設定",
@@ -85,8 +88,18 @@ change(e){
         input.drug_code{
             width:100px;
         }
+        input.custom_yj{
+            width:130px;
+        }
         input.yj_comment, input.hot_comment{
-            width:150px;
+            width:280px;
+        }
+        .drug_name{
+            font-weight:bold;
+            font-size:larger;
+        }
+        .package{
+            font-weight:bold;
         }
     </style>
     <td>
@@ -96,13 +109,14 @@ change(e){
             薬品コード:
             <input
                 class="drug_code" 
-                ref="drug_code" 
+                ref="drug_code"
                 name="drug_code_{this['HOT11']}" 
                 value="{this['drug_code']}">
             </input>
             <br/>
             カスタムYJ:
             <input
+                class="custom_yj" 
                 ref="custom_yj" 
                 name="custom_yj_{this['HOT11']}" 
                 value="{this['custom_yj']}">
@@ -111,22 +125,20 @@ change(e){
 
     </td>
     <td>
-            販売名:{this["販売名"]} <br/>
+            製造:{this["製造会社"]} 販売:{this["販売会社"]} <br/>
+            <div class="drug_name">{this["販売名"]}</div>
+            <div class="package">
+                {this["包装形態"]}
+                {this["包装単位数"]}
+                {this["包装単位単位"]}
+                ({this["規格単位"]})
+            </div>
             <!-- 告示名称:{this["告示名称"]} -->
             成分名:{this["成分名"]}
+            
     </td>
-    <td>
-            {this["規格単位"]}<br/>
-            {this["包装形態"]}
-            {this["包装単位数"]}
-            {this["包装単位単位"]}
-    </td>
-    <td>
-            製造:{this["製造会社"]} <br/>
-            販売:{this["販売会社"]}
-    </td>
-    <td>
-            {this["新_金額"]} / 
+    <td class="center">
+            {this["新_金額"]} 円/ 
             {this["単位_漢字名称"]}
     </td>
     <td>

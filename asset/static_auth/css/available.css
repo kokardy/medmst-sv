@@ -2,31 +2,33 @@
     display:none;
 }
 
+.center{
+    text-align:center;
+}
+
+#query_string{
+    ime-mode:active;
+}
+
 table{
     width:100%;
     table-layout:fixed;
 }
 
 th.医薬品コード{
-    width:200px;
+    width:180px;
 }
 th.名称{
     width:350px;
-}
-th.規格単位・包装{
-    width:100px;
-}
-th.会社{
-    width:300px;
 }
 th.薬価{
     width:75px;
 }
 th.YJで採用設定{
-    width:160px;
+    width:300px;
 }
 th.HOTで採用設定{
-    width:160px;
+    width:300px;
 }
 th.保存{
     width:50px;

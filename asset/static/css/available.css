@@ -6,27 +6,23 @@
     ime-mode:active;
 }
 
+.center{
+    text-align:center;
+}
 
 table{
-    width:1200px;
+    width:100%;
     table-layout:fixed;
 }
 
-th.医薬品コード{
-    width:200px;
-}
-
-th.名称{
-    width:300px;
+th.コード{
+    width: 200px;
 }
 th.規格単位{
-    width:100px;
-}
-th.包装{
-    width:80px;
+    width:250px;
 }
 th.薬価{
-    width:75px;
+    width:200px;
 }
 th.採用状態{
     width:200px;
