@@ -1,10 +1,17 @@
 <atable>
 
 <style>
+.drug_name{
+    font-weight:bold;
+    font-size:larger;
+}
+.package{
+    font-weight:bold;
+}
 
 /* 不採用 */
 tr.status0{
-    background-color:gray;
+    background-color:#CCCCCC;
 }
 /* 院内 */
 tr.status1{
@@ -72,11 +79,9 @@ this.on("mount", function(){
 this.drugs = [ ]
 
 this.fields = [
-    "医薬品コード",
+    "コード",
     "名称",
     "規格単位",
-    "包装",
-    "会社",
     "薬価",
     "採用状態",
     "リンク",
@@ -114,33 +119,30 @@ change(e){
 
 <drug>
     <td>
-            厚労省コード:{this["薬価基準収載医薬品コード"]} <br/>
+            薬価コード:{this["薬価基準収載医薬品コード"]} <br/>
             YJコード:{this["個別医薬品コード"]} <br/>
             薬品コード:{this["drug_code"]} <br/>
             カスタムYJ:{this['custom_yj']} <br/>
     </td>
     <td>
-            販売名:{this["販売名"]} <br/>
-            <!-- 告示名称:{this["告示名称"]} -->
-            成分名:{this["成分名"]}
-    </td>
-    <td>
-            {this["規格単位"]}
-    </td>
-    <td>
+            製造:{this["製造会社"]} 販売:{this["販売会社"]}
+            <div class="drug_name">{this["販売名"]}</div>
+            <div class="package">
             {this["包装形態"]}
             {this["包装単位数"]}
             {this["包装単位単位"]}
+            </div>
+            <!-- 告示名称:{this["告示名称"]} -->
+            成分名:{this["成分名"]}
     </td>
-    <td>
-            製造:{this["製造会社"]} <br/>
-            販売:{this["販売会社"]}
+    <td class="center">
+            {this["規格単位"]}
     </td>
-    <td>
-            {this["新_金額"]} / 
+    <td class="center">
+            {this["新_金額"]} 円/ 
             {this["単位_漢字名称"]}
     </td>
-    <td>
+    <td class="center">
             <em>{this["採用状態"]}</em><br/>
             YJコメント:{this["yj_comment"]} <br/>
             HOTコメント:{this["hot_comment"]}
