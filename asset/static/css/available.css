@@ -18,14 +18,11 @@ table{
 th.コード{
     width: 200px;
 }
-th.規格単位{
-    width:250px;
-}
 th.薬価{
     width:200px;
 }
-th.採用状態{
-    width:200px;
+th.コメント{
+    width:400px;
 }
 th.リンク{
     width:100px;
