@@ -81,9 +81,8 @@ this.drugs = [ ]
 this.fields = [
     "コード",
     "名称",
-    "規格単位",
+    "コメント",
     "薬価",
-    "採用状態",
     "リンク",
 ]
 
@@ -125,35 +124,32 @@ change(e){
             カスタムYJ:{this['custom_yj']} <br/>
     </td>
     <td>
-            製造:{this["製造会社"]} 販売:{this["販売会社"]}
-            <div class="drug_name">{this["販売名"]}</div>
-            <div class="package">
+            <em>{this["採用状態"]}</em> 
+            成分名:{this["成分名"]}
+            <div class="drug_name">
+                <a href="/redirect/pmda/yj/{ this['個別医薬品コード'] }" target="_blank">
+                    {this["販売名"]}
+                </a>
+            </div>
+            <span class="package">
             {this["包装形態"]}
             {this["包装単位数"]}
             {this["包装単位単位"]}
-            </div>
+            :
+            {this["規格単位"]}
+            </span>
+            製造:{this["製造会社"]} 販売:{this["販売会社"]}
             <!-- 告示名称:{this["告示名称"]} -->
-            成分名:{this["成分名"]}
     </td>
     <td class="center">
-            {this["規格単位"]}
+            {this["yj_comment"]} {this["hot_comment"]}
     </td>
     <td class="center">
             {this["新_金額"]} 円/ 
             {this["単位_漢字名称"]}
     </td>
-    <td class="center">
-            <em>{this["採用状態"]}</em><br/>
-            YJコメント:{this["yj_comment"]} <br/>
-            HOTコメント:{this["hot_comment"]}
-    </td>
     <td class="outerlink">
         <div if={ this['個別医薬品コード'] }>
-        <a 
-        target="_blank"
-        href="/redirect/pmda/yj/{ this['個別医薬品コード'] }">
-                添付文書
-        </a>
         <a
         target="_blank"
         href="//10.26.61.131/jiho/latest/CYJ/{this['個別医薬品コード']}.pdf">
