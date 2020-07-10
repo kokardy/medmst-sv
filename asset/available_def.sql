@@ -58,8 +58,11 @@ CREATE VIEW "available_view" as
             LIMIT 1),
     '') as "JAN",
     m1."薬価基準収載医薬品コード"                  ,
-    COALESCE(m1."個別医薬品コード", 
-            custom_yj.yjcode) as "個別医薬品コード",
+    CASE
+        WHEN m1."個別医薬品コード" <> '' and m1."個別医薬品コード" IS NOT NULL THEN m1."個別医薬品コード" 
+        WHEN custom_yj.yjcode <> '' and custom_yj.yjcode IS NOT NULL THEN custom_yj.yjcode
+		ELSE '----'
+    END as "個別医薬品コード",
    -- m1."告示名称" ,
    -- (SELECT "告示名称" FROM medis
    --     WHERE SUBSTR("基準番号（ＨＯＴコード）", 1, 11) = "HOT11" LIMIT 1
@@ -89,18 +92,23 @@ CREATE VIEW "available_view" as
     COALESCE(custom_yj."yjcode", '') as custom_yj
 
 	FROM medis m1
-    LEFT JOIN yj
-        ON m1."個別医薬品コード" = yj."yjcode"
+    LEFT JOIN generic
+        ON m1."薬価基準収載医薬品コード" = generic."薬価基準収載医薬品コード"
     LEFT JOIN hot
         ON SUBSTR(m1."基準番号（ＨＯＴコード）", 1, 11) = hot."HOT11"
     LEFT JOIN custom_yj
         ON SUBSTR(hot."HOT11", 1 , 9) = custom_yj."HOT9"
+    LEFT JOIN yj
+        ON 
+            CASE
+                WHEN m1."個別医薬品コード" <> '' and m1."個別医薬品コード" IS NOT NULL THEN m1."個別医薬品コード" 
+                WHEN custom_yj.yjcode <> '' and custom_yj.yjcode IS NOT NULL THEN custom_yj.yjcode
+                ELSE '----'
+            END = yj."yjcode"
 	LEFT JOIN (SELECT DISTINCT "薬価基準コード", "単位_漢字名称", "新_金額" 
                     from y 
                     WHERE "薬価基準コード" IS NOT NULl
                         AND "薬価基準コード" <> '') as y1
 		ON m1."薬価基準収載医薬品コード" = y1."薬価基準コード"
-    LEFT JOIN generic
-        ON m1."薬価基準収載医薬品コード" = generic."薬価基準収載医薬品コード"
     WHERE m1."更新区分" <> '2' AND m1."更新区分" <> '4' -- '2':中止,'4':削除
 ;
