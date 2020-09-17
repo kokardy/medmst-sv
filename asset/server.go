@@ -83,7 +83,7 @@ func handleAvailable(c *gin.Context) {
 				"HOT11" like $1 || '%' OR
 				"製造会社" like $1 || '%' OR
 				"販売会社" like $1 || '%'
-			ORDER BY "HOT11", "販売会社", "製造会社"
+			ORDER BY "HOT11", "販売名", "販売会社", "製造会社"
 			;
 		`
 	param := connectParam()
