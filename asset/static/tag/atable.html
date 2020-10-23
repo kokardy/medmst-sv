@@ -30,10 +30,26 @@ a,a:visited{
     color:blue;
 }
 
-em{
-    font-size:Larger;
+em.saiyou{
     font-weight:bold;
 
+}
+em.generic{
+    color:red;
+    font-style:normal;
+    font-size:smaller;
+    font-weight:bold;
+}
+
+td.コード{
+    font-size:smaller;
+}
+span.成分名{
+  font-size:smaller;
+}
+
+span.company{
+    font-size:smaller;
 }
 
 
@@ -70,7 +86,6 @@ em{
 
     <script>
 
-
 this.on("mount", function(){
   document.getElementById("query_string").focus()
 })
@@ -106,65 +121,73 @@ change(e){
     .then(undefined, function onRejected(error){
         console.log("rejected:" + error)
     })
-
-
-
 }
-
 
     </script>
 </atable>
 
-
 <drug>
-    <td>
-            薬価コード:{this["薬価基準収載医薬品コード"]} <br/>
-            YJコード:{this["個別医薬品コード"]} <br/>
-            薬品コード:{this["drug_code"]} <br/>
-            カスタムYJ:{this['custom_yj']} <br/>
-    </td>
-    <td>
-            <em>{this["採用状態"]}</em> 
-            成分名:{this["成分名"]}
-            <div class="drug_name">
-                <a href="/redirect/pmda/yj/{ this['個別医薬品コード'] }?from=searchlist" target="_blank">
-                    {this["販売名"]}
-                </a>
-            </div>
-            <span class="package">
-            {this["包装形態"]}
-            {this["包装単位数"]}
-            {this["包装単位単位"]}
-            :
-            {this["規格単位"]}
-            </span>
-            製造:{this["製造会社"]} 販売:{this["販売会社"]}
-            <!-- 告示名称:{this["告示名称"]} -->
-    </td>
-    <td class="center">
-            {this["yj_comment"]} {this["hot_comment"]}
-    </td>
-    <td class="center">
-            {this["新_金額"]} 円/ 
-            {this["単位_漢字名称"]}
-    </td>
-    <td class="outerlink">
-        <div if={ this['個別医薬品コード'] }>
-        <a
-        target="_blank"
-        href="//10.26.61.131/jiho/latest/CYJ/{this['個別医薬品コード']}.pdf">
-                JIHO(薬効)
-        </a>
-        <a
-        target="_blank"
-        href="//10.26.61.131/jiho/latest/IYJ/{this['個別医薬品コード']}.pdf">
-                JIHO(成分)
-        </a>
-        <!-- GS1:{ GS1toJAN(this['JAN']) } -->
-        <!-- JAN:{ this['JAN'] } -->
-        <button onclick="gs1search({ GS1toJAN(this['JAN']) });">GS1での検索結果へ</button>
-        </div>
-    </td>
+  <td class="コード">
+    HOT11:{this["HOT11"]} <br/>
+    薬価コード:{this["薬価基準収載医薬品コード"]} <br/>
+    YJ:{this["個別医薬品コード"]} <br/>
+    薬品コード:{this["drug_code"]} <br/>
+    カスタムYJ:{this['custom_yj']} <br/>
+  </td>
+  <td>
+    <em class="saiyou">{this["採用状態"]}</em> 
+    <span class="成分名">成分名:{this["成分名"]}</span>
+    <div class="drug_name">
+    <a 
+       href="/redirect/pmda/yj/{ this['個別医薬品コード'] }?from=searchlist"
+       target="_blank">{this["販売名"]}
+    </a>
+    </div>
+    <div class="package">
+      <!-- {this["後発情報"]} -->
+      <em class="generic">{this.kouhatu[ this["後発情報"] ]}</em>
+      {this["包装形態"]}
+      {this["包装単位数"]}
+      {this["包装単位単位"]}
+      :
+      {this["規格単位"]}
+    </div>
+    <span class="company">製造:{this["製造会社"]} 販売:{this["販売会社"]}</span>
+    <!-- 告示名称:{this["告示名称"]} -->
+  </td>
+  <td class="center">
+    {this["yj_comment"]} {this["hot_comment"]}
+  </td>
+  <td class="center">
+    {this["新_金額"]} 円/ 
+    {this["単位_漢字名称"]}
+  </td>
+  <td class="outerlink">
+    <div if={ this['個別医薬品コード'] }>
+    <a
+      target="_blank"
+      href="//10.26.61.131/jiho/latest/CYJ/{this['個別医薬品コード']}.pdf">
+          JIHO(薬効)
+    </a>
+    <a
+      target="_blank"
+      href="//10.26.61.131/jiho/latest/IYJ/{this['個別医薬品コード']}.pdf">
+          JIHO(成分)
+    </a>
+    <!-- GS1:{ GS1toJAN(this['JAN']) } -->
+    <!-- JAN:{ this['JAN'] } -->
+    <button onclick="gs1search({ GS1toJAN(this['JAN']) });">GS1での検索結果へ</button>
+    </div>
+  </td>
+
+<script>
+
+this.kouhatu = {
+  "1":"先発(後発なし)",
+  "2":"先発(後発あり)",
+  "3":"後発",
+  "★":"後発(先発と同額以上)",
+};
 
 
 save_status(e){
@@ -172,5 +195,6 @@ save_status(e){
   console.log("opts:" + this.opts)
   console.log("opts:" + Object.keys(this.opts))
 }
+</script>
 
 </drug>
