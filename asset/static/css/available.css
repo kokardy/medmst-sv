@@ -16,13 +16,13 @@ table{
 }
 
 th.コード{
-    width: 200px;
+    width:150px;
 }
 th.薬価{
-    width:200px;
+    width:170px;
 }
 th.コメント{
-    width:400px;
+    width:230px;
 }
 th.リンク{
     width:100px;
