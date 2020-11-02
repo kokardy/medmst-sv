@@ -72,6 +72,46 @@ span.company{
 </input>
 <button onClick="{change}">検索</button>
 
+<input
+    id="check_status0"
+    type="checkbox"
+    name="status0"
+    ref="status0"
+    onClick="{drug_filter}"
+>
+不採用
+</input>
+<input
+    id="check_status1"
+    type="checkbox"
+    name="status1"
+    ref="status1"
+    onClick="{drug_filter}"
+    checked="checked"
+>
+院内専用
+</input>
+<input
+    id="check_status2"
+    type="checkbox"
+    name="status2"
+    ref="status2"
+    onClick="{drug_filter}"
+    checked="checked"
+>
+院外専用
+</input>
+<input
+    id="check_status3"
+    type="checkbox"
+    name="status3"
+    ref="status3"
+    onClick="{drug_filter}"
+    checked="checked"
+>
+院内・院外
+</input>
+
 <table>
     <thead>
         <th each="{field, index in fields}" class="{field}">
@@ -91,6 +131,7 @@ this.on("mount", function(){
 })
 
 
+this.all_drugs = []
 this.drugs = [ ]
 
 this.fields = [
@@ -100,6 +141,38 @@ this.fields = [
     "薬価",
     "リンク",
 ]
+
+
+function filter(drugs){
+    var new_drugs = []
+    var status0 = document.getElementById("check_status0").checked
+    var status1 = document.getElementById("check_status1").checked
+    var status2 = document.getElementById("check_status2").checked
+    var status3 = document.getElementById("check_status3").checked
+    drugs.forEach(function(d){
+            if(d.status_flag == 0 && status0){
+                    new_drugs.push(d)
+            }
+            if(d.status_flag == 1 && status1){
+                    new_drugs.push(d)
+            }
+            if(d.status_flag == 2 && status2){
+                    new_drugs.push(d)
+            }
+            if(d.status_flag == 3 && status3){
+                    new_drugs.push(d)
+            }
+        }
+    )
+    return new_drugs
+}
+
+drug_filter(e){
+    //console.log("drug_filter")
+    var tag = this 
+    var new_drugs = filter(tag.all_drugs)
+    tag.drugs = new_drugs
+}
 
 change(e){
     console.log("change")
@@ -114,8 +187,9 @@ change(e){
     })
     .then(function(json){
         console.log(url)
-        console.debug(json)
-        tag.drugs = json
+        //console.debug(json)
+        tag.all_drugs = json
+        tag.drugs = filter(tag.all_drugs)
         tag.update()
     })
     .then(undefined, function onRejected(error){
