@@ -1,6 +1,10 @@
 <atable>
 
 <style>
+.invisible{
+    display:none;
+}
+
 .drug_name{
     font-weight:bold;
     font-size:larger;
@@ -112,11 +116,15 @@ span.company{
 院内・院外
 </input>
 
+<input type="checkbox" id="toggle_detail" onClick="{toggle}">詳細</input>
+
 <table>
     <thead>
-        <th each="{field, index in fields}" class="{field}">
-            { field }
-        </th>
+        <th class="コード detail">コード</th>
+        <th class="名称">名称</th>
+        <th class="コメント">コメント</th>
+        <th class="薬価">薬価</th>
+        <th class="リンク">リンク</th>
     </thead>
 
     <tbody>
@@ -124,7 +132,7 @@ span.company{
     </tbody>
 </table>
 
-    <script>
+<script>
 
 this.on("mount", function(){
   document.getElementById("query_string").focus()
@@ -134,14 +142,38 @@ this.on("mount", function(){
 this.all_drugs = []
 this.drugs = [ ]
 
-this.fields = [
-    "コード",
-    "名称",
-    "コメント",
-    "薬価",
-    "リンク",
-]
+//詳細の表示・非表示の切り替え
+function detail_visible(){
+    var details = document.getElementsByClassName("detail")
+    for(var i = 0; i<details.length; i++){
+       details[i].classList.remove("invisible")
+    }
+}
 
+function detail_invisible(){
+    var details = document.getElementsByClassName("detail")
+    for(var i = 0; i<details.length; i++){
+       details[i].classList.add("invisible")
+    }
+}
+function detail_view(){
+    var on = document.getElementById("toggle_detail").checked
+    if(on){
+        detail_visible()
+    }else{
+        detail_invisible()
+    }
+}
+
+
+toggle(){
+    var tag = this
+    var new_drugs = []
+    new_drugs = filter(tag.all_drugs)
+    tag.drugs = new_drugs
+    tag.update()
+    detail_view()
+}
 
 function filter(drugs){
     var new_drugs = []
@@ -149,21 +181,42 @@ function filter(drugs){
     var status1 = document.getElementById("check_status1").checked
     var status2 = document.getElementById("check_status2").checked
     var status3 = document.getElementById("check_status3").checked
+
+    //詳細チェックボックスで同じHOT9を省く
+    var on = document.getElementById("toggle_detail").checked
+    if(!on){
+        var ok = {}
+        drugs.forEach(function(drug){
+             var hot9 = drug.HOT11.substr(0,9)
+             if(ok[hot9] && ok[hot9].status_flag > drug.status_flag){
+                 return
+             }else{
+                 new_drugs = new_drugs.filter(function(d){
+                         return d.HOT11.substr(0,9) != hot9
+                 })
+                 new_drugs.push(drug)
+                 ok[hot9] = drug
+             }
+        })
+        drugs = new_drugs
+    }
+    new_drugs = []
+    
+    //採用状態のチェックボックスでフィルタ
     drugs.forEach(function(d){
-            if(d.status_flag == 0 && status0){
-                    new_drugs.push(d)
-            }
-            if(d.status_flag == 1 && status1){
-                    new_drugs.push(d)
-            }
-            if(d.status_flag == 2 && status2){
-                    new_drugs.push(d)
-            }
-            if(d.status_flag == 3 && status3){
-                    new_drugs.push(d)
-            }
+        if(d.status_flag == 0 && status0){
+                new_drugs.push(d)
         }
-    )
+        if(d.status_flag == 1 && status1){
+                new_drugs.push(d)
+        }
+        if(d.status_flag == 2 && status2){
+                new_drugs.push(d)
+        }
+        if(d.status_flag == 3 && status3){
+                new_drugs.push(d)
+        }
+    })
     return new_drugs
 }
 
@@ -171,7 +224,23 @@ drug_filter(e){
     //console.log("drug_filter")
     var tag = this 
     var new_drugs = filter(tag.all_drugs)
+    var on = document.getElementById("toggle_detail").checked
+    if(!on){
+        var new_drugs2 = []
+        var ok = {}
+        new_drugs.forEach(function(drug){
+            var hot9 = drug.HOT11.substr(0,9)
+            if(ok[hot9]){return}
+            ok[hot9] = true
+            new_drugs2.push(drug)
+        })
+        new_drugs = new_drugs2
+    }
     tag.drugs = new_drugs
+
+    //update してからvisible invisibleしないと死ぬ
+    tag.update()
+    detail_view()
 }
 
 change(e){
@@ -187,10 +256,11 @@ change(e){
     })
     .then(function(json){
         console.log(url)
-        //console.debug(json)
+        console.debug(json)
         tag.all_drugs = json
         tag.drugs = filter(tag.all_drugs)
         tag.update()
+        detail_view()
     })
     .then(undefined, function onRejected(error){
         console.log("rejected:" + error)
@@ -201,7 +271,7 @@ change(e){
 </atable>
 
 <drug>
-  <td class="コード">
+  <td class="コード detail invisible">
     HOT11:{this["HOT11"]} <br/>
     薬価コード:{this["薬価基準収載医薬品コード"]} <br/>
     YJ:{this["個別医薬品コード"]} <br/>
@@ -220,11 +290,12 @@ change(e){
     <div class="package">
       <!-- {this["後発情報"]} -->
       <em class="generic">{this.kouhatu[ this["後発情報"] ]}</em>
+      <span class="package detail invisible">
       {this["包装形態"]}
       {this["包装単位数"]}
       {this["包装単位単位"]}
-      :
-      {this["規格単位"]}
+      :{this["規格単位"]}
+      </span>
     </div>
     <span class="company">製造:{this["製造会社"]} 販売:{this["販売会社"]}</span>
     <!-- 告示名称:{this["告示名称"]} -->
