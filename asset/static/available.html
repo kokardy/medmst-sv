@@ -50,12 +50,13 @@ function onload(){
 
 function gs1search(gs1){
     document.gs1form.gs1code.value = gs1;
+    document.gs1form["btnA.x"] = 50 + (10 * Math.random()) % 10 ;
+    document.gs1form["btnA.y"] = 20 + (10 * Math.random()) % 10 ;
     document.gs1form.submit();
-    //document.gs1form["btnA.x"] = 50 + (10 * Math.random()) % 10 ;
-    //document.gs1form["btnA.y"] = 20 + (10 * Math.random()) % 10 ;
 }
 
 function GS1toJAN(jan){
+    if(!jan){return ""}
     indicator = 1;
     check = jan.slice(12,13);
     check = parseInt(check, 10);
@@ -152,4 +153,4 @@ function GS1toJAN(jan){
 	<input type="hidden" name="gs1code" value="04987084000637">
 </form>
 </body>
-</html>
+

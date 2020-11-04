@@ -258,11 +258,12 @@ change(e){
         console.log(url)
         console.debug(json)
         tag.all_drugs = json
-        tag.drugs = filter(tag.all_drugs)
+        tag.drugs = json ? filter(tag.all_drugs) : []
         tag.update()
         detail_view()
     })
     .then(undefined, function onRejected(error){
+        alert("見みつかりませんでした")
         console.log("rejected:" + error)
     })
 }
@@ -277,6 +278,7 @@ change(e){
     YJ:{this["個別医薬品コード"]} <br/>
     薬品コード:{this["drug_code"]} <br/>
     カスタムYJ:{this['custom_yj']} <br/>
+    GS1:{ GS1toJAN(this['JAN']) } JAN:{this['JAN']}
   </td>
   <td>
     <em class="saiyou">{this["採用状態"]}</em> 
@@ -287,15 +289,15 @@ change(e){
        target="_blank">{this["販売名"]}
     </a>
     </div>
-    <div class="package">
+    <div>
       <!-- {this["後発情報"]} -->
       <em class="generic">{this.kouhatu[ this["後発情報"] ]}</em>
-      <span class="package detail invisible">
+    </div>
+    <div class="package detail invisible">
       {this["包装形態"]}
       {this["包装単位数"]}
       {this["包装単位単位"]}
       :{this["規格単位"]}
-      </span>
     </div>
     <span class="company">製造:{this["製造会社"]} 販売:{this["販売会社"]}</span>
     <!-- 告示名称:{this["告示名称"]} -->
