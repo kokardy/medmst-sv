@@ -43,16 +43,22 @@
 
 function onload(){
     if(document.domain=="10.26.61.131" || document.domain=="yakuzai-web2"){
-        document.gs1form.action = "http://10.26.61.131:8081/PmdaSearch/iyakuSearch/";
+        document.search_form.action = "http://10.26.61.131:8081/PmdaSearch/iyakuSearch/";
     }
 }
 
+function name_search(name){
+  document.search_form.gs1code.value = ""
+  document.search_form.nameWord.value = name
+  document.search_form.submit()
+}
 
 function gs1search(gs1){
-    document.gs1form.gs1code.value = gs1;
-    document.gs1form["btnA.x"] = 50 + (10 * Math.random()) % 10 ;
-    document.gs1form["btnA.y"] = 20 + (10 * Math.random()) % 10 ;
-    document.gs1form.submit();
+  document.search_form.gs1code.value = gs1;
+  document.search_form.nameWord.value = "";
+  document.search_form["btnA.x"] = 50 + (10 * Math.random()) % 10 ;
+  document.search_form["btnA.y"] = 20 + (10 * Math.random()) % 10 ;
+  document.search_form.submit();
 }
 
 function GS1toJAN(jan){
@@ -73,7 +79,7 @@ function GS1toJAN(jan){
 <div data-is="atable"></div>
 <script>riot.mount("atable"); </script>
 
-<form name="gs1form"
+<form name="search_form"
       action="https://www.pmda.go.jp/PmdaSearch/iyakuSearch/"
       method="POST"
       target="_blank">
@@ -150,7 +156,7 @@ function GS1toJAN(jan){
 	<input type="hidden" name="personFlg" value="false">
 	<input type="hidden" name="iyakuKoumokuSelectSwitchRadio" value="2">
 
-	<input type="hidden" name="gs1code" value="04987084000637">
+	<input type="hidden" name="gs1code" value="">
 </form>
 </body>
 
