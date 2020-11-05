@@ -56,6 +56,10 @@ span.company{
     font-size:smaller;
 }
 
+.gs1button{
+    padding:0;
+}
+
 
 </style>
 
@@ -63,8 +67,8 @@ span.company{
 下の検索ボックスに薬品名・会社名・YJコードなどを入力して検索してください。
 </div>
 
+<div>
 <span>検索:</span>
-
 <!-- 検索BOX  -->
 <input
     id="query_string"
@@ -72,9 +76,12 @@ span.company{
     type="text"
     ref="query"
     class="query_input"
+    onkeyup="{change}"
     >
 </input>
-<button onClick="{change}">検索</button>
+<!-- テキストボックスから直接イベント拾って更新することにした
+<button onClick="{change}">検索</button> -->
+</div>
 
 <input
     id="check_status0"
@@ -247,6 +254,7 @@ change(e){
     console.log("change")
     var tag = this
     var queryStr = this.refs.query.value
+    if(queryStr.length < 2){return}
     var url = "/json/available/"
     url += "?query=" + queryStr
     url = encodeURI(url)
@@ -278,20 +286,23 @@ change(e){
     YJ:{this["個別医薬品コード"]} <br/>
     薬品コード:{this["drug_code"]} <br/>
     カスタムYJ:{this['custom_yj']} <br/>
-    GS1:{ GS1toJAN(this['JAN']) } JAN:{this['JAN']}
+    JAN:{this['JAN']}
+    <button 
+      class="gs1button"
+      onclick="gs1search({ GS1toJAN(this['JAN']) });">
+        GS1:{ GS1toJAN(this['JAN']) }
+    </button>
   </td>
   <td>
     <em class="saiyou">{this["採用状態"]}</em> 
+    <em class="generic">{this.kouhatu[ this["後発情報"] ]}</em>
     <span class="成分名">成分名:{this["成分名"]}</span>
     <div class="drug_name">
+    <button onclick={name_s}>検索</button>
     <a 
        href="/redirect/pmda/yj/{ this['個別医薬品コード'] }?from=searchlist"
        target="_blank">{this["販売名"]}
     </a>
-    </div>
-    <div>
-      <!-- {this["後発情報"]} -->
-      <em class="generic">{this.kouhatu[ this["後発情報"] ]}</em>
     </div>
     <div class="package detail invisible">
       {this["包装形態"]}
@@ -323,11 +334,11 @@ change(e){
     </a>
     <!-- GS1:{ GS1toJAN(this['JAN']) } -->
     <!-- JAN:{ this['JAN'] } -->
-    <button onclick="gs1search({ GS1toJAN(this['JAN']) });">GS1での検索結果へ</button>
     </div>
   </td>
 
 <script>
+
 
 this.kouhatu = {
   "1":"先発(後発なし)",
@@ -336,6 +347,11 @@ this.kouhatu = {
   "★":"後発(先発と同額以上)",
 };
 
+name_s(e){
+  var tag = this
+  var name = tag["販売名"]
+  name_search(name)
+}
 
 save_status(e){
   console.log("a this:" + Object.keys(this))
