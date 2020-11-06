@@ -81,15 +81,17 @@ function onload(){
           http://<span class="domain"></span>/redirect/pmda/drug_code/[6桁薬品コード]/
           </li>
         </ul>
-        <h2>TODO</h2>
+        <details>
+        <summary>TODO</summary>
         <ul class="todo">
+           <li>旧システムのマスタを毎日コピーしているので、YJのデータはリセットされる。新バージョンに移行時にcronを止める必要あり</li>
            <li class="finish">編集画面のチェックボックスのidをHOT11ベースからJANベースに変更する.→やっぱりHOT11に戻した</li>
            <li class="finish">公式マスタの定期更新(cron)</li>
            <li class="finish">定期バックアップからのリストア機能をつける</li>
            <li class="finish">再起動時に採用薬データを入れなおす</li>
-           <li>最新の採用状況をインポート. scriptは作成した</li>
+           <li class="finish">最新の採用状況をインポート. scriptは作成した.cronで毎日インポートしている。</li>
            <li class="finish">PMDAの各ファイルへのURLの定期更新(cron)</li>
-           <li>公式のマスタのワクチン何故かYJ入っていない。→ついているYJは正式ではなく(仮)とmedisから回答あり。カスタムYJ入れる or HOTで設定する必要あり</li>
+           <li class="finish">公式のマスタのワクチン何故かYJ入っていない。→ついているYJは正式ではなく(仮)とmedisから回答あり。カスタムYJ入れる or HOTで設定する必要あり。採用薬は入力した</li>
            <li>JIHOにYJがない薬品はデッドリンクになる</li> 
            <li class="finish">採用状況の定期バックアップ</li>
            <li class="finish">薬品コードから添付文書へリダイレクトするURLの追加</li>
@@ -101,8 +103,10 @@ function onload(){
            <li class="finish">YJが入ってないMEDIS用にカスタムYJテーブル作成</li>
            <li class="finish">検索結果の見栄えを変える</li> 
         </ul>
+        </details>
 
-        <h2>Change Log</h2>
+        <details>
+        <summary>Change Log</summary>
         <ul class="history">
             <li>20200227 正式稼働。YJと薬品コードから添付文書のリダイレクト機能のみ
             <li>20200229 NOTFOUNDのトラブル。原因：PMDAのサイトの仕様変更。httpからhttpsへリダイレクトするようになった。対応：nginxからrproxyにリバースプロキシを変更。リバースプロキシの設定をhttpsのページを読むように変更。
@@ -126,9 +130,9 @@ function onload(){
             <li>20201103 チェックボックスで詳細と採用状況のフィルタ</li>
             <li>20201104 詳細情報にGS1とJANを追加</li>
             <li>20201105 GS1の検索ボタンを詳細に移動。薬品名で検索するボタンを追加</li>
-
         </ul>
 *not リリース日
+        </details>
 
     </body>
 

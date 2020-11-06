@@ -2,62 +2,68 @@
 
 <style>
 .invisible{
-    display:none;
+  display:none;
 }
 
 .drug_name{
-    font-weight:bold;
-    font-size:larger;
+  font-weight:bold;
+  font-size:larger;
 }
 .package{
-    font-weight:bold;
+  font-weight:bold;
+}
+
+.filter{
+  font-size:20pt;
+  font-weight:bold;
+  color:green;
+  background-color:yellow;
 }
 
 /* 不採用 */
 tr.status0{
-    background-color:#CCCCCC;
+  background-color:#CCCCCC;
 }
 /* 院内 */
 tr.status1{
-    background-color:#FFAAAA;
+  background-color:#FFAAAA;
 }
 /* 院外 */
 tr.status2{
-    background-color:#AAFFAA;
+  background-color:#AAFFAA;
 }
 /* 院内院外採用 */
 tr.status3{
-    background-color:white;
+  background-color:white;
 }
 
 a,a:visited{
-    color:blue;
+  color:blue;
 }
 
 em.saiyou{
-    font-weight:bold;
-
+  font-weight:bold;
 }
 em.generic{
-    color:red;
-    font-style:normal;
-    font-size:smaller;
-    font-weight:bold;
+  color:red;
+  font-style:normal;
+  font-size:smaller;
+  font-weight:bold;
 }
 
 td.コード{
-    font-size:smaller;
+  font-size:smaller;
 }
 span.成分名{
   font-size:smaller;
 }
 
 span.company{
-    font-size:smaller;
+  font-size:smaller;
 }
 
 .gs1button{
-    padding:0;
+  padding:0;
 }
 
 
@@ -83,47 +89,58 @@ span.company{
 <button onClick="{change}">検索</button> -->
 </div>
 
-<input
-    id="check_status0"
-    type="checkbox"
-    name="status0"
-    ref="status0"
-    onClick="{drug_filter}"
->
-不採用
-</input>
-<input
-    id="check_status1"
-    type="checkbox"
-    name="status1"
-    ref="status1"
-    onClick="{drug_filter}"
-    checked="checked"
->
-院内専用
-</input>
-<input
-    id="check_status2"
-    type="checkbox"
-    name="status2"
-    ref="status2"
-    onClick="{drug_filter}"
-    checked="checked"
->
-院外専用
-</input>
-<input
-    id="check_status3"
-    type="checkbox"
-    name="status3"
-    ref="status3"
-    onClick="{drug_filter}"
-    checked="checked"
->
-院内・院外
-</input>
-
-<input type="checkbox" id="toggle_detail" onClick="{toggle}">詳細</input>
+<div class="filter">
+<label>
+  <input
+      id="check_status0"
+      type="checkbox"
+      name="status0"
+      ref="status0"
+      onClick="{drug_filter}"
+  >
+  不採用
+  </input>
+</label>
+<label>
+  <input
+      id="check_status1"
+      type="checkbox"
+      name="status1"
+      ref="status1"
+      onClick="{drug_filter}"
+      checked="checked"
+  >
+  院内専用
+  </input>
+</label>
+<label>
+  <input
+      id="check_status2"
+      type="checkbox"
+      name="status2"
+      ref="status2"
+      onClick="{drug_filter}"
+      checked="checked"
+  >
+  院外専用
+  </input>
+</label>
+<label>
+  <input
+      id="check_status3"
+      type="checkbox"
+      name="status3"
+      ref="status3"
+      onClick="{drug_filter}"
+      checked="checked"
+  >
+  院内・院外
+  </input>
+</label>
+<label>
+  <input type="checkbox" id="toggle_detail" onClick="{toggle}">詳細</input>
+</label>
+</div>
 
 <table>
     <thead>
