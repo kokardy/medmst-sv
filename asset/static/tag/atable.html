@@ -271,7 +271,13 @@ change(e){
     console.log("change")
     var tag = this
     var queryStr = this.refs.query.value
+
+    //1文字は検索しない
     if(queryStr.length < 2){return}
+
+    //3文字以下の数字だけは検索しない
+    if(queryStr.length < 4 && !isNaN(queryStr)){return}
+
     var url = "/json/available/"
     url += "?query=" + queryStr
     url = encodeURI(url)
